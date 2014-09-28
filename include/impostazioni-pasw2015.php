@@ -12,7 +12,7 @@ function pasw2015_upload_admin_scripts() {
 
 function pasw2015_impostazioni() { ?>
 	<div class="wrap">
-		<h2>Impostazioni <a href="" class="add-new-h2">Pagina di Benvenuto</a> <a href="" class="add-new-h2">Supporto</a> <a href="" class="add-new-h2">Porte Aperte sul Web</a></h2>
+		<h2>Impostazioni</h2>
 			
 			<?php require ( get_template_directory() . '/include/impostazioni-pasw2015-saver.php' ); ?>
 

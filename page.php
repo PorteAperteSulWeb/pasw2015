@@ -40,7 +40,7 @@
 <?php   endwhile; } ?>
 <?php
 	$TitoloPagina=$post->post_title;
-	if ( get_post_meta($post->ID, 'usrlo_pagina_categoria', true)!=-1 ) {
+	if ( get_option('pasw_catpage') != 0 && get_post_meta($post->ID, 'usrlo_pagina_categoria', true)!=-1 ) {
 		$categoria_pagina = get_post_meta($post->ID, 'usrlo_pagina_categoria', true);
 		if(isset($categoria_pagina)){
 			echo '<div class="clear"></div>

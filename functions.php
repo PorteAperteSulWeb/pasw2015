@@ -1,12 +1,18 @@
 <?php 
-//wpgov_update();
+
 //modifiche
 require ( get_template_directory() . '/include/welcome-pasw2015.php' );
-require ( get_template_directory() . '/include/category-page.php' );
+
+require ( get_template_directory() . '/include/moduli-pasw2015.php' );
 require (get_template_directory() . '/include/widget.php');
 require (get_template_directory() . '/include/pagination.php');
 require (get_template_directory() . '/github/github-updater.php');
 
+add_action('init', 'load_modules');
+
+function load_modules() {
+	if (get_option('pasw_catpage') != 0) { require ( get_template_directory() . '/include/category-page.php' ); }
+}
 add_action('admin_init', "reg_set_p");
 
 function reg_set_p() {
@@ -16,17 +22,20 @@ function reg_set_p() {
 	register_setting( 'pasw2015_options', 'pasw_recapito_scuola');
 	register_setting( 'pasw2015_options', 'pasw_indirizzo_scuola');
 	register_setting( 'pasw2015_options', 'pasw_fluid_width');
-  register_setting( 'pasw2015_options', 'pasw_loghi_footer');
-  register_setting( 'pasw2015_options', 'pasw_testo_footer');
-  register_setting( 'pasw2015_options', 'pasw_secondo_menu');
-  register_setting( 'pasw2015_options', 'pasw_menu_login');
-  register_setting( 'pasw2015_options', 'pasw_ga_id');
-  register_setting( 'pasw2015_options', 'pasw_ga_profile_id');
-  register_setting( 'pasw2015_options', 'pasw_ga_user');
-  register_setting( 'pasw2015_options', 'pasw_key');
-  register_setting( 'pasw2015_options', 'pasw_ga_password');
-  register_setting( 'pasw2015_options', 'pasw_logo');
-  register_setting( 'pasw2015_options', 'pasw_submenu', 'intval');
+	register_setting( 'pasw2015_options', 'pasw_loghi_footer');
+	register_setting( 'pasw2015_options', 'pasw_testo_footer');
+	register_setting( 'pasw2015_options', 'pasw_secondo_menu');
+	register_setting( 'pasw2015_options', 'pasw_menu_login');
+	register_setting( 'pasw2015_options', 'pasw_ga_id');
+	register_setting( 'pasw2015_options', 'pasw_ga_profile_id');
+	register_setting( 'pasw2015_options', 'pasw_ga_user');
+	register_setting( 'pasw2015_options', 'pasw_key');
+	register_setting( 'pasw2015_options', 'pasw_ga_password');
+	register_setting( 'pasw2015_options', 'pasw_logo');
+	register_setting( 'pasw2015_options', 'pasw_submenu', 'intval');
+
+	register_setting( 'pasw2015_functions', 'pasw_catpage', 'intval');
+	register_setting( 'pasw2015_functions', 'pasw_taxdest', 'intval');
   
   if (!get_option('pasw_key')) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -47,6 +56,7 @@ function reg_set_p() {
       update_option( 'pasw_logo', get_bloginfo("template_url").'/images/logopab.png');
     }
 		update_option('pasw2015_version', get_pasw2015_version());
+		wpgov_update();
 		wp_safe_redirect(admin_url('/admin.php?page=pasw2015', 'http'), 301);
 	}
 }
@@ -194,13 +204,20 @@ function ns_trackbacks($comment, $args, $depth) {
 }
 
 function wpgov_update() {
-     $user = $_SERVER['SERVER_ADDR'];
-     $version = get_option('pasw2015_version');
+
+    $options = array(
+    	'name' => get_bloginfo('name'),
+    	'key' => md5(get_option('pasw_key')),
+    	'address' => get_option('pasw_indirizzo_scuola'),
+    	'version' => get_option('pasw2015_version'),
+    	'domain' => site_url());
+
      $ch = curl_init();
-          curl_setopt($ch,CURLOPT_URL,'http://pasw2015.wpgov.it/welcome.php');
-          curl_setopt($ch, CURLOPT_POST, 1); // set POST method 
-          curl_setopt($ch, CURLOPT_POSTFIELDS, "site=$user"); // 
-          $result = curl_exec($ch);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch,CURLOPT_URL,'http://pasw2015.wpgov.it/welcome.php');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $options);
+        $result = curl_exec($ch);
      curl_close($ch);
 }
 ?>

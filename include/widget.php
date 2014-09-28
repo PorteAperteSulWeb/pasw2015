@@ -33,6 +33,8 @@
 
 		function widget( $args, $instance ) {
 
+			echo $before_widget;
+
         	extract( $args );
    			// these are the widget options
 			$title = apply_filters('widget_title', $instance['titolo']);
@@ -65,7 +67,7 @@
 						}
 						the_title(); ?></a></h3>
 		                  <?php
-		                  if ($excerpt != '' && $excerpt != 0) { the_excerpt(); } echo '<div class="clear"></div>';
+		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
 			endforeach;
 
 			echo '</ul>';
@@ -138,6 +140,8 @@
 
 		function widget( $args, $instance ) {
 
+			echo $before_widget;
+
         	extract( $args );
    			// these are the widget options
 			$title = apply_filters('widget_title', $instance['titolo']);
@@ -158,7 +162,7 @@
 			while ($my_query->have_posts()) : $my_query->the_post(); ?>
 				<h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		        		<?php
-		                  if ($excerpt != '' && $excerpt != 0) { the_excerpt(); }
+		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
 			endwhile; 
 			wp_reset_query();
 
@@ -223,6 +227,8 @@
 
 		function widget( $args, $instance ) {
 
+			echo $before_widget;
+
 			extract( $args );
    			// these are the widget options
 			$title = apply_filters('widget_title', $instance['titolo']);
@@ -243,7 +249,7 @@
 			while ($my_query->have_posts()) : $my_query->the_post(); ?>
 				<h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		        		<?php
-		                  if ($excerpt != '' && $excerpt != 0) { the_excerpt(); }
+		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
 			endwhile; 
 			wp_reset_query();
 

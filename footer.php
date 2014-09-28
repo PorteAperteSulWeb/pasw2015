@@ -4,10 +4,10 @@
 	<div class="imglinks">
 		
 		<?php if (get_option('pasw_loghi_footer')!= '') { ?>
-		<img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>"><br/>
+		<img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>" alt=""/><br/>
 		<?php echo html_entity_decode(get_option('pasw_loghi_footer')); ?>
 
-		<br/><img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>">
+		<br/><img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>" alt=""/>
 	<div class="clear"></div>
 	<?php } ?>
 
