@@ -1,0 +1,588 @@
+/*
+Theme Name: Nearly-Sprung
+Author: Richard "Jodi" Maxwell
+
+See style.css for more info.
+*/
+
+
+/***************** 3 Column Layout ******************/
+
+body 
+{
+	min-width: 580px;         /* 580 2 x (LC fullwidth + CC padding) + RC fullwidth */
+}
+
+#container 
+{
+	padding-left: 0px;      /* LC fullwidth */
+	padding-right: 20px;     /* RC fullwidth + CC padding */
+}
+
+#container .column 
+{
+	position: relative;
+	float: left;
+}
+
+#centrecontent 
+{
+	padding: 0px 20px;       /* CC padding */
+	width: 100%;
+}
+
+#footer 
+{
+	clear: both;
+}
+
+
+/********************** Global **********************/
+
+/* Structure */
+
+body 
+{
+	margin: 0;
+	padding: 0;
+}
+
+p 
+{
+	margin: 1.2em 0;
+}
+
+ol, ul 
+{
+	margin: 1.2em 0 1.2em 2em;
+	padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 
+{
+	margin: 0.5em 0;
+}
+
+blockquote 
+{
+	margin: 0 20px;
+	padding: 0 20px;
+}
+
+form, img 
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+
+/* Typography */
+
+body 
+{
+	font-size: 78%;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+}
+
+p 
+{
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+ol, ul 
+{
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6 
+{
+	font-family: "Lucida Grande", Tahoma, Arial, sans-serif;
+}
+
+h1, h2 
+{
+	font-size: 1.4em;
+}
+
+h3 
+{
+	font-size: 1.3em;
+}
+
+h4 
+{
+	font-size: 1.2em;
+}
+
+a 
+{
+	text-decoration: none;
+}
+
+input, textarea, select 
+{
+	font-size: 1em;
+	font-family: "Lucida Sans Unicode", Tahoma, Arial, sans-serif;
+}
+
+blockquote 
+{
+	font-size: 0.9em;
+}
+
+code 
+{
+	font-family: monospace;
+}
+
+.small 
+{
+	font-size: 0.9em;
+}
+
+/* Colour and borders */
+
+body 
+{
+	background: white;
+}
+
+
+h1, h2, h3, h4, h5, h6 
+{
+	color: #003399; 
+}
+
+a
+{
+	color: #003399;
+}
+
+input, textarea, select 
+{
+	border: 1px solid #F0F0F0;
+	background-color: #FAFAF0;
+	color: #3A291F;
+}
+
+blockquote 
+{
+	border-left: 4px solid #E8E8CE;
+}
+
+code 
+{
+	color: #666;
+}
+
+.small 
+{
+	color: #999;
+}
+
+/********************** Header **********************/
+
+/* Structure */
+
+#header 
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+#header p
+{
+	padding: 0px;
+	margin: 0 0 0 40px;	
+}
+
+#header h1 
+{
+	margin: 0 0 0 10px;
+		
+}
+
+#header ul
+{	
+	display: none;
+}
+
+
+/* Typography */
+
+#header h1 
+{
+	font-size: 2.4em;
+}
+#header h1 a 
+{
+	text-decoration: none;
+}
+#header img 
+{
+	float: right;
+}
+
+/* Colour and borders */
+
+#header 
+{
+	background-color: #FAFAF0;
+	border-bottom: 10px solid #003399;
+}
+
+#header h1 a 
+{
+	color: #003399;
+}
+
+
+/******************* Main Content *******************/
+
+/* Structure */
+
+#centrecontent
+{
+	overflow: hidden;
+}
+
+/* Colour */
+
+#centrecontent
+{
+	background-color: #FFF;
+	overflow: hidden;
+}
+
+/********** Previous and Next by Catagory ***********/
+
+/* Structure */
+
+#postnavigation
+{	
+	display: none;
+}
+
+
+/********************** Footer **********************/
+
+
+/* Structure */
+
+#footer 
+{
+	clear: both;
+}
+
+#footer p 
+{
+	margin: 0;
+	padding: 10px 10px 0px 0px;
+}
+
+/* Typography */
+
+#footer 
+{
+	font-size: 0.9em;
+	text-align: right;
+}
+
+#footer p 
+{
+	font-size: 0.9em;
+	text-align: right;
+}
+
+/* Colour and borders */
+
+#footer p 
+{
+	background-color: white;
+	border-top: 10px solid #003399;
+}
+
+
+/********************** Blog ************************/
+
+/* Structure */
+.postentry,
+.postfeedback
+{
+	margin-left: 2em;
+}
+
+.posttitle 
+{
+	margin-bottom: 0;
+	width: 100%;
+	overflow: auto;
+	/* Width and overflow to clear '.posttitle a' */
+}
+
+.posttitle a 
+{
+	float: left;
+	padding: 0 10px;
+}
+
+
+/* Colour and borders */
+
+.posttitle 
+{
+	color: #FFF;
+}
+
+
+/******************** Comments **********************/
+
+/* Structure */
+
+#commentform 
+{ 
+	display:none;
+}
+
+#commentlist 
+{
+	margin: 1.2em 0;
+	padding: 0;
+}
+
+#commentlist li 
+{
+	padding: 1px 20px;
+}
+
+.commenttitle 
+{
+	margin-bottom: 0;
+}
+
+.commentmeta 
+{
+	margin-top: 0;
+}
+
+#comment 
+{
+	width: 98%;
+}
+
+.avatar
+{
+	float:left;
+	margin: 5px 10px 5px 0px;
+}
+
+/* Typography */
+
+#commentlist 
+{
+	list-style-type: none;
+}
+
+.commenttitle 
+{
+	font-size: 1.1em;
+}
+
+.commentmeta 
+{
+	font-size: 0.9em;
+}
+
+/* Colour and borders */
+
+#commentlist 
+{
+	border-bottom: 1px solid #E8E8CE;
+}
+
+#commentlist li 
+{
+	border-top: 1px solid #E8E8CE;
+	background-color: #FFF;
+}
+
+.alt 
+{
+	background-color: #FAFAF0 !important;
+}
+
+.commentmeta 
+{
+	color: #999;
+}
+
+.officialcomment
+{
+	background-color: #F0F0F0 !important;
+}
+
+/********************* Images ***********************/
+p img 
+{
+	padding: 0;
+	max-width: 100%;
+}
+
+/*	
+	Using 'class="alignright"' on an image will (who would've
+	thought?!) align the image to the right. And using 'class="centered',
+	will of course center the image. This is much better than using
+	align="center", being much more futureproof (and valid) 
+*/
+.aligncenter,
+div.aligncenter,
+img.centered 
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+	
+img.alignright 
+{
+	padding: 4px;
+	margin: 0 0 2px 7px;
+	display: inline;
+}
+
+img.alignleft 
+{
+	padding: 4px;
+	margin: 0 7px 2px 0;
+	display: inline;
+}
+
+.alignright 
+{
+	float: right;
+}
+	
+.alignleft 
+{
+	float: left
+}
+
+.reallysmallthumbs a img
+{
+	width: 60px;
+	height:60px;
+	float: left;
+	margin: 1px;
+}
+
+
+/****************** Holly Hacks *********************/
+
+/* holly hacks to fix peekabo bugs in IE */
+
+/* Hides from IE5-mac \*/
+* html li {height: 1%;}
+/* End hide from IE5-mac */
+
+/************ tabelle *****************/
+#centrecontent table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 96%;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	font-size: 0.9em;
+	background-color: #BFDFFF;	
+}
+#centrecontent caption {
+	display: none;
+}
+#centrecontent table th, #centrecontent table td {
+	padding: 2px;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+}
+#centrecontent table th {
+	background-color: #003399;
+	color: #fff;
+}
+#centrecontent table td {
+	background-color: #fff;
+}
+
+#centrecontent table
+{
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+
+/****************** nascondi menu ****************/
+
+#header ul {
+display: none;
+}
+
+#leftsidebar {
+display: none;
+}
+
+#rightsidebar {
+display: none;
+}
+
+#topbar {
+display: none;
+}
+
+.nascosto {
+display: none;
+}
+
+/*.postmeta 
+{
+	display:none
+}*/
+
+.permalink 
+{
+	display:none
+}
+
+.commentslink,
+.trackbacklink 
+{
+	display:none
+}
+
+/**************** pagina categorie *******************/
+
+.news {
+margin-top:10px;
+padding: 0 0.4em;
+font-size: 95%;
+
+}
+.news h3 {
+color: #000;
+border-bottom: 1px dotted #000099;
+} 
+.news .postmeta {
+margin-top: -6px;
+} 
+.news .postmeta a {
+color: #000;
+} 
+
+/***************** mappa *********************/
+#left {
+         width: 64%;
+         float: left;
+}
+#right {
+         width: 34%;
+         float: right;
+}
