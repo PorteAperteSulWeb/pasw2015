@@ -2,7 +2,7 @@
 Theme Name: PASW 2015
 Description:
 Author: Comunità di pratica Porte aperte sul web - USR Lombardia
-Version: 0.7.1
+Version: 0.7.2
 Tags:
 GitHub Theme URI: https://github.com/PorteAperteSulWeb/pasw2015
 GitHub Branch: master
@@ -20,6 +20,10 @@ clear:both;
 margin:10px auto;
 width:100%;
 text-align:center;
+}
+
+.imglinks img {
+transition: -webkit-filter 1s;
 }
 
 .pagecat {
@@ -62,6 +66,12 @@ margin: 0px;
 
 .sotto-pagine li {
 padding: 5px;
+border-bottom: 1px dotted white;
+text-align: center;
+}
+
+.sotto-pagine li a {
+text-decoration: none;
 }
 
 .secondo-menu {
@@ -481,14 +491,13 @@ height:auto!important;
 min-height:27px;
 width:100%;
 padding:0;
-margin:-17px 0 0;
+position: relative;
+float:left;
 }
 
 #topbar ul {
-font-size:.9em;
-text-align:left;
-line-height:1.5em;
 margin-left:160px;
+margin-top: 0px;
 }
 
 #topbar li a {
@@ -511,6 +520,7 @@ color:#FFF;
 #topbar ul li a:hover {
 background:#C2E2ED;
 color:#3A291F;
+transition: background 0.5s, color 0.2s;
 }
 
 #topbar ul li.current_page_item a {
@@ -560,7 +570,7 @@ font-size:.8em;
 margin-top:.8em;
 }
 
-#path a:hover {
+#path a {
 text-decoration:none;
 }
 
@@ -1518,7 +1528,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .posttitle, .pagetitle {
 	color: #25385D;
-	border-bottom:1px dashed #25385D;
+	border-bottom:1px dotted #25385D;
+	padding-left: 10px;
 }
 
 .postmeta .postauthor, .comment-author {

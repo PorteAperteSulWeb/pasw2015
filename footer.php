@@ -43,7 +43,12 @@
 
 		?>
 		</div>
-		<p>Sito realizzato<?php if (get_option('pasw_Autore')) { echo ' da ' . get_option('pasw_Autore'); }?> su modello dalla comunit&agrave; di pratica <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/">Porte aperte sul web</a> <small>(v.2015-<?php echo get_option('pasw2015_version'); ?>)</small>
+		<p>Sito realizzato<?php if (get_option('pasw_Autore')) { echo ' da ' . get_option('pasw_Autore'); }?> su modello dalla comunit&agrave; di pratica <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/">Porte aperte sul web</a>
+		<small> (PASW2015 <?php echo get_option('pasw2015_version'); ?>) &bull; 
+		<a href="http://wordpress.org" title="Piattaforma CMS WordPress">WordPress</a> &bull; 
+		<a href="http://validator.w3.org/check/referer" title="XHTML 1.0 Strict valido"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> &bull; 
+		<a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS valido"><abbr title="Cascading Style Sheets">CSS</abbr></a>
+		</small>
 	</p>
 </div>
 <?php do_action('wp_footer'); ?>

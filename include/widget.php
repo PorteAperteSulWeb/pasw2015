@@ -33,8 +33,6 @@
 
 		function widget( $args, $instance ) {
 
-			echo $before_widget;
-
         	extract( $args );
    			// these are the widget options
 			$title = apply_filters('widget_title', $instance['titolo']);
@@ -45,7 +43,7 @@
 			$thumbnail = $instance['imgevidenza'];
 
 			if ( $title ) {
-				echo $before_title . $title . $after_title;
+				echo $before_widget . $before_title . $title . $after_title;
 			}
 
 			echo '<ul';
@@ -59,15 +57,15 @@
 					global $more;
 					$more = 0;
 			?>
-				<h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
+				<li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
 
 					<?php
 						if ( has_post_thumbnail() && $thumbnail ) {
 							the_post_thumbnail(array(50,50));
 						}
-						the_title(); ?></a></h3>
+						the_title(); ?></a></h3></li>
 		                  <?php
-		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
+		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>';} //echo '<div class="clear"></div>';
 			endforeach;
 
 			echo '</ul>';
@@ -140,8 +138,6 @@
 
 		function widget( $args, $instance ) {
 
-			echo $before_widget;
-
         	extract( $args );
    			// these are the widget options
 			$title = apply_filters('widget_title', $instance['titolo']);
@@ -150,7 +146,7 @@
 			$excerpt = $instance['riassunto'];
 
 			if ( $title ) {
-				echo $before_title . $title . $after_title;
+				echo $before_widget . $before_title . $title . $after_title;
 			}
 
 			echo '<ul';
@@ -160,9 +156,9 @@
 			//WordPress loop for custom post type
 			$my_query = new WP_Query('post_type=amm-trasparente&showposts=' . $limit);
 			while ($my_query->have_posts()) : $my_query->the_post(); ?>
-				<h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+				<li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3></li>
 		        		<?php
-		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
+		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>';}
 			endwhile; 
 			wp_reset_query();
 
@@ -227,8 +223,6 @@
 
 		function widget( $args, $instance ) {
 
-			echo $before_widget;
-
 			extract( $args );
    			// these are the widget options
 			$title = apply_filters('widget_title', $instance['titolo']);
@@ -237,7 +231,7 @@
 			$excerpt = $instance['riassunto'];
 
 			if ( $title ) {
-				echo $before_title . $title . $after_title;
+				echo $before_widget . $before_title . $title . $after_title;
 			}
 
 			echo '<ul';
@@ -247,7 +241,7 @@
 			//WordPress loop for custom post type
 			$my_query = new WP_Query('post_type=circolari&showposts=' . $limit);
 			while ($my_query->have_posts()) : $my_query->the_post(); ?>
-				<h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+				<li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3></li>
 		        		<?php
 		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
 			endwhile; 

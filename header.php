@@ -120,8 +120,16 @@ if ($descrizione) { ?>
 		</form>
 
 <?php
+	$append_link = '<ul id="%1$s" class="%2$s">%3$s';
+	if ( is_user_logged_in() ) {
+				$append_link .= '<li><a href="' . wp_logout_url() . '" style="background-color: red;">Esci</a></li>';
+		} else if (!get_option('pasw_menu_login')) {
+				$append_link .= '<li><a href="' . wp_login_url() . '" style="background-color: green;">Log in</a></li>';
+	}
+	$append_link .= '</ul>';
+
 	if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-2' ) ) {
-		wp_nav_menu( array( 'menu' => '', 'container' => '', 'menu_class' => '', 'theme_location' => 'menu-2' ) );
+		wp_nav_menu( array( 'menu' => '', 'items_wrap' => $append_link, 'container' => '', 'menu_class' => 'menu-principale-responsivo', 'theme_location' => 'menu-2' ) );
 	} else 	{
 		echo '
 		<ul id="menu-menu-superiore">
@@ -131,20 +139,6 @@ if ($descrizione) { ?>
 		</ul>';
 	}
 ?>
-
-<ul>
-
-<li>
-	<?php if ( is_user_logged_in() ) { ?>
-			<a href="<?php echo wp_logout_url(); ?>" style="background-color: red;">Esci</a>
-	<?php } else { ?>
-		<?php if (!get_option('pasw_menu_login')) { ?>
-			<a href="<?php echo wp_login_url(); ?>" style="background-color: green;">Log in</a>
-		<?php } ?>
-	<?php } ?>
-</li>
-
-</ul>
 
 </div>
 

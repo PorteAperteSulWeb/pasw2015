@@ -46,7 +46,7 @@ function pasw2015_welcome() { ?>
 		<span class="title">-</span>
 	</li>
 </ul>
-<h4 class="wp-people-group">e ancora...</h4>
+<h4 class="wp-people-group">Con la collaborazione di...</h4>
 <ul class="wp-people-group ">
 	<li class="wp-person">
 		<a href=""><img src="http://www.gravatar.com/avatar/9474c75c8be90627711a1e69d48f1797.jpg?s=60" class="gravatar"></a>
@@ -64,9 +64,15 @@ function pasw2015_welcome() { ?>
 		<span class="title">-</span>
 	</li>
 </ul>
+<h4 class="wp-people-group">E il supporto di...</h4>
 <p class="wp-credits-list">
 Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Giorgio Galli, Lillo Sciasia, Paolo Mauri
 </p>
+<center>
+<a href="http://www.porteapertesulweb.it" target="_blank" alt="Porte Aperte sul Web">
+<img src="<?php echo site_url() . '/wp-content/themes/pasw2015/images/logopab.png'; ?>" />
+</a>
+</center>
 	</div>
 <?php }
 

@@ -5,7 +5,7 @@ Template Name: Pagina senza B.L. SX
 ?>
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
-<div id="centrecontent" class="column">
+<div id="centrecontent" style="width: 75%;" class="column">
 
 <!-- breadcrumbs -->
 <div id="path">
