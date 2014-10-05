@@ -5,10 +5,11 @@
   </ul>
 </div>
 <?php if (get_option('pasw_secondo_menu')) {
-	echo '<div class="secondo-menu">';
+    echo '<div class="secondo-menu">';
 
-	if(function_exists('wp_nav_menu')) {
-		wp_nav_menu( array( 'menu' => '', 'container' => '', 'menu_class' => '', 'theme_location' => 'menu-4' ) );
-	}
-	echo '</div>';
+    if(function_exists('wp_nav_menu')) {
+        wp_nav_menu( array( 'menu' => '', 'container' => '', 'menu_class' => '', 'theme_location' => 'menu-4' ) );
+    }
+    echo '</div>';
 } ?>
+<div id="centrecontent" <?php if (get_option('pasw_fluid_layout') == '1') { echo 'style="width: 62%;"'; } ?> class="column">

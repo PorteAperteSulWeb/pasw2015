@@ -43,16 +43,16 @@ if ($descrizione) { ?>
 <?php } ?>
 
 <?php if (get_option('pasw_ga_id')) { ?>
-	<script type="text/javascript">
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	  ga('create', '<?php echo get_option('pasw_ga_id'); ?>', 'auto');
-	  ga('send', 'pageview');
+      ga('create', '<?php echo get_option('pasw_ga_id'); ?>', 'auto');
+      ga('send', 'pageview');
 
-	</script>
+    </script>
 <?php } ?>
 
 </head>
@@ -60,6 +60,8 @@ if ($descrizione) { ?>
 <body class="custom-background">
 
 <div id="wrapper" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
+
+<div class="sidebarleft-100-background"></div>
 
 <div class="nascosto">
 
@@ -80,27 +82,27 @@ if ($descrizione) { ?>
 <div id="header" style="background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
 <?php
-	if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
-		wp_nav_menu( array( 'menu' => '', 'container' => 'ul', 'menu_class' => 'sito', 'theme_location' => 'menu-1' ) );
-	} else 	{
-		echo '<ul class="sito"></ul>';
-	}
+    if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
+        wp_nav_menu( array( 'menu' => '', 'container' => 'ul', 'menu_class' => 'sito', 'theme_location' => 'menu-1' ) );
+    } else     {
+        echo '<ul class="sito"></ul>';
+    }
 ?>
 
 <div class="clear"></div>
 
 <div class="contatti">
 <?php
-	$site_url = get_site_url();
-	if (get_option('pasw_email_scuola') != '') {
-		echo get_option('pasw_email_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-email.png' . '" alt="email"/><br/>';
-	}
-	if (get_option('pasw_indirizzo_scuola') != '') {
-		echo get_option('pasw_indirizzo_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-indirizzo.png' . '" alt="indirizzo"/><br/>';
-	}
-	if (get_option('pasw_recapito_scuola') != '') {
-		echo get_option('pasw_recapito_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-telefono.png' . '" alt="telefono"/><br/>';
-	}
+    $site_url = get_site_url();
+    if (get_option('pasw_email_scuola') != '') {
+        echo get_option('pasw_email_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-email.png' . '" alt="email"/><br/>';
+    }
+    if (get_option('pasw_indirizzo_scuola') != '') {
+        echo get_option('pasw_indirizzo_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-indirizzo.png' . '" alt="indirizzo"/><br/>';
+    }
+    if (get_option('pasw_recapito_scuola') != '') {
+        echo get_option('pasw_recapito_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-telefono.png' . '" alt="telefono"/><br/>';
+    }
 ?>
 </div>
 
@@ -113,31 +115,31 @@ if ($descrizione) { ?>
 
 <div id="topbar">
 
-		<form style="float:right;padding: 1px;margin-right:20px;" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
-			<div><label class="screen-reader-text" for="s">Cerca:</label>
-				<input type="text" value="" name="s" id="s" />
-			</div>
-		</form>
+        <form style="float:right;padding: 1px;margin-right:20px;" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
+            <div><label class="screen-reader-text" for="s">Cerca:</label>
+                <input type="text" value="" name="s" id="s" />
+            </div>
+        </form>
 
 <?php
-	$append_link = '<ul id="%1$s" class="%2$s">%3$s';
-	if ( is_user_logged_in() ) {
-				$append_link .= '<li><a href="' . wp_logout_url() . '" style="background-color: red;">Esci</a></li>';
-		} else if (!get_option('pasw_menu_login')) {
-				$append_link .= '<li><a href="' . wp_login_url() . '" style="background-color: green;">Log in</a></li>';
-	}
-	$append_link .= '</ul>';
+    $append_link = '<ul id="%1$s" class="%2$s">%3$s';
+    if ( is_user_logged_in() ) {
+                $append_link .= '<li><a href="' . wp_logout_url() . '" style="background-color: red;">Esci</a></li>';
+        } else if (!get_option('pasw_menu_login')) {
+                $append_link .= '<li><a href="' . wp_login_url() . '" style="background-color: green;">Log in</a></li>';
+    }
+    $append_link .= '</ul>';
 
-	if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-2' ) ) {
-		wp_nav_menu( array( 'menu' => '', 'items_wrap' => $append_link, 'container' => '', 'menu_class' => 'menu-principale-responsivo', 'theme_location' => 'menu-2' ) );
-	} else 	{
-		echo '
-		<ul id="menu-menu-superiore">
-			<li id="menu-item-0" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-0">
-				
-			</li>
-		</ul>';
-	}
+    if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-2' ) ) {
+        wp_nav_menu( array( 'menu' => '', 'items_wrap' => $append_link, 'container' => '', 'menu_class' => 'menu-principale-responsivo', 'theme_location' => 'menu-2' ) );
+    } else     {
+        echo '
+        <ul id="menu-menu-superiore">
+            <li id="menu-item-0" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-0">
+
+            </li>
+        </ul>';
+    }
 ?>
 
 </div>
