@@ -12,4 +12,4 @@
     }
     echo '</div>';
 } ?>
-<div id="centrecontent" <?php if (get_option('pasw_fluid_layout') == '1') { echo 'style="width: 62%;"'; } ?> class="column">
+<div id="centrecontent"  class="column">

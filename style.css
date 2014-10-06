@@ -16,11 +16,17 @@ display:table;
 clear:both;
 }
 
+#menu-menu-orizzontale li:first-child a {
+width: 18.5%;
+text-align: center;
+}
+
 .sidebarleft-100-background {
-	background-color: #C2E2ED;
+background-color: #C2E2ED;
 width: 20%;
+min-width: 170px;
 position: absolute;
-top: 170px;
+top: 150px;
 height: 20000px;
 }
 
@@ -58,6 +64,12 @@ background-color: #DEEFF6;
 padding: 2px;
 font-weight: bold;
 margin-right: 5px;
+}
+
+.lastmodified {
+float:right;
+font-size: 0.7em;
+padding-top: 10px;
 }
 
 .sotto-pagine {
@@ -179,6 +191,7 @@ padding:0;
 width:98%;
 overflow: hidden;
 position: relative;
+background-color: white;
 }
 
 #container {
@@ -191,6 +204,7 @@ clear:both;
 float:left;
 margin-top:0;
 width:20%;
+min-width: 170px;
 overflow:hidden;
 padding:0;
 position:relative;
@@ -213,7 +227,7 @@ font-size: 0.7em;
 margin:0;
 padding:0 5px 5px 10px;
 float:left;
-width:58%;
+width:60%;
 }
 
 #centrecontent .attachment-50x50 {
@@ -232,11 +246,9 @@ margin-top:3px;
 min-height:120px;
 overflow:hidden;
 margin:0;
-max-width:220px;
 min-width:122px;
 padding:5px 0 0;
-width:20%;
-/*background: url("images/middleSfuma.jpg") repeat-x scroll left top transparent;*/
+width:18%;
 }
 
 #footer {
@@ -517,7 +529,6 @@ float:left;
 }
 
 #topbar ul {
-margin-left:160px;
 margin-top: 0px;
 }
 
@@ -556,24 +567,7 @@ margin-top:-14px;
 }
 
 /******************* Main Content *******************/
-/* Structure */
-/*
 
-
-
-#centrecontent h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-
-
-
-text-decoration: none; 
-
-
-
-}
-
-
-
- */
 #centrecontent ul {
 margin-top:0;
 }
@@ -730,8 +724,7 @@ padding-left:20px;
 
 #rightsidebar ul {
 margin:10px;
-/*padding: 0;*/
-padding:0 8px;
+padding: 0 0 0 8px;
 list-style-type:none;
 font-size:95%;
 }
