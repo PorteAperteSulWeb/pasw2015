@@ -247,11 +247,6 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 * @return bool
 	 */
 	public function get_remote_changes( $changes ) {
-		// early exit if $changes file doesn't exist locally. Saves an API call.
-		if ( ! file_exists( $this->type->local_path . $changes ) ) {
-			return false;
-		}
-
 		$response = $this->get_transient( 'changes' );
 
 		if ( ! $response ) {
@@ -261,7 +256,7 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 			$response = $this->api( '1.0/repositories/:owner/:repo/src/' . trailingslashit( $this->type->branch ) . $changes );
 
 			if ( ! $response ) {
-				$response['message'] = 'No CHANGES.md found';
+				$response['message'] = 'No changelog found';
 				$response = (object) $response;
 			}
 

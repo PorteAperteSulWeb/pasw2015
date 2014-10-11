@@ -2,7 +2,7 @@
 Theme Name: PASW 2015
 Description:
 Author: Comunità di pratica Porte aperte sul web - USR Lombardia
-Version: 0.8.3
+Version: 0.8.4
 Tags:
 GitHub Theme URI: https://github.com/PorteAperteSulWeb/pasw2015
 GitHub Branch: master
@@ -292,7 +292,7 @@ display:block;
 
 .stickyc-col {
 	float:left;
-	padding:10px;
+	padding:1%;
 }
 
 /********************** Global **********************/
@@ -1282,10 +1282,10 @@ text-decoration:none;
 }
 
 .col-com2 {
-width:30.5%;
+width:30%;
 float:left;
 margin-right:5px;
-padding:4px;
+padding:1%;
 }
 
 .col-com2 ul {
@@ -1309,75 +1309,6 @@ padding-left:10px;
 list-style-type:none;
 font-size:1.1em;
 }
-
-/* stile circolare */
-.mittente {
-font-size:.8em;
-text-align:center;
-margin-top:1.5em;
-line-height:1.4em;
-margin-bottom:1.5em;
-}
-
-.sigla {
-font-size:.8em;
-margin-top:1.5em;
-}
-
-.destinatari {
-font-size:.9em;
-margin-top:1em;
-margin-bottom:.5em;
-}
-
-.destinatari p {
-padding-bottom:.5em;
-margin:0;
-line-height:1.4em;
-}
-
-.firma {
-margin-top:1.5em;
-margin-bottom:1em;
-text-align:center;
-}
-
-.firma1,.firma2 {
-text-align:center;
-float:left;
-width:35%;
-}
-
-.firma p,.firma1 p,.firma2 p {
-display:block;
-}
-
-.firma1 img,.firma2 img {
-margin-right:auto;
-margin-left:auto;
-}
-
-.oggetto {
-font-size:.9em;
-margin-top:1em;
-margin-bottom:1em;
-}
-
-/*
-
-
-
-address {
-
-
-
-font-size: 0.9em;
-
-
-
-}
-
-
 
 /*footbar*/
 #footbar {

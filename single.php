@@ -7,14 +7,7 @@
 </div>
 <!-- fine breadcrumbs -->
 
-<div class="nascosto">
-<strong> Navigazione veloce </strong>
-<ul>
-<li><a href="#wrapper">torna in cima</a></li>
-<li><a href="#leftsidebar">vai alla navigazione principale</a></li>
-<li><a href="#rightsidebar">vai alla navigazione contestuale</a></li>
-</ul>
-</div>
+
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
         <div class="post" id="post-<?php the_ID(); ?>">

@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Pagina senza B.L. SX
+Template Name: Pagina senza B.L. DX
 */
 ?>
 <?php get_header(); ?>
@@ -34,7 +34,9 @@ Template Name: Pagina senza B.L. SX
                         <?php wp_list_pages('depth=1&title_li=&child_of='.$post->ID); ?>
                     </ul>
                 </div>
-                <?php } ?>
+                <?php if (get_option( 'pasw_submenu') == '2') { echo '<div class="clear"></div>';
+                    }
+                }?>
                 <div class="postentry">
                     <?php the_content(__('Leggi il resto &raquo;')); ?>
                 </div>

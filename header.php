@@ -8,39 +8,15 @@
 
 <title><?php if ( function_exists('optimal_title') ) { ?><?php optimal_title(); ?><?php bloginfo('name'); ?><?php } else { ?><?php bloginfo('name'); ?> <?php if ( is_single() ) { ?> &raquo; Blog Archive <?php } ?> <?php wp_title(); ?><?php } ?></title>
 
-<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" /> <!-- leave this for stats -->
-
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
-
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/print.css" type="text/css" media="print" />
-
 <link rel="shortcut icon" type="image/ico" href="<?php echo get_template_directory_uri(); ?>/favicon.ico" />
-
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
-
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
 <?php wp_head(); ?>
-
-<?php
-
-$descrizione=get_post_meta($post->ID, 'DC.Description', true);
-
-if ($descrizione) { ?>
-
-                                <!-- Inizio requisiti Linee Guida Direttiva 8/2009 -->
-
-                                <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
-
-                                <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
-
-                                <meta name="DC.Description" content="<?php echo $descrizione ?>"  />
-
-                                <!-- Fine requisiti Linee Guida Direttiva 8/2009 -->
-
-<?php } ?>
 
 <?php if (get_option('pasw_ga_id')) { ?>
     <script type="text/javascript">
@@ -57,27 +33,13 @@ if ($descrizione) { ?>
 
 </head>
 
+<?php flush(); ?>
+
 <body class="custom-background">
 
 <div id="wrapper" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
 
 <div class="sidebarleft-100-background"></div>
-
-<div class="nascosto">
-
-<strong> Navigazione veloce </strong>
-
-<ul>
-
-<li><a href="#centrecontent">vai al contenuto</a></li>
-
-<li><a href="#leftsidebar">vai alla navigazione principale</a></li>
-
-<li><a href="#rightsidebar">vai alla navigazione contestuale</a></li>
-
-</ul>
-
-</div>
 
 <div id="header" style="background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
