@@ -11,8 +11,9 @@ require (get_template_directory() . '/github/github-updater.php');
 add_action('init', 'load_modules'); //ocio!
 
 function load_modules() {
-    if (get_option('pasw_catpage') != 0) { require ( get_template_directory() . '/include/category-page.php' ); }
-    if (get_option('pasw_msidebar') != 0) { require ( get_template_directory() . '/include/multiple-sidebars.php' ); pasw_sidebar_generator::init(); }
+    if (get_option('pasw_catpage') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-category-page.php' ); }
+    if (get_option('pasw_taxdest') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-destinatari.php' ); }
+    if (get_option('pasw_msidebar') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-multiple-sidebars.php' ); pasw_sidebar_generator::init(); }
 }
 add_action('admin_init', "reg_set_p");
 
@@ -55,11 +56,31 @@ function reg_set_p() {
     add_option( 'pasw2015_version');
     if (version_compare(get_option('pasw2015_version'), get_pasw2015_version(), "<")) {
     if (get_option('pasw2015_version') == '') {
-      update_option( 'pasw_logo', get_bloginfo("template_url").'/images/logopab.png');
+      update_option( 'pasw_logo', get_bloginfo("template_url").'/images/repubblica-italiana.png');
     }
         update_option('pasw2015_version', get_pasw2015_version());
         wpgov_update();
         wp_safe_redirect(admin_url('/admin.php?page=pasw2015', 'http'), 301);
+    }
+
+}
+
+add_action( 'after_setup_theme', 'pasw2015_setup' );
+
+add_action('admin_notices', 'pasw_alerts');
+
+function pasw_alerts() {
+    if (is_admin() && get_option('pasw_wrongdirectory') == 1) {
+        echo '<div class="error"><p>Pasw2015 è installato nella directory "<b>' . get_template() . '</b>". Per un corretto funzionamento è necessario cambiare il nome della cartella in "pasw2015".<br/>
+        Questo messaggio scomparirà automaticamente correggendo il problema.</p></div>';
+    }
+}
+
+function pasw2015_setup() {
+    if (get_template() != 'pasw2015') {
+        update_option('pasw_wrongdirectory', 1);
+    } else {
+        delete_option('pasw_wrongdirectory');
     }
 }
 
@@ -69,15 +90,16 @@ function get_pasw2015_version() {
 
 $defaults = array(
     'default-color'          => 'white',
-    'default-image'          => '',
-    'default-repeat'         => ''
+    'default-image'          => get_template_directory_uri() . '/images/pattern_default_pasw2015.jpg',
+    'default-repeat'         => 'repeat'
 );
 add_theme_support( 'custom-background', $defaults );
 
 $args = array(
     'width'         => 1150,
     'height'        => 125,
-    'default-image' => ''
+    'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
+    'default-repeat'=> 'repeat'
 );
 add_theme_support( 'custom-header', $args );
 
@@ -204,6 +226,7 @@ function ns_trackbacks($comment, $args, $depth) {
      </div>
 <?php
 }
+
 
 function wpgov_update() {
 
