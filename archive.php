@@ -10,22 +10,37 @@ if(function_exists('bcn_display'))
 ?>
 </div>
 <!-- fine breadcrumbs -->
+    <?php if (have_posts()) : ?>
 
-        <?php
-            if (single_cat_title( '', false )) {
-                echo '<h2>'; single_cat_title( '', true ); echo '</h2>';
+    <h2 class="posttitle"><?php single_cat_title(); ?></h2>
 
-                echo '<div style="float:right;"><small>';
-                include(TEMPLATEPATH . '/include/archive-filters.php');
-                echo '</small></div>';
+    <div style="float:right;">
+        <ul>
+            <?php
+                wp_dropdown_categories('show_count=1&hierarchical=1');
+            ?>
+            <script type="text/javascript">
+                var dropdown = document.getElementById("cat");
+                function onCatChange() {
+                    if ( dropdown.options[dropdown.selectedIndex].value > 0 ) {
+                        location.href = "<?php echo get_option('home');
+            ?>/?cat="+dropdown.options[dropdown.selectedIndex].value;
+                    }
+                }
+                dropdown.onchange = onCatChange;
+            </script>
+            <select name="archive-dropdown" onChange='document.location.href=this.options[this.selectedIndex].value;'>
+                <option value="">Filtra per mese</option>
+                <?php wp_get_archives('type=monthly&format=option&show_post_count=1'); ?>
+            </select>
+            <select name="archive-dropdown" onChange='document.location.href=this.options[this.selectedIndex].value;'>
+                <option value="">Filtra per anno</option>
+                <?php wp_get_archives('type=yearly&format=option&show_post_count=1'); ?>
+            </select>
+        </ul>
+    </div>
 
-            } else {
-                echo '<h2>Archivio</h2>';
-            }
-        ?>
-
-     <?php if (have_posts()) : ?>
-
+    <h3>Archivio</h3>
     <?php if( is_tax( 'tipologie' ) ) { echo '<div class="clear"></div>'; at_archive_buttons(); } ?>
 
         <?php while (have_posts()) : the_post(); ?>
@@ -48,7 +63,8 @@ if(function_exists('bcn_display'))
         </div>
         <?php endwhile; ?>
     <?php else : ?>
-        <p><div class="clear"></div><br/><br/>Spiacenti, ma non ci sono articoli per questa categoria.</p>
+        <h2><?php echo single_cat_title(); ?></h2>
+        <p><?php _e('Spiacenti, ma non ci sono articoli per questa categoria.'); ?></p>
     <?php endif; ?>
     <div class="clear"></div>
     <div style="text-align:center;width:100%;">

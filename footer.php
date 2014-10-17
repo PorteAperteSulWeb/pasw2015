@@ -1,86 +1,57 @@
 </div>
 <div class="clear"></div>
 
-    <div class="imglinks">
+	<div class="imglinks">
+		
+		<?php if (get_option('pasw_loghi_footer')!= '') { ?>
+		<img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>" alt=""/><br/>
+		<?php echo html_entity_decode(get_option('pasw_loghi_footer')); ?>
 
-        <?php if (get_option('pasw_loghi_footer')!= '') { ?>
-        <img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>" alt=""/><br/>
-        <?php echo html_entity_decode(get_option('pasw_loghi_footer')); ?>
+		<br/><img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>" alt=""/>
+	<div class="clear"></div>
+	<?php } ?>
 
-    <div class="clear"></div>
-    <?php } ?>
-</div>
-
+<?php bloginfo('name'); ?>  2014
+<br/>
+<small>
+	<?php echo html_entity_decode(get_option('pasw_testo_footer')); ?><br/>
+</small>
 </div>
 
 <div id="footer">
+	
+		<div style="float:right;">
+		<?php
 
-    <div id="footer-interno">
-        <div id="footer-column">
-            <img style="float:left;padding:10px;" src="<?php echo get_option('pasw_logo'); ?>" width="100px" height="113px" alt=""/>
-            <span style="float:left;padding-top: 12px;">
-                <?php bloginfo('name'); ?>
-                <br/>
-                <small>
+		 $menu_name = 'menu-3'; // Get the nav menu based on $menu_name (same as 'theme_location' or 'menu' arg to wp_nav_menu)
 
-<?php
-    $site_url = get_site_url();
-if (get_option('pasw_indirizzo_scuola') != '') {
-        echo get_option('pasw_indirizzo_scuola') . '<br/>';
-    }
-    if (get_option('pasw_recapito_scuola') != '') {
-        echo get_option('pasw_recapito_scuola') . '<br/>';
-    }
-    if (get_option('pasw_email_scuola') != '') {
-        echo get_option('pasw_email_scuola') . '<br/>';
-    }
-        ?>
-                    <?php echo html_entity_decode(get_option('pasw_testo_footer')); ?><br/>
-                </small>
-            </span>
-        </div>
+		    if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) {
+			    $menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
 
-        <div id="footer-column" style="width:15%;">
-        <?php
+			    $menu_items = wp_get_nav_menu_items($menu->term_id);
 
-         $menu_name = 'menu-3'; // Get the nav menu based on $menu_name (same as 'theme_location' or 'menu' arg to wp_nav_menu)
+			    $i = 0;
+			    echo '<p>';
+			    foreach ( (array) $menu_items as $key => $menu_item ) {
+			    	if ($i++ != 0) {
+			    		echo ' &bull; ';
+			    	}
+			        echo  '<a href="' . $menu_item->url . '">' . $menu_item->title . '</a>';
+			    }
+			    echo '</p>';
+		    }
 
-            if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) {
-                $menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
-
-                $menu_items = wp_get_nav_menu_items($menu->term_id);
-
-                $i = 0;
-                echo '<ul style="list-style-type: square;font-size: 0.8em;margin-top: 30px;">';
-                foreach ( (array) $menu_items as $key => $menu_item ) {
-
-                    echo  '<li><a href="' . $menu_item->url . '">' . $menu_item->title . '</a></li>';
-                }
-                echo '</ul>';
-            }
-
-        ?>
-        </div>
-
-        <div id="footer-credits">
-            Credits
-        <p>Sito realizzato<?php if (get_option('pasw_Autore')) { echo ' da ' . get_option('pasw_Autore'); }?><br/>su modello della comunit&agrave; di pratica<br/>
-<?php
-    // #######################
-    // Abbiamo lavorato molto su questo nuovo tema. Per favore, non rimuovere i credits.
-    // #######################
-?>
-
-            <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/"> <img src="<?php echo get_template_directory_uri() . '/images/logopab.png'; ?>" width="180" alt=""/></a>
-
-        <br/><small> Versione 2015.<?php echo get_option('pasw2015_version'); ?><br/>
-        Proudly powered by <a href="http://wordpress.org" title="Piattaforma CMS WordPress">WordPress</a> &bull;
-        <a href="http://validator.w3.org/check/referer" title="XHTML 1.0 Strict valido"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> &bull;
-        <a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS valido"><abbr title="Cascading Style Sheets">CSS</abbr></a>
-        </small>
-        </div>
-    </div>
+		?>
+		</div>
+		<p>Sito realizzato<?php if (get_option('pasw_Autore')) { echo ' da ' . get_option('pasw_Autore'); }?> su modello dalla comunit&agrave; di pratica <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/">Porte aperte sul web</a>
+		<small> (PASW2015 <?php echo get_option('pasw2015_version'); ?>) &bull; 
+		<a href="http://wordpress.org" title="Piattaforma CMS WordPress">WordPress</a> &bull; 
+		<a href="http://validator.w3.org/check/referer" title="XHTML 1.0 Strict valido"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> &bull; 
+		<a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS valido"><abbr title="Cascading Style Sheets">CSS</abbr></a>
+		</small>
+	</p>
 </div>
 <?php do_action('wp_footer'); ?>
+</div>
 </body>
 </html>

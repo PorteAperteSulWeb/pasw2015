@@ -63,7 +63,7 @@
                             global $more;
                             $more = 0;
                     ?>
-                        <h4><span class="hdate"><?php the_time('j M Y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+                        <h4><span class="hdate"><?php the_time('j F Y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                                   <?php the_excerpt();
                     endforeach;
 

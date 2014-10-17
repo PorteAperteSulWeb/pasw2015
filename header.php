@@ -68,16 +68,16 @@
 ?>
 </div>
 
-<a href="<?php bloginfo('url'); ?>"><img style="margin-left: 20px;margin-right:10px;max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
+<a href="<?php bloginfo('url'); ?>"><img src="<?php echo get_option('pasw_logo'); ?>" alt="<?php echo get_option('Pasw_Logo_alt'); ?>" class="logo"/></a>
 
-    <h1 style="margin-top: 10px;color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1><?php // echo stripslashes(get_option('Pasw_Testa')); ?>
+<h1 style="color:#<?php header_textcolor(); ?>;"><?php bloginfo('name'); ?></h1><?php // echo stripslashes(get_option('Pasw_Testa')); ?>
 <?php echo stripslashes(get_bloginfo('description')); ?>
 
 </div>
 
 <div id="topbar">
 
-        <form style="float:right;padding: 1px;margin-right: 2px;" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
+        <form style="float:right;padding: 1px;margin-right:20px;" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
             <div><label class="screen-reader-text" for="s">Cerca:</label>
                 <input type="text" value="" name="s" id="s" />
             </div>
