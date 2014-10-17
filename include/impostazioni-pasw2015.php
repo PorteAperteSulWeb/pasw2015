@@ -12,6 +12,7 @@ function pasw2015_upload_admin_scripts() {
 
 function pasw2015_impostazioni() { ?>
     <div class="wrap">
+
         <h2>Impostazioni</h2>
 
             <?php require ( get_template_directory() . '/include/impostazioni-pasw2015-saver.php' ); ?>
@@ -141,12 +142,18 @@ function pasw2015_impostazioni() { ?>
                     </div>
                     <div class="welcome-panel-column">
                         <h4>Info Scuola</h4>
-                        <label for="phone">numero di telefono:</label>
-                        <input id="phone" type="text" name="pasw_recapito_scuola_n" value="<?php echo get_option('pasw_recapito_scuola'); ?>" class="regular-text">
+
                         <label for="address">indirizzo:</label>
                         <input id="address" type="text" name="pasw_indirizzo_scuola_n" value="<?php echo get_option('pasw_indirizzo_scuola'); ?>" class="regular-text">
+                        <br/><small>(es. "Via Papa Giovanni XXIII, 1 - 24016")</small>
+
+                        <br/><label for="phone">numero di telefono:</label>
+                        <input id="phone" type="text" name="pasw_recapito_scuola_n" value="<?php echo get_option('pasw_recapito_scuola'); ?>" class="regular-text">
+                        <br/><small>(es. "tel. 0345/ - fax 0345/")</small>
+
                         <label for="email">e-mail:</label>
                         <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo get_option('pasw_email_scuola'); ?>" class="regular-text">
+                        <br/><small>(es. "codicemecc@pec.istruzione.it")</small>
                     </div>
                 </div>
                 <h4>Loghi Footer</h4>

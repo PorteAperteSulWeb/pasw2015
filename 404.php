@@ -1,14 +1,7 @@
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
-<div id="centrecontent" class="column">
-	<h2>404</h2>
-	<p>Spiacenti: la pagina non esiste</p>
-	<?php if ( function_exists('related_posts_404') ) { ?>
-	<p>
-	Prova con
-	<ul>
-	<?php related_posts_404(5, 10, '<li>', '</li>', '', '', false, true); ?>
-	</ul></p><?php } ?>	
+    <h2 style="text-align: center;font-size: 20em;line-height: 0;margin-top: 0.5em;">404</h2>
+    <p style="text-align: center;font-size: 2em;color: #25385D;">Pagina non trovata</p>
 </div>
 <?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
 <?php get_footer(); ?>
