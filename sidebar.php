@@ -13,3 +13,7 @@
     echo '</div>';
 } ?>
 <div id="centrecontent"  class="column">
+
+<!-- breadcrumbs -->
+<?php include(TEMPLATEPATH . '/template/breadcrumbs.php'); ?>
+<!-- fine breadcrumbs -->

@@ -7,6 +7,7 @@ add_action('admin_menu', 'pasw2015_menu');
 function pasw2015_menu() {
 
     add_menu_page('WordPress PASW 2015', 'Pasw 2015', 'manage_options', 'pasw2015', 'pasw2015_welcome', 'dashicons-screenoptions', 63);
+    add_submenu_page('pasw2015', 'Personalizza', 'Personalizza', 'manage_options', 'customize.php' );
     add_submenu_page('pasw2015', 'Moduli', 'Moduli', 'manage_options', 'pasw2015-moduli', 'pasw2015_moduli' );
     add_submenu_page('pasw2015', 'Impostazioni', 'Impostazioni', 'manage_options', 'pasw2015-impostazioni', 'pasw2015_impostazioni' );
 }

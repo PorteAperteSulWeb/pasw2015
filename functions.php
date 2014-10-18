@@ -227,6 +227,82 @@ function ns_trackbacks($comment, $args, $depth) {
 <?php
 }
 
+function pasw2015_colors_register_theme_customizer( $wp_customize ) {
+
+    $wp_customize->add_setting( 'pasw2015_colore_principale', array( 'default' => '#00004d', 'transport'   => 'postMessage' ));
+    $wp_customize->add_setting( 'pasw2015_colore_secondario', array( 'default' => '#C2E2ED', 'transport'   => 'postMessage' ));
+
+    $wp_customize->add_control(
+        new WP_Customize_Color_Control(
+            $wp_customize,
+            'colore-principale',
+            array(
+                'label'      => 'Colore principale',
+                'section'    => 'colors',
+                'settings'   => 'pasw2015_colore_principale'
+            )
+        )
+    );
+
+    $wp_customize->add_control(
+        new WP_Customize_Color_Control(
+            $wp_customize,
+            'colore-secondario',
+            array(
+                'label'      => 'Colore secondario',
+                'section'    => 'colors',
+                'settings'   => 'pasw2015_colore_secondario'
+            )
+        )
+    );
+
+}
+add_action( 'customize_register', 'pasw2015_colors_register_theme_customizer' );
+
+function pasw2015_customizer_css() { ?>
+
+    <style type="text/css">
+        h1, h2, h3, h4 {
+            color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+        }
+        a:link, a:visited, a:hover, a:active {
+            color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+        }
+        #topbar, #header ul.sito, #footer, #rightsidebar h2 {
+            background-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+        }
+        .hdate {
+            background-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+        }
+        #wrapper, #topbar, #header ul.sito, #footer {
+            box-shadow: 0 0 3px <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+        }
+
+        #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a {
+            background-color: <?php echo get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED'); ?>;
+        }
+
+        .col-com2, .sotto-pagine, .pagecat, .riassunto {
+            background-color: <?php echo get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED'); ?>;
+        }
+    </style>
+
+    <?php
+}
+add_action( 'wp_head', 'pasw2015_customizer_css' );
+
+function pasw2015_customizer_live_preview() {
+
+    wp_enqueue_script(
+        'pasw2015-theme-customizer',
+        get_template_directory_uri() . '/js/theme-customizer.js',
+        array( 'jquery', 'customize-preview' ),
+        '0.3.0',
+        true
+    );
+
+}
+add_action( 'customize_preview_init', 'pasw2015_customizer_live_preview' );
 
 function wpgov_update() {
 

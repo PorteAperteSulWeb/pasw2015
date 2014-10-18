@@ -1,24 +1,15 @@
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
-<!-- breadcrumbs -->
-<div id="path">
-<?php
-if(function_exists('bcn_display'))
-{
-    bcn_display();
-}
-?>
-</div>
-<!-- fine breadcrumbs -->
+<?php if (single_cat_title( '', false )) {
+                echo '<div style="float:right;margin-top: .8em;"><small>';
+                include(TEMPLATEPATH . '/include/archive-filters.php');
+                echo '</small></div>';
+
+            }?>
 
         <?php
             if (single_cat_title( '', false )) {
                 echo '<h2>'; single_cat_title( '', true ); echo '</h2>';
-
-                echo '<div style="float:right;"><small>';
-                include(TEMPLATEPATH . '/include/archive-filters.php');
-                echo '</small></div>';
-
             } else {
                 echo '<h2>Archivio</h2>';
             }

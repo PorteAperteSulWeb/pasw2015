@@ -1,15 +1,14 @@
 </div>
 <div class="clear"></div>
 
+    <?php if (get_option('pasw_loghi_footer')!= '') { ?>
+
     <div class="imglinks">
-
-        <?php if (get_option('pasw_loghi_footer')!= '') { ?>
-        <img src="<?php echo get_template_directory_uri() . '/images/footsep.png'; ?>" alt=""/><br/>
         <?php echo html_entity_decode(get_option('pasw_loghi_footer')); ?>
+        <div class="clear"></div>
+    </div>
 
-    <div class="clear"></div>
     <?php } ?>
-</div>
 
 </div>
 
@@ -81,6 +80,6 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         </div>
     </div>
 </div>
-<?php do_action('wp_footer'); ?>
+<?php wp_footer(); ?>
 </body>
 </html>

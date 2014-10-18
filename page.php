@@ -1,12 +1,6 @@
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
 
-<!-- breadcrumbs -->
-<div id="path">
-<?php if(function_exists('bcn_display')) { bcn_display(); } ?>
-</div>
-<!-- fine breadcrumbs -->
-
 <?php if (have_posts()){
         while (have_posts()) : the_post();
 ?>            <div class="post" id="post-<?php the_ID(); ?>">

@@ -90,9 +90,9 @@ extract(shortcode_atts(array(
 
     $returner .= '</h3>';
 
-    $returner .= '<div style="float:right;"><small><a href="' . get_term_link( $utente, 'paswdestinatari' ) . '">Vedi tutto &raquo;</a></small></div>';
-    $returner .= '<small>Visualizzazione di ' . $numero . ' voci ordinate per ' . $ordine;
-    if ($anno != '') { $returner .= ' nell\'anno ' . $anno; }
+    $returner .= '<div style="float:right;"><small><a href="' . get_term_link( $utente, 'paswdestinatari' ) . '">' . $tipo_cpt . ' per ' . $utente . ' &raquo;</a></small></div>';
+    $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
+    if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
     $returner .= '</small><hr>';
 
     $returner .= '<p><ul>';

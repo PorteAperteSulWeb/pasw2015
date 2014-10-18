@@ -1,15 +1,6 @@
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
-<!-- breadcrumbs -->
-<div id="path">
-<?php
-if(function_exists('bcn_display'))
-{
-    bcn_display();
-}
-?>
-</div>
-<!-- fine breadcrumbs -->
+
     <?php if (have_posts()) : ?>
 
     <h2 class="posttitle">Contenuti per <?php single_cat_title(); ?></h2>

@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/print.css" type="text/css" media="print" />
-<link rel="shortcut icon" type="image/ico" href="<?php echo get_template_directory_uri(); ?>/favicon.ico" />
+<link rel="shortcut icon" type="image/ico" href="<?php echo get_template_directory_uri(); ?>/images/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
@@ -39,39 +39,32 @@
 
 <div id="wrapper" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
 
-<div class="sidebarleft-100-background"></div>
+<div id="sidebarleft-100-background"></div>
 
 <div id="header" style="background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
 <?php
     if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
         wp_nav_menu( array( 'menu' => '', 'container' => 'ul', 'menu_class' => 'sito', 'theme_location' => 'menu-1' ) );
-    } else     {
+    } else {
         echo '<ul class="sito"></ul>';
     }
 ?>
 
 <div class="clear"></div>
 
-<div class="contatti">
-<?php
-    $site_url = get_site_url();
-    if (get_option('pasw_email_scuola') != '') {
-        echo get_option('pasw_email_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-email.png' . '" alt="email"/><br/>';
-    }
-    if (get_option('pasw_indirizzo_scuola') != '') {
-        echo get_option('pasw_indirizzo_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-indirizzo.png' . '" alt="indirizzo"/><br/>';
-    }
-    if (get_option('pasw_recapito_scuola') != '') {
-        echo get_option('pasw_recapito_scuola') . ' <img src="' . get_template_directory_uri() . '/icone/c-telefono.png' . '" alt="telefono"/><br/>';
-    }
-?>
-</div>
+<a href="<?php bloginfo('url'); ?>"><img style="margin-top: -10px;margin-left: 20px;margin-right:10px;max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
 
-<a href="<?php bloginfo('url'); ?>"><img style="margin-left: 20px;margin-right:10px;max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
+    <div class="head-widget">
 
-    <h1 style="margin-top: 10px;color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1><?php // echo stripslashes(get_option('Pasw_Testa')); ?>
+    </div>
+
+    <h1 style="color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1><?php // echo stripslashes(get_option('Pasw_Testa')); ?>
 <?php echo stripslashes(get_bloginfo('description')); ?>
+    <br/>
+    <small>
+        <?php echo get_option('pasw_indirizzo_scuola') . ' &bull; ' . get_option('pasw_recapito_scuola'); ?>
+    </small>
 
 </div>
 

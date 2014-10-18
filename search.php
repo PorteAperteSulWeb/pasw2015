@@ -1,15 +1,6 @@
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
-<!-- breadcrumbs -->
-<div id="path">
-<?php
-if(function_exists('bcn_display'))
-{
-    bcn_display();
-}
-?>
-</div>
-<!-- fine breadcrumbs -->
+
     <?php if (have_posts()) : ?>
         <h2 class="pagetitle">Risultati della ricerca</h2>
         <p>Di seguito sono elencati i risultati della ricerca. Speriamo che ci sia anche quello che stavi cercando.</p>
