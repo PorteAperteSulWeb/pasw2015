@@ -71,7 +71,6 @@ extract(shortcode_atts(array(
             return '<p style="color:red;">Errore Shortcode: parametro <strong>utente</strong> non specificato<p>';
     }
 
-
     $tipo_cpt = get_post_type_object( $tipo );
     if (is_object($tipo_cpt)) {
         $tipo_cpt = $tipo_cpt->labels->name;
@@ -81,12 +80,12 @@ extract(shortcode_atts(array(
     } else {
         $tipo_cpt = "Contenuti";
         //Sarà necessario fare una query per ogni CPT
+        $tipo =  'post,page';
     }
 
     $returner = '';
     $returner .= '<h3>' . $tipo_cpt . ' di interesse';
 
-    if ($utente) { $returner .= ' per ' . $utente; }
 
     $returner .= '</h3>';
 

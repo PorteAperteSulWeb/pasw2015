@@ -437,6 +437,7 @@ padding:0;
 margin:0;
 min-height:125px;
 position:relative;
+text-align: center;
 }
 
 /* Essential Layout (IE7 Fix) */
