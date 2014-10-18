@@ -1,6 +1,8 @@
 #Benvenuto in Pasw2015!
 PASW2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web per fornire alle scuole, e più in generale a tutte le Pubbliche Amministrazioni, un modello di sito professionale, trasparente, innovativo e accessibile sviluppato per il CMS WordPress.
 
+**Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
+
 ## Procedure
 
 ### Installazione
@@ -21,34 +23,4 @@ Pasw2015 integra un modulo php in grado di verificare automaticamente se è disp
 www.liceolanusei.gov.it
 www.comune.carassai.ap.it
 
-### Mappa dei siti Pasw2015
-
-## Moduli Integrati
-
-### Categorie nelle Pagine
-
-### Tassonomia Destinatari
-
-#### Shortcode
-
-### Sidebars Generator
-
-## Plugin Supportati
-
-### Briciole di Pane
-Il tema visualizzerà automaticamente le briciole di pane se è installato uno tra i seguenti plugin (in ordine di priorità):
-
-I. Breadcrumbs NavXT
-II. WordPress Seo by Yoast*
-
-* = necessario abilitare la funzione nelle impostazioni del plugin
-
-## Supporto
-Porte Aperte sul Web fornisce assistenza in modo volontario tramite i canali:
-
-### Licenza
-Il tema è rilasciato con licenza GPL v3 ed è dunque fornito gratuitamente.
-
-### Crediti
-Porte Aperte sul Web
-WPGov - WordPress per la Pubblica Amministrazione
+**Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
