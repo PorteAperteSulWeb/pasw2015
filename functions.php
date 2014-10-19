@@ -328,7 +328,7 @@ add_filter( 'pre_get_posts', 'pasw_get_posts' );
 
 function pasw_get_posts( $query ) {
     if( !is_admin() ) {
-        if ( !is_post_type_archive() && $query->is_archive() ) {
+        if ( (is_home() || is_category() || is_tag() || is_archive()  || is_feed() ) && $query->is_main_query() ) {
             $query->set( 'post_type', array( 'any' ) );
         }
         return $query;
