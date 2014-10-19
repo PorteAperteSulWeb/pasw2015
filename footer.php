@@ -15,7 +15,7 @@
 <div id="footer">
 
     <div id="footer-interno">
-        <div id="footer-column">
+        <div class="footer-column">
             <img style="float:left;padding:10px;" src="<?php echo get_option('pasw_logo'); ?>" width="100px" height="113px" alt=""/>
             <span style="float:left;padding-top: 12px;max-width: 70%;">
                 <?php bloginfo('name'); ?>
@@ -39,7 +39,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
             </span>
         </div>
 
-        <div id="footer-column" style="width:15%;">
+        <div class="footer-column" style="width:15%;">
         <?php
 
          $menu_name = 'menu-3'; // Get the nav menu based on $menu_name (same as 'theme_location' or 'menu' arg to wp_nav_menu)

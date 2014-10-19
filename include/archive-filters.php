@@ -1,7 +1,6 @@
 <?php
     $categories = get_categories('hide_empty=0&child_of='.get_query_var('cat'));
-
-    if (count($categories)) {
+    if (get_query_var('cat') && count($categories)) {
         echo '<select name="archive-dropdown" onChange="document.location.href=this.options[this.selectedIndex].value;">';
         echo '<option value="">Sottocategorie</option>';
         foreach ($categories as $category) {
@@ -15,7 +14,7 @@
     }
 ?>
 
-            <select name="archive-dropdown" onChange='document.location.href=this.options[this.selectedIndex].value;'>
-                <option value="">Filtra per data</option>
-                <?php wp_get_archives('type=monthly&format=option&show_post_count=1'); ?>
-            </select>
+    <select name="archive-dropdown" onChange='document.location.href=this.options[this.selectedIndex].value;'>
+        <option value="">Contenuti per data</option>
+        <?php wp_get_archives('type=monthly&format=option'); ?>
+    </select>

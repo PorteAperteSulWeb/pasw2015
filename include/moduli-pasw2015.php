@@ -2,6 +2,14 @@
 
     function pasw2015_moduli() {
 
+        if (isset($_GET['switchcolumn']) || wp_verify_nonce($_GET['switchcolumn'], 'switchcolumn')) {
+            if (get_option('pasw_mcolumn') == 0) {
+                update_option('pasw_mcolumn', '1');
+            } else {
+                update_option('pasw_mcolumn', '0');
+            }
+        }
+
         if (isset($_GET['switchcat']) || wp_verify_nonce($_GET['switchcat'], 'switchcat')) {
             if (get_option('pasw_catpage') == 0) {
                 update_option('pasw_catpage', '1');
@@ -47,6 +55,21 @@
         <th scope="col" class="manage-column column-cb check-column" style=""><th scope="col" class="manage-column column-name" style="">Plugin</th><th scope="col" class="manage-column column-description" style="">Descrizione</th>    </tr>
     </tfoot>
     <tbody id="the-list">
+        <tr class="<?php if (get_option('pasw_mcolumn') == 0) { echo 'in'; } ?>active"><th scope="row" class="check-column"></th>
+            <td class="plugin-title"><strong>Shortcode per Colonne</strong><div class="row-actions visible">
+                <span class="activate">
+                    <a href="<?php print wp_nonce_url(admin_url('admin.php?page=pasw2015-moduli'), 'switchcolumn', 'switchcolumn');?>" class="edit">
+                        <?php if (get_option('pasw_mcolumn') == 0) { echo 'Attiva'; } else { echo 'Disattiva'; } ?>
+                    </a>
+                </span>
+            </td>
+            <td class="column-description desc">
+                <div class="plugin-description">
+                    <p>Questa funzione offre la possibilità di creare colonne di diversa larghezza tramite shortcode nei contenuti</p>
+                </div>
+            </td>
+        </tr>
+
         <tr class="<?php if (get_option('pasw_catpage') == 0) { echo 'in'; } ?>active"><th scope="row" class="check-column"></th>
             <td class="plugin-title"><strong>Categorie nelle Pagine</strong><div class="row-actions visible">
                 <span class="activate">

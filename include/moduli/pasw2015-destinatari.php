@@ -83,18 +83,20 @@ extract(shortcode_atts(array(
         $tipo =  'post,page';
     }
 
-    $returner = '';
-    $returner .= '<h3>' . $tipo_cpt . ' di interesse';
+    $utente_cpt = strtolower(get_term_by( 'slug', $utente, 'paswdestinatari' )->name);
 
+    $returner = '';
+    $returner .= '<h3>' . $tipo_cpt . ' di interesse per ' . $utente_cpt;
 
     $returner .= '</h3>';
 
-    $returner .= '<div style="float:right;"><small><a href="' . get_term_link( $utente, 'paswdestinatari' ) . '">' . $tipo_cpt . ' per ' . $utente . ' &raquo;</a></small></div>';
     $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
     if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
+
+    $returner .= ' &bull; <a href="' . get_term_link( $utente, 'paswdestinatari' ) . '">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
     $returner .= '</small><hr>';
 
-    $returner .= '<p><ul>';
+    $returner .= '<ul>';
 
     if (strtolower($ordine) == 'data') { $ordine = 'date'; }
 
@@ -125,13 +127,15 @@ extract(shortcode_atts(array(
 
 
             endwhile; else:
-            $returner .= '<p>Nessuna risultato...</p>';
+            $returner .= 'Nessun risultato...';
         endif;
         wp_reset_query();
 
     }
 
-    $returner .= '</ul></p>';
+    $returner .= '</ul>';
+
+    $returner .= '<div class="clear"></div>';
     return $returner;
 }
 add_shortcode('destinatari', 'paswdestinatari_func');

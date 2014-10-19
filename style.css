@@ -154,17 +154,6 @@ filter: grayscale(100%);
 filter: grayscale(0%);
 }
 
-.head-widget {
-float:right;
-padding: 5px 10px 5px;
-font-size:.8em;
-text-align:right;
-margin: 10px 20px 0px 0px;
-border-radius: 5px;
-border-top: 1px solid #25385D;
-border-right: 1px solid #25385D;
-}
-
 /***************** 3 Column Layout ******************/
 html {
 margin:0 auto;
@@ -272,7 +261,7 @@ text-decoration:none;
 	width: 1000px;
 }
 
-#footer-column {
+.footer-column {
 	float:left;
 	width:55%;
 }
@@ -1522,3 +1511,28 @@ border-bottom:none;
 }
 
 /**** end paging nav *****/
+
+/* ------- Fluid Columns ------- */
+.one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth { position:relative; margin-right:4%; float:left; min-height:1px; height:auto!important; height:1px; }
+.one_half { width:48%; }
+.one_third { width:30.6666%; }
+.two_third { width:65.3332%; }
+.one_fourth { width:22%; }
+.two_fourth { width:48%; }
+.three_fourth { width:74%; }
+.one_fifth { width:16.8%; }
+.two_fifth { width:37.6%; }
+.three_fifth { width:58.4%; }
+.four_fifth { width:79.2%; }
+.one_sixth { width:13.3333%; }
+.two_sixth { width:30.6666%; }
+.three_sixth { width:47.9998%; }
+.four_sixth { width:65.3332%; }
+.five_sixth { width:82.6665%; }
+.last { margin-right:0!important; clear:right; }
+.one_half .one_half { margin-right:8.3333%; width:45.8333%; }
+.one_half .one_third { margin-right:8.3333%; width:27.7778%; }
+.one_half .two_third { margin-right:8.3333%; width:63.8889%; }
+.two_third .one_third { margin-right:6.1224%; width:29.2517%; }
+.two_third .two_third { margin-right:6.1224%; width:64.6258%; }
+.two_third .one_fourth { margin-right:6.1224%; width:20.4082%; 

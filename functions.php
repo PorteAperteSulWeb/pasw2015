@@ -11,6 +11,7 @@ require (get_template_directory() . '/github/github-updater.php');
 add_action('init', 'load_modules'); //ocio!
 
 function load_modules() {
+    if (get_option('pasw_mcolumn') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-multiple-columns.php' ); }
     if (get_option('pasw_catpage') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-category-page.php' ); }
     if (get_option('pasw_taxdest') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-destinatari.php' ); }
     if (get_option('pasw_msidebar') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-multiple-sidebars.php' ); pasw_sidebar_generator::init(); }
@@ -36,6 +37,7 @@ function reg_set_p() {
     register_setting( 'pasw2015_options', 'pasw_logo');
     register_setting( 'pasw2015_options', 'pasw_submenu', 'intval');
 
+    register_setting( 'pasw2015_functions', 'pasw_mcolumn', 'intval');
     register_setting( 'pasw2015_functions', 'pasw_catpage', 'intval');
     register_setting( 'pasw2015_functions', 'pasw_taxdest', 'intval');
     register_setting( 'pasw2015_functions', 'pasw_msidebar', 'intval');
@@ -321,4 +323,16 @@ function wpgov_update() {
         $result = curl_exec($ch);
      curl_close($ch);
 }
+
+add_filter( 'pre_get_posts', 'pasw_get_posts' );
+
+function pasw_get_posts( $query ) {
+    if( !is_admin() ) {
+        if ( !is_post_type_archive() && $query->is_archive() ) {
+            $query->set( 'post_type', array( 'any' ) );
+        }
+        return $query;
+    }
+}
+
 ?>

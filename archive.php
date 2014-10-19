@@ -1,13 +1,11 @@
 <?php get_header(); ?>
 <?php get_sidebar(); ?>
-<?php if (single_cat_title( '', false )) {
-                echo '<div style="float:right;margin-top: .8em;"><small>';
-                include(TEMPLATEPATH . '/include/archive-filters.php');
-                echo '</small></div>';
+<?php
 
-            }?>
+    echo '<div style="float:right;margin-top: .8em;"><small>';
+    include(TEMPLATEPATH . '/include/archive-filters.php');
+    echo '</small></div>';
 
-        <?php
             if (single_cat_title( '', false )) {
                 echo '<h2>'; single_cat_title( '', true ); echo '</h2>';
             } else {
@@ -23,6 +21,10 @@
 
         <div class="post-box-archive">
         <span class="hdate"><?php the_time('j F y'); ?></span>
+
+        <?php if (!is_category()) { ?>
+        <span class="hdate" style="font-weight:normal;"><?php echo get_post_type_object(get_post_type())->labels->singular_name; ?></span>
+        <?php } ?>
 
             <a href="<?php the_permalink(); ?>">
             <?php

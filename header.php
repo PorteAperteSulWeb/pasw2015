@@ -55,10 +55,6 @@
 
 <a href="<?php bloginfo('url'); ?>"><img style="margin-top: -10px;margin-left: 20px;margin-right:10px;max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
 
-    <div class="head-widget">
-
-    </div>
-
     <h1 style="color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1><?php // echo stripslashes(get_option('Pasw_Testa')); ?>
 <?php echo stripslashes(get_bloginfo('description')); ?>
     <br/>
