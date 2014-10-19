@@ -28,6 +28,12 @@ position: absolute;
 height: 100%;
 }
 
+.shortcode-destinatari small {
+padding: 2px 6px;
+border-radius: 5px;
+border: 1px solid #00004d;
+}
+
 .imglinks {
 margin:10px auto;
 width:100%;

@@ -66,7 +66,6 @@ extract(shortcode_atts(array(
     'ordine' => 'date', //vuoto: post -> data // pagine -> alfabetico
    ), $atts));
 
-
     if ($utente == '') {
             return '<p style="color:red;">Errore Shortcode: parametro <strong>utente</strong> non specificato<p>';
     }
@@ -86,6 +85,7 @@ extract(shortcode_atts(array(
     $utente_cpt = strtolower(get_term_by( 'slug', $utente, 'paswdestinatari' )->name);
 
     $returner = '';
+    $returner .= '<div class="shortcode-destinatari">';
     $returner .= '<h3>' . $tipo_cpt . ' di interesse per ' . $utente_cpt;
 
     $returner .= '</h3>';
@@ -93,10 +93,8 @@ extract(shortcode_atts(array(
     $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
     if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
 
-    $returner .= ' &bull; <a href="' . get_term_link( $utente, 'paswdestinatari' ) . '">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
-    $returner .= '</small><hr>';
-
-    $returner .= '<ul>';
+    $returner .= '  &bull;  <a href="' . get_term_link( $utente, 'paswdestinatari' ) . '">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
+    $returner .= '</small>';
 
     if (strtolower($ordine) == 'data') { $ordine = 'date'; }
 
@@ -104,38 +102,53 @@ extract(shortcode_atts(array(
 
     foreach ($arrayposttypes as $ciao) {
 
+        $returner .= '<ul>';
+
         if (count($arrayposttypes) > 1) {
             $returner .= '<h4>' .  get_post_type_object( $ciao )->labels->name . '</h4>';
         }
 
+        if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "pagina") {
+            $numero_n = -1;
+            $ordine_n = 'name';
+            $order = 'ASC';
+        } else {
+            $numero_n = $numero;
+            $ordine_n = $ordine;
+            $order = 'DESC';
+        }
+
         query_posts( array(
             'post_type' => $ciao,
-            'orderby' => $ordine,
-            'order' => 'DESC',
+            'orderby' => $ordine_n,
+            'order' => $order,
             'year' => $anno,
-            'posts_per_page' => $numero,
+            'posts_per_page' => $numero_n,
             'paswdestinatari' => $utente )
         );
 
         if ( have_posts() ) : while ( have_posts() ) : the_post();
             global $post;
 
-            $returner .= '<li>';
-            $returner .= '<div style="float:right;"><small>' .  get_the_date() . '</small></div>';
-            $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a>';
-            $returner .= '</li>';
+            if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "articolo") {
+                $returner .= '<li>';
+                $returner .= '<div style="float:right;"><small>' .  get_the_date() . '</small></div>';
+                $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a>';
+                $returner .= '</li>';
+            } else if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "pagina") {
+                 $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a> &bull; ';
+            }
 
 
             endwhile; else:
             $returner .= 'Nessun risultato...';
         endif;
         wp_reset_query();
-
+        $returner .= '</ul>';
     }
 
-    $returner .= '</ul>';
 
-    $returner .= '<div class="clear"></div>';
+    $returner .= '</div><div class="clear"></div>';
     return $returner;
 }
 add_shortcode('destinatari', 'paswdestinatari_func');
