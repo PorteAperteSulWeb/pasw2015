@@ -39,7 +39,7 @@ function pasw2015_welcome() { ?>
     <li class="wp-person">
         <a href="http://marcomilesi.ml"><img src="http://www.gravatar.com/avatar/c70b8e378aa035f77ab7a3ddee83b892.jpg?s=60" class="gravatar"></a>
         <a class="web" href="http://marcomilesi.ml">Marco Milesi</a>
-        <span class="title">San Pellegrino Terme</span>
+        <span class="title">San Pellegrino Terme<br/><small>Studente</small></span>
     </li>
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/a5294e8762346dbbfa62e6fee71b3614.jpg?s=60" class="gravatar"></a>
@@ -47,7 +47,7 @@ function pasw2015_welcome() { ?>
         <span class="title">-</span>
     </li>
 </ul>
-<h4 class="wp-people-group">Con la collaborazione di...</h4>
+<h4 class="wp-people-group">...con la collaborazione di:</h4>
 <ul class="wp-people-group ">
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/9474c75c8be90627711a1e69d48f1797.jpg?s=60" class="gravatar"></a>
@@ -70,7 +70,6 @@ function pasw2015_welcome() { ?>
         <span class="title">-</span>
     </li>
 </ul>
-<h4 class="wp-people-group">E il supporto di...</h4>
 <p class="wp-credits-list">
 Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Giorgio Galli, Lillo Sciascia, Paolo Mauri
 </p>

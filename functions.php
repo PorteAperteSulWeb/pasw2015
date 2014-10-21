@@ -14,7 +14,10 @@ function load_modules() {
     if (get_option('pasw_mcolumn') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-multiple-columns.php' ); }
     if (get_option('pasw_catpage') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-category-page.php' ); }
     if (get_option('pasw_taxdest') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-destinatari.php' ); }
-    if (get_option('pasw_msidebar') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-multiple-sidebars.php' ); pasw_sidebar_generator::init(); }
+    if (get_option('pasw_msidebar') != 0) {
+        require ( get_template_directory() . '/include/moduli/pasw2015-multiple-sidebars.php' );
+        pasw_sidebar_generator::init();
+    }
 }
 add_action('admin_init', "reg_set_p");
 
@@ -273,7 +276,7 @@ function pasw2015_customizer_css() { ?>
         #topbar, #header ul.sito, #footer, #rightsidebar h2 {
             background-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
         }
-        .hdate {
+        .hdate, .sotto-pagine li:hover, #centrecontent a img:hover {
             background-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
         }
         #wrapper, #topbar, #header ul.sito, #footer {
@@ -284,8 +287,12 @@ function pasw2015_customizer_css() { ?>
             background-color: <?php echo get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED'); ?>;
         }
 
-        .col-com2, .sotto-pagine, .pagecat, .riassunto {
+        .col-com2, .sotto-pagine, .pagecat, .riassunto, .postmeta {
             background-color: <?php echo get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED'); ?>;
+        }
+
+        .posttitle, .pagetitle, #leftsidebar h2 {
+            border-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
         }
     </style>
 

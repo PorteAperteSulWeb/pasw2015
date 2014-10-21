@@ -178,8 +178,7 @@ class pasw_sidebar_generator {
 
     function admin_menu(){
         add_submenu_page('pasw2015', 'Sidebar Pasw', 'Sidebar', 'manage_options', 'pasw-sidebar-generator', 'pasw_sidebar_generator::admin_page' );
-
-}
+    }
 
     function admin_page(){
         ?>
