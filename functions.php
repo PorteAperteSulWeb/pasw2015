@@ -324,10 +324,10 @@ function wpgov_update() {
      curl_close($ch);
 }
 
-add_filter( 'pre_get_posts', 'pasw_get_posts' );
+//add_filter( 'pre_get_posts', 'pasw_get_posts' );
 
 function pasw_get_posts( $query ) {
-    if( !is_admin() ) {
+    if( !is_admin() && $_SERVER['post_type'] == null) {
         if ( (is_home() || is_category() || is_tag() || is_archive()  || is_feed() ) && $query->is_main_query() ) {
             $query->set( 'post_type', array( 'any' ) );
         }

@@ -13,7 +13,8 @@
             }
         ?>
 
-     <?php if (have_posts()) : ?>
+
+     <?php global $post; if (have_posts()) : ?>
 
     <?php if( is_tax( 'tipologie' ) ) { echo '<div class="clear"></div>'; at_archive_buttons(); } ?>
 

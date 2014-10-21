@@ -77,6 +77,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         <a href="http://validator.w3.org/check/referer" title="XHTML 1.0 Strict valido"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> &bull;
         <a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS valido"><abbr title="Cascading Style Sheets">CSS</abbr></a>
         </small>
+            </p>
         </div>
     </div>
 </div>

@@ -362,9 +362,11 @@ text-decoration:none;
 }
 
 input,textarea,select {
-font-size:1em;
-border:1px solid #999;
+border:none;
+box-shadow: 0 0 3px #00004d;
 color: #00004d;
+font-family:"Open Sans",sans-serif;
+padding-left: 5px;
 }
 
 blockquote {
@@ -803,10 +805,6 @@ background: white url(images/search.png) no-repeat center right;
 font-family: Verdana, Arial, Helvetica, sans-serif;
 font-size: 0.8em;
 padding: 5px 2px 4px 10px;
-}
-
-#searchform input {
-border:none;
 }
 
 /***************** Calendar Styles ******************/
