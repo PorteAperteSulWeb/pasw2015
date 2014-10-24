@@ -16,7 +16,7 @@
 
     <div id="footer-interno">
         <div class="footer-column">
-            <img style="float:left;padding:10px;" src="<?php echo get_option('pasw_logo'); ?>" width="100px" height="113px" alt=""/>
+            <img style="float:left;padding:10px;max-height:140px;" src="<?php echo get_option('pasw_logo'); ?>" alt=""/>
             <span style="float:left;padding-top: 12px;max-width: 70%;">
                 <?php bloginfo('name'); ?>
                 <br/>

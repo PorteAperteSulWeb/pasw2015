@@ -42,7 +42,12 @@ echo '</div>';
             <?php endif; ?>
                         <?php if (!is_page()) { ?>
                         <p><span class="postauthor">Pubblicato il <?php the_time('j F Y') ?> da <?php echo get_the_author(); ?></span>
-                        <br/><?php _e('Contenuto in:'); ?> <?php the_category(', ') ?>
+                        <br/>
+            <?php
+                if (get_post_type() == 'post') {
+                    echo 'Contenuto in: '; the_category(', ');
+                } else { echo '<br/>'; }
+            ?>
                         <?php $posttags = get_the_tags($post->ID);
                                         if ($posttags) { ?>
                                             <span><br/>Tag:</span>
