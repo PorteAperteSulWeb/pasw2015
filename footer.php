@@ -8,7 +8,7 @@
         <div class="clear"></div>
     </div>
 
-    <?php } ?>
+    <?php } else { echo '<br/><br/><br/>'; } ?>
 
 </div>
 
@@ -63,7 +63,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
 
         <div id="footer-credits">
             Credits
-        <p>Sito realizzato<?php if (get_option('pasw_Autore')) { echo ' da ' . get_option('pasw_Autore'); }?><br/>su modello della comunit&agrave; di pratica<br/>
+        <p>Sito realizzato <?php if (get_option('pasw_Autore')) { echo 'da ' . get_option('pasw_Autore') . '<br/>'; }?>su modello della comunit&agrave; di pratica<br/>
 <?php
     // #######################
     // Abbiamo lavorato molto su questo nuovo tema. Per favore, non rimuovere i credits.

@@ -55,7 +55,7 @@
 
 <a href="<?php bloginfo('url'); ?>"><img style="margin-top: -10px;margin-left: 20px;margin-right:10px;max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
 
-    <h1 style="color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1><?php // echo stripslashes(get_option('Pasw_Testa')); ?>
+    <h1 style="color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>
 <?php echo stripslashes(get_bloginfo('description')); ?>
     <br/>
     <small>
@@ -66,7 +66,7 @@
 
 <div id="topbar">
 
-        <form style="float:right;padding: 1px;margin-right: 2px;" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
+        <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
             <div><label class="screen-reader-text" for="s">Cerca:</label>
                 <input type="text" value="" name="s" id="s" />
             </div>
@@ -75,9 +75,9 @@
 <?php
     $append_link = '<ul id="%1$s" class="%2$s">%3$s';
     if ( is_user_logged_in() ) {
-                $append_link .= '<li><a href="' . wp_logout_url() . '" style="background-color: red;">Esci</a></li>';
+                $append_link .= '<li><a href="' . wp_logout_url() . '" id="btn-logout">Esci</a></li>';
         } else if (!get_option('pasw_menu_login')) {
-                $append_link .= '<li><a href="' . wp_login_url() . '" style="background-color: green;">Log in</a></li>';
+                $append_link .= '<li><a href="' . wp_login_url() . '" id="btn-login">Log in</a></li>';
     }
     $append_link .= '</ul>';
 

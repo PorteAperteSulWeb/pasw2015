@@ -3,7 +3,7 @@ Theme Name: PASW 2015
 Description: Pasw2015 è il tema trasparente e accessibile promosso dalla Comunità di Pratica "Porte Aperte sul Web". Bello, accessibile e innovativo, con supporto continuo e volontario offerto dalla comunità.
 Author: Porte Aperte sul Web
 Author URI: http://www.porteapertesulweb.it
-Version: 1.1
+Version: 1.1.1
 Tags: pasw, scuole, pubblica amministrazione, accessibile, trasparente, personalizzabile
 GitHub Theme URI: https://github.com/PorteAperteSulWeb/pasw2015
 GitHub Branch: master
@@ -74,6 +74,20 @@ font-weight: bold;
 float:right;
 font-size: 0.7em;
 padding-top: 10px;
+}
+
+#btn-login {
+	background-color: green;
+}
+
+#btn-logout {
+	background-color: red;
+}
+
+.topsearch-div {
+	float:right;
+	padding: 3px;
+	margin-right: 2px;
 }
 
 .sotto-pagine {
@@ -319,9 +333,17 @@ margin:.5em 0;
 }
 
 ol,ul {
-margin:1.2em 0 1.2em;
-padding:0;
+margin:1.2em 0 1.2em 0em;
 line-height:1.5em;
+padding:0px;
+}
+
+.postentry ul, .postentry ol {
+	padding-left: 2em;
+}
+
+ul ul,ul ol,ol ol,ol,ul {
+font-size:.9em;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -363,10 +385,18 @@ text-decoration:none;
 
 input,textarea,select {
 border:none;
-box-shadow: 0 0 3px #00004d;
 color: #00004d;
 font-family:"Open Sans",sans-serif;
 padding-left: 5px;
+}
+
+input#submit{
+cursor: pointer;
+border-radius: 0;
+font-weight: 700;
+padding: 2px 6px;
+height: 28px;
+font-size: 11px;
 }
 
 blockquote {
@@ -567,15 +597,6 @@ margin-top:-14px;
 }
 
 /******************* Main Content *******************/
-
-#centrecontent ul {
-margin-top:0;
-}
-
-.postentry ul {
-margin-left: 20px;
-list-style-type: circle;
-}
 
 #path {
 font-size:.8em;
@@ -800,7 +821,7 @@ line-height:1.2em;
 
 /******************* Search Widget ******************/
 #searchform #s {
-width: 200px;
+width: 95%;
 background: white url(images/search.png) no-repeat center right;
 font-family: Verdana, Arial, Helvetica, sans-serif;
 font-size: 0.8em;
@@ -1101,29 +1122,6 @@ padding:0 1px;
 font-size:.9em;
 }
 
-/****************** Holly Hacks *********************/
-/* holly hacks to fix peekabo bugs in IE */
-/* Hides from IE5-mac \*/
-* html li {
-height:1%;
-}
-
-/* End hide from IE5-mac */
-/* Hides from IE5-mac \*/
-* html #postnavigation {
-width:145px;
-height:2px;
-}
-
-/* End hide from IE5-mac */
-html>body #leftsidebar ul ul ul li a {
-width:135px;
-}
-
-html>body #rightsidebar ul ul ul li a {
-width:95px;
-}
-
 /**************** pagina categorie *******************/
 #centrecontent table {
 width:100%;
@@ -1396,10 +1394,6 @@ margin-bottom:1.5em;
 
 #comments,h2.pagetitle {
 font-weight:400;
-}
-
-ul ul,ul ol,ol ol,ol,ul {
-font-size:.9em;
 }
 
 #centrecontent li {

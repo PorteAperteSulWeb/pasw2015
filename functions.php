@@ -267,33 +267,42 @@ add_action( 'customize_register', 'pasw2015_colors_register_theme_customizer' );
 function pasw2015_customizer_css() { ?>
 
     <style type="text/css">
+        <?php
+            $c_principale = get_theme_mod( 'pasw2015_colore_principale', '#00004d');
+            $c_secondario = get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED');
+        ?>
         h1, h2, h3, h4 {
-            color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+            color: <?php echo $c_principale; ?>;
+        }
+        input, textarea, select {
+            box-shadow: 0 0 3px <?php echo $c_principale; ?>;
         }
         a:link, a:visited, a:hover, a:active {
-            color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+            color: <?php echo $c_principale; ?>;
         }
         #topbar, #header ul.sito, #footer, #rightsidebar h2 {
-            background-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+            background-color: <?php echo $c_principale; ?>;
         }
         .hdate, .sotto-pagine li:hover, #centrecontent a img:hover {
-            background-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+            background-color: <?php echo $c_principale; ?>;
         }
         #wrapper, #topbar, #header ul.sito, #footer {
-            box-shadow: 0 0 3px <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
+            box-shadow: 0 0 3px <?php echo $c_principale; ?>;
+        }
+        .posttitle, .pagetitle, #leftsidebar h2 {
+            border-color: <?php echo $c_principale; ?>;
         }
 
         #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a {
-            background-color: <?php echo get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED'); ?>;
+            background-color: <?php echo $c_secondario; ?>;
         }
 
         .col-com2, .sotto-pagine, .pagecat, .riassunto, .postmeta {
-            background-color: <?php echo get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED'); ?>;
+            background-color: <?php echo $c_secondario; ?>;
         }
-
-        .posttitle, .pagetitle, #leftsidebar h2 {
-            border-color: <?php echo get_theme_mod( 'pasw2015_colore_principale', '#00004d'); ?>;
-        }
+        input#submit{
+            background-color: <?php echo $c_secondario; ?>;
+            border-bottom: 1px solid <?php echo $c_principale; ?>;
     </style>
 
     <?php
