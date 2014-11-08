@@ -3,9 +3,7 @@ PASW2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul
 
 **Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
 
-## Procedure
-
-### Installazione
+## Installazione
 Per procedere all'installazione del tema, seguire questi semplici passaggi:
 
 1. scaricare da https://github.com/PorteAperteSulWeb/pasw2015/releases l'ultima versione, cliccando su "Download Zip"
@@ -14,13 +12,13 @@ Per procedere all'installazione del tema, seguire questi semplici passaggi:
 4. caricare la nuova cartella, via ftp, in wp-content/themes/
 5. controllare che i file php, css e le sottocartelle del tema siano contenute in wp-content/themes/**pasw2015**
 
-### Aggiornamento
+## Aggiornamento
 Pasw2015 integra un modulo php in grado di verificare automaticamente se è disponibile una nuova versione del tema e offre un processo di aggiornamento fortemente integrato con WordPress. Aggiornare Pasw2015 è esattamente come aggiornare un plugin!
 
-### Come iniziare
+## Demo
 
-## DEMO
-www.liceolanusei.gov.it
-www.comune.carassai.ap.it
+- www.liceolanusei.gov.it
+- www.icscarpa.gov.it
+- www.comune.carassai.ap.it
 
 **Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
