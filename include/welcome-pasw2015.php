@@ -60,11 +60,6 @@ function pasw2015_welcome() { ?>
         <span class="title">-</span>
     </li>
     <li class="wp-person">
-        <a href=""><img src="http://www.gravatar.com/avatar/bd973f68c52839b913061d9b9e414014.jpg?s=60" class="gravatar"></a>
-        <a class="web" href="">Paolo Valenti</a>
-        <span class="title">-</span>
-    </li>
-    <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/f5c122f213686878dd4b39f7d9ae34c6.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Riccardo Boccaccio</a>
         <span class="title">-</span>
