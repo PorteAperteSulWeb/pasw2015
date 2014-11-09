@@ -67,7 +67,7 @@
 
         <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
             <div><label class="screen-reader-text" for="s">Cerca:</label>
-                <input type="text" value="" name="s" id="s" />
+                <input placeholder="Cerca..." type="text" value="" name="s" id="s" />
             </div>
         </form>
 
