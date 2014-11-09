@@ -74,7 +74,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
 
         <br/><small> Versione 2015.<?php echo get_option('pasw2015_version'); ?><br/>
         Proudly powered by <a href="http://wordpress.org" title="Piattaforma CMS WordPress">WordPress</a> &bull;
-        <a href="http://validator.w3.org/check/referer" title="XHTML 1.0 Strict valido"><abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a> &bull;
+        <a href="http://validator.w3.org/check/referer" title="HTML5 valido"><abbr title="HyperText Markup Language">HTML5</abbr></a> &bull;
         <a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS valido"><abbr title="Cascading Style Sheets">CSS</abbr></a>
         </small>
             </p>
