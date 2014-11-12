@@ -25,13 +25,13 @@
 <?php
     $site_url = get_site_url();
 if (get_option('pasw_indirizzo_scuola') != '') {
-        echo get_option('pasw_indirizzo_scuola') . '<br/>';
+        echo stripslashes(get_option('pasw_indirizzo_scuola')) . '<br/>';
     }
     if (get_option('pasw_recapito_scuola') != '') {
-        echo get_option('pasw_recapito_scuola') . '<br/>';
+        echo stripslashes(get_option('pasw_recapito_scuola')) . '<br/>';
     }
     if (get_option('pasw_email_scuola') != '') {
-        echo get_option('pasw_email_scuola') . '<br/>';
+        echo stripslashes(get_option('pasw_email_scuola')) . '<br/>';
     }
         ?>
                     <?php echo html_entity_decode(get_option('pasw_testo_footer')); ?><br/>

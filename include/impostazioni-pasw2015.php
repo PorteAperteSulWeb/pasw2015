@@ -63,7 +63,7 @@ function pasw2015_impostazioni() { ?>
 
         <div id="welcome-panel" class="welcome-panel">
             <div class="welcome-panel-content">
-                <h3>Google Analytics</h3>
+                <h3>Google Analytics<a style="float:right;" class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla configurazione di Google Analytics</a></h3>
                 <p class="about-description">Personalizza Google Analytics</p>
                 <div class="welcome-panel-column-container">
                     <div class="welcome-panel-column">
@@ -144,15 +144,15 @@ function pasw2015_impostazioni() { ?>
                         <h4>Info Scuola</h4>
 
                         <label for="address">indirizzo:</label>
-                        <input id="address" type="text" name="pasw_indirizzo_scuola_n" value="<?php echo get_option('pasw_indirizzo_scuola'); ?>" class="regular-text">
+                        <input id="address" type="text" name="pasw_indirizzo_scuola_n" value="<?php echo stripslashes(get_option('pasw_indirizzo_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "Via Papa Giovanni XXIII, 1 - 24016")</small>
 
                         <br/><label for="phone">numero di telefono:</label>
-                        <input id="phone" type="text" name="pasw_recapito_scuola_n" value="<?php echo get_option('pasw_recapito_scuola'); ?>" class="regular-text">
+                        <input id="phone" type="text" name="pasw_recapito_scuola_n" value="<?php echo stripslashes(get_option('pasw_recapito_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "tel. 0345/ - fax 0345/")</small>
 
                         <label for="email">e-mail:</label>
-                        <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo get_option('pasw_email_scuola'); ?>" class="regular-text">
+                        <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo stripslashes(get_option('pasw_email_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "codicemecc@pec.istruzione.it")</small>
                     </div>
                 </div>

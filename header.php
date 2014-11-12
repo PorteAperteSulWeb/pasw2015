@@ -15,20 +15,10 @@
 
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
-<?php wp_head(); ?>
-
-<?php if (get_option('pasw_ga_id')) { ?>
-    <script type="text/javascript">
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', '<?php echo get_option('pasw_ga_id'); ?>', 'auto');
-      ga('send', 'pageview');
-
-    </script>
-<?php } ?>
+<?php
+    wp_head();
+    include(TEMPLATEPATH . '/include/frontend/google-analytics.php');
+?>
 
 </head>
 
@@ -40,27 +30,32 @@
 
 <div id="sidebarleft-100-background"></div>
 
-<div id="header" style="background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
+<div id="header" style="height: <?php echo get_custom_header()->height; ?>px; background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
-<?php
-    if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
-        wp_nav_menu( array( 'menu' => '', 'container' => 'ul', 'menu_class' => 'sito', 'theme_location' => 'menu-1' ) );
-    } else {
-        echo '<ul class="sito"></ul>';
-    }
-?>
+        <?php
+            if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
+                wp_nav_menu( array( 'menu' => '', 'container' => 'ul', 'menu_class' => 'sito', 'theme_location' => 'menu-1' ) );
+            } else {
+                echo '<ul class="sito"></ul>';
+            }
+        ?>
+    <div class="clear"></div>
+    <div id="header-interno">
 
-<div class="clear"></div>
+        <a href="<?php bloginfo('url'); ?>"><img style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
 
-<a href="<?php bloginfo('url'); ?>"><img style="margin-top: -10px;margin-left: 20px;margin-right:10px;max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
+            <h1 style="color:#<?php header_textcolor(); ?>;">
+                <a style="color:#<?php header_textcolor(); ?>;" href="<?php bloginfo('url'); ?>">
+                    <?php bloginfo('name'); ?>
+                </a>
+            </h1>
+            <?php echo stripslashes(get_bloginfo('description')); ?>
+            <br/>
+            <small>
+                <?php echo stripslashes(get_option('pasw_indirizzo_scuola')) . ' &bull; ' . stripslashes(get_option('pasw_recapito_scuola')); ?>
+            </small>
 
-    <h1 style="color:#<?php header_textcolor(); ?>;"><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>
-<?php echo stripslashes(get_bloginfo('description')); ?>
-    <br/>
-    <small>
-        <?php echo get_option('pasw_indirizzo_scuola') . ' &bull; ' . get_option('pasw_recapito_scuola'); ?>
-    </small>
-
+    </div>
 </div>
 
 <div id="topbar">

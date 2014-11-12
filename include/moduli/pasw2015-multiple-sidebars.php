@@ -199,7 +199,8 @@ class pasw_sidebar_generator {
             }
         </script>
         <div class="wrap">
-            <div id="icon-options-general" class="icon32"></div><h2>Barre Laterali <small>PASW</small></h2>
+            <div id="icon-options-general" class="icon32"></div><h2>Barre Laterali <small>PASW</small>
+             <a class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Sidebar-generator" target="_blank">Documentazione</a></h2>
             <br />
             <table class="widefat page" id="sbg_table" style="width:600px;">
                 <tr>

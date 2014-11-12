@@ -29,18 +29,7 @@ function webtreats_formatter($content) {
     return $new_content;
 }
 
-// Remove the 2 main auto-formatters
-remove_filter('the_content', 'wpautop');
-remove_filter('the_content', 'wptexturize');
-
-// Before displaying for viewing, apply this function
 add_filter('the_content', 'webtreats_formatter', 99);
-add_filter('widget_text', 'webtreats_formatter', 99);
-
-
-
-
-
 
 function webtreats_one_third( $atts, $content = null ) {
    return '<div class="one_third">' . do_shortcode($content) . '</div>';

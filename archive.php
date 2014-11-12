@@ -3,7 +3,7 @@
 <?php
 
     echo '<div style="float:right;margin-top: .8em;"><small>';
-    include(TEMPLATEPATH . '/include/archive-filters.php');
+    include(TEMPLATEPATH . '/include/frontend/archive-filters.php');
     echo '</small></div>';
 
             if (single_cat_title( '', false )) {

@@ -1,9 +1,5 @@
 <?php
 
-//modifiche
-require ( get_template_directory() . '/include/welcome-pasw2015.php' );
-
-require ( get_template_directory() . '/include/moduli-pasw2015.php' );
 require (get_template_directory() . '/include/widget.php');
 require (get_template_directory() . '/include/pagination.php');
 require (get_template_directory() . '/github/github-updater.php');
@@ -11,6 +7,8 @@ require (get_template_directory() . '/github/github-updater.php');
 add_action('init', 'load_modules'); //ocio!
 
 function load_modules() {
+    require (get_template_directory() . '/include/welcome-pasw2015.php' );
+
     if (get_option('pasw_mcolumn') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-multiple-columns.php' ); }
     if (get_option('pasw_catpage') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-category-page.php' ); }
     if (get_option('pasw_taxdest') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-destinatari.php' ); }
@@ -22,6 +20,7 @@ function load_modules() {
 add_action('admin_init', "reg_set_p");
 
 function reg_set_p() {
+    require (get_template_directory() . '/include/moduli-pasw2015.php' );
 
     register_setting( 'pasw2015_options', 'pasw_social');
     register_setting( 'pasw2015_options', 'pasw_email_scuola');
@@ -103,8 +102,11 @@ add_theme_support( 'custom-background', $defaults );
 $args = array(
     'width'         => 1150,
     'height'        => 125,
+    'flex-height'   => true,
+    'flex-width'    => true,
     'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
-    'default-repeat'=> 'repeat'
+    'default-repeat'=> 'repeat',
+    'default-text-color'    => '#00004d'
 );
 add_theme_support( 'custom-header', $args );
 

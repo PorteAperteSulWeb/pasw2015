@@ -18,12 +18,23 @@ function pasw2015_welcome() { ?>
         <div class="about-text">Pasw2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web.
         <br/>Bello, accessibile e innovativo.</div>
         <div class="wp-badge">Pasw2015
-        <?php echo get_option('pasw2015_version') . '<br/>';
-        $filename = get_theme_root() . '/pasw2015/style.css';
-        if (file_exists($filename)) {
-            echo date ("d M Y", filemtime($filename));
-        }
-           ?></div>
+        <?php
+            echo get_option('pasw2015_version') . '<br/>';
+            $filename = get_theme_root() . '/pasw2015/style.css';
+            if (file_exists($filename)) {
+                echo date ("d M Y", filemtime($filename));
+            }
+        ?>
+            <br/><br/><br/>
+            <a class="add-new-h2" target="_blank" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki">Documentazione</a>
+            <br/><br/>
+            <a class="add-new-h2" target="_blank" href="https://github.com/PorteAperteSulWeb/pasw2015/issues/">Segnala Problema</a>
+            <br/><br/>
+            <a class="add-new-h2" target="_blank" href="https://github.com/PorteAperteSulWeb/pasw2015/issues/">Proponi Idea</a>
+            <br/><br/>
+            <a class="add-new-h2" target="_blank" href="https://github.com/PorteAperteSulWeb/pasw2015/releases">Changelog</a>
+            <br/><br/>
+        </div>
 
 <ul class="wp-people-group ">
     <li class="wp-person">

@@ -93,6 +93,8 @@
                     <a href="<?php print wp_nonce_url(admin_url('admin.php?page=pasw2015-moduli'), 'switchsidebar', 'switchsidebar');?>" class="edit">
                         <?php if (get_option('pasw_msidebar') == 0) { echo 'Attiva'; } else { echo 'Disattiva'; } ?>
                     </a>
+                     &bull;
+                    <a class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Sidebar-generator" target="_blank">Documentazione</a>
                 </span>
             </td>
             <td class="column-description desc">
@@ -112,7 +114,7 @@
             </td>
             <td class="column-description desc">
                 <div class="plugin-description">
-                    <p><span style="color:red;font-weight:bold;">Funzione dormiente - per il momento -</span></p>
+                    <p>Abilita un nuovo sistema di catalogazione delle informazioni basato su destinatari (alunni, genitori, ATA, docenti). Attualmente in <strong>beta</strong>. Documentazione in fase di sviluppo</p>
                 </div>
             </td>
         </tr>
