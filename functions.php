@@ -59,12 +59,16 @@ function reg_set_p() {
 
     add_option( 'pasw2015_version');
     if (version_compare(get_option('pasw2015_version'), get_pasw2015_version(), "<")) {
-    if (get_option('pasw2015_version') == '') {
-      update_option( 'pasw_logo', get_bloginfo("template_url").'/images/repubblica-italiana.png');
-    }
+        if (get_option('pasw2015_version') == '') {
+          update_option( 'pasw_logo', get_bloginfo("template_url").'/images/repubblica-italiana.png');
+        }
         update_option('pasw2015_version', get_pasw2015_version());
         wpgov_update();
         wp_safe_redirect(admin_url('/admin.php?page=pasw2015', 'http'), 301);
+    }
+
+    if (get_option('pasw_favicon') == '') {
+        update_option( 'pasw_favicon', get_bloginfo("template_url").'/images/favicon.ico');
     }
 
 }

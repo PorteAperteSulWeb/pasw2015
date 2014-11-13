@@ -105,6 +105,12 @@ function pasw2015_impostazioni() { ?>
                             <input id="pasw_logo_upload" class="button" type="button" value="Carica" />
                             <br />Inserisci un URL o carica un'immagine
                         </label>
+                        <h4>FavIcon</h4>
+                        <label for="upload_favicon">
+                            <input id="pasw_favicon_n" type="text" size="36" name="pasw_favicon_n" value="<?php if (get_option('pasw_favicon') != '') { echo get_option('pasw_favicon'); } else { echo 'http://'; } ?>" />
+                            <input id="pasw_favicon_upload" class="button" type="button" value="Carica" />
+                            <br />Inserisci un URL o carica un'immagine
+                        </label>
                     </div>
                     <div class="welcome-panel-column">
                         <h4></h4>
