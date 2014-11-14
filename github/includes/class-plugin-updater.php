@@ -67,6 +67,8 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 		add_filter( 'plugins_api', array( $this, 'plugins_api' ), 99, 3 );
 		add_filter( 'upgrader_source_selection', array( $this, 'upgrader_source_selection' ), 10, 3 );
 		add_filter( 'http_request_args', array( $this, 'no_ssl_http_request_args' ), 10, 2 );
+
+		GitHub_Updater_Settings::$ghu_plugins = $this->config;
 	}
 
 
@@ -93,11 +95,9 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 			set_site_transient( 'ghu-' . md5( $response->slug . 'wporg' ), $wp_repo_data, ( 12 * HOUR_IN_SECONDS ) );
 		}
 
-		if ( ! empty( $wp_repo_data['body'] ) ) {
-			$wp_repo_body = unserialize( $wp_repo_data['body'] );
-			if ( is_object( $wp_repo_body ) ) {
-				$response = $wp_repo_body;
-			}
+		$wp_repo_body = unserialize( $wp_repo_data['body'] );
+		if ( is_object( $wp_repo_body ) ) {
+			$response = $wp_repo_body;
 		}
 
 		foreach ( (array) $this->config as $plugin ) {

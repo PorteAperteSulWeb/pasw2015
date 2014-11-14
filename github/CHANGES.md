@@ -1,10 +1,17 @@
+#### 3.0.0
+* Settings Page for your GitHub Access Tokens
+* added POT file and some more i18n fixes - thanks @grappler
+* added `Requires WP` and `Requires PHP` headers to set minimum version requirements - for @GaryJ
+* unset any HTTP Authorization headers for GitHub API calls as this gives a 401 error. Rare potential bug if you have private Bitbucket repos.
 
 #### 2.9.0
 * move instantiation of `class GitHub_Plugin_Updater` and `class GitHub_Theme_Updater` into `GitHub_Updater::init()` and restrict to `current_user_can( 'update_plugins' )` and `current_user_can( 'update_themes' )` so that non-privileged users don't incur load time.
 * now loading classes via `spl_autoload_register`
 * switched to `erusev/parsedown` for rendering changelogs, faster and more light-weight.
 * now parses remote file info to save only file headers to transient. Hopefully speeds up database retrieval of transient.
-* this revision mostly due to @szepeviktor prodding me. ;-)
+* added README link to GitHub Link plugin by @szepeviktor
+* added mu-plugin option and instructions.
+* above revisions mostly due to @szepeviktor prodding me. ;-)
 * accept `CHANGES.md` or `CHANGELOG.md` for processing, for @GaryJ
 * composer support added, thanks @hyyan
 
