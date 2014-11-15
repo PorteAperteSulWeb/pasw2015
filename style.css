@@ -271,6 +271,8 @@ height: 250px;
 color:#FFF;
 position: relative;
 z-index: 0;
+float: left;
+width: 100%;
 }
 
 #footer a {
