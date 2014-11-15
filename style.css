@@ -267,7 +267,7 @@ width:18%;
 padding: 5px 0;
 clear:both;
 margin-top: -100px;
-height: 250px;
+min-height: 250px;
 color:#FFF;
 position: relative;
 z-index: 0;
