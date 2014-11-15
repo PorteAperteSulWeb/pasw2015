@@ -590,6 +590,7 @@ display:inline;
 #topbar ul li a {
 text-decoration:none;
 color:#FFF;
+transition: background 0.5s, color 0.2s;
 }
 
 #topbar ul li a:hover {
