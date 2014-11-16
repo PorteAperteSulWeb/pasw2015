@@ -53,9 +53,10 @@
 				-->
 
 				<?php
+			$after_title = "<span class=after_widget_title><a href=". esc_url( $category_link ) ." title='Tutti gli articoli della categoria ". $category_name . "' >Mostra Tutto</a></span>".$after_title;
 			}
 
-            $after_title = "<span class=after_widget_title><a href=". esc_url( $category_link ) ." title='Tutti gli articoli della categoria ". $category_name . "' >Mostra Tutto</a></span>".$after_title;
+            
 
             if ( $title ) {
                 echo $before_widget . $before_title . $title . $after_title;
