@@ -5,7 +5,7 @@ PASW2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul
 
 ## Installazione
 
-Per effettuare un installazione da zero abbiamo preparato una guida che trovi [qui](https://github.com/PorteAperteSulWeb/pasw2015/wiki/Installazione-da-zero)
+Per effettuare un installazione da zero abbiamo preparato una [guida](https://github.com/PorteAperteSulWeb/pasw2015/wiki/Installazione-da-zero)
 
 ### 5-minutes installation
 
@@ -25,8 +25,8 @@ Pasw2015 integra un modulo php in grado di verificare automaticamente se è disp
 
 ## Demo
 
-- www.liceolanusei.gov.it
-- www.icscarpa.gov.it
-- www.comune.carassai.ap.it
+- [Liceo Lanusei](http://www.liceolanusei.gov.it)
+- [ICS Scarpa](http://www.icscarpa.gov.it)
+- [Comune di Carassai](http://www.comune.carassai.ap.it)
 
 **Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
