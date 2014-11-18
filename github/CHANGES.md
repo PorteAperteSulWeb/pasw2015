@@ -1,7 +1,21 @@
+#### 3.0.4
+* Who would've thought `file_exists` was case-sensitive
+* when checking meta, use `empty()` instead of `! isset()` for `null array`
+
+#### 3.0.3
+* Bugfix to properly authenticate on JetPack Stats page
+
+#### 3.0.2
+* simplify check and exit on Settings if no Bitbucket plugins/themes
+
+#### 3.0.1
+* Remove Bitbucket settings from page if no appropriate plugins or themes exist.
+
 #### 3.0.0
 * Settings Page for your GitHub Access Tokens
 * added POT file and some more i18n fixes - thanks @grappler
 * added `Requires WP` and `Requires PHP` headers to set minimum version requirements - for @GaryJ
+* move update check to function to also check WP and PHP version requirements.
 * unset any HTTP Authorization headers for GitHub API calls as this gives a 401 error. Rare potential bug if you have private Bitbucket repos.
 
 #### 2.9.0

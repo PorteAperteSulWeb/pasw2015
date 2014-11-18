@@ -32,8 +32,8 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 * Add extra headers via filter hooks
 	 */
 	public static function add_headers() {
-		add_filter( 'extra_plugin_headers', array( 'GitHub_Updater_Bitbucket_API', 'add_plugin_headers' ) );
-		add_filter( 'extra_theme_headers', array( 'GitHub_Updater_Bitbucket_API', 'add_theme_headers' ) );
+		add_filter( 'extra_plugin_headers', array( __CLASS__, 'add_plugin_headers' ) );
+		add_filter( 'extra_theme_headers', array( __CLASS__, 'add_theme_headers' ) );
 	}
 
 	/**
@@ -46,6 +46,8 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$ghu_extra_headers     = array(
 			'Bitbucket Plugin URI' => 'Bitbucket Plugin URI',
 			'Bitbucket Branch'     => 'Bitbucket Branch',
+			'Requires WP'          => 'Requires WP',
+			'Requires PHP'         => 'Requires PHP',
 		);
 		parent::$extra_headers = array_unique( array_merge( parent::$extra_headers, $ghu_extra_headers ) );
 		$extra_headers         = array_merge( (array) $extra_headers, (array) $ghu_extra_headers );
@@ -63,6 +65,8 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$ghu_extra_headers     = array(
 			'Bitbucket Theme URI' => 'Bitbucket Theme URI',
 			'Bitbucket Branch'    => 'Bitbucket Branch',
+			'Requires WP'         => 'Requires WP',
+			'Requires PHP'        => 'Requires PHP',
 		);
 		parent::$extra_headers = array_unique( array_merge( parent::$extra_headers, $ghu_extra_headers ) );
 		$extra_headers         = array_merge( (array) $extra_headers, (array) $ghu_extra_headers );
@@ -148,9 +152,11 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		if ( ! is_array( $response ) ) {
 			return false;
 		}
-		$this->type->transient      = $response;
-		$this->type->branch         = ( ! empty( $response['Bitbucket Branch'] ) ? $response['Bitbucket Branch'] : 'master' );
-		$this->type->remote_version = $response['Version'];
+		$this->type->transient            = $response;
+		$this->type->remote_version       = strtolower( $response['Version'] );
+		$this->type->branch               = ( ! empty( $response['Bitbucket Branch'] ) ? $response['Bitbucket Branch'] : 'master' );
+		$this->type->requires_wp_version  = ( ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : $this->type->requires_wp_version );
+		$this->type->requires_php_version = ( ! empty( $response['Requires PHP'] ) ? $response['Requires PHP'] : $this->type->requires_php_version );
 
 		return true;
 	}
@@ -327,13 +333,19 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$options  = get_site_option( 'github_updater' );
 		$password = null;
 
-
-		if ( isset( $args['headers'] ) ) {
-			unset( $args['headers']['Authorization'] );
+		// Exit if on JetPack Stats
+		if ( function_exists( 'get_current_screen' ) &&
+		     false !== strpos( get_current_screen()->id, 'jetpack' )
+			) {
+			return $args;
 		}
 
 		if ( ! isset( $this->type ) && ! empty( $options[ $this->type->repo ] ) ) {
 			return $args;
+		}
+
+		if ( isset( $args['headers']['Authorization'] ) ) {
+			unset( $args['headers']['Authorization'] );
 		}
 
 		if ( $options[ $this->type->repo ] ) {
