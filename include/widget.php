@@ -41,6 +41,22 @@
             $align = $instance['allineamento'];
             $excerpt = $instance['riassunto'];
             $thumbnail = $instance['imgevidenza'];
+      		$showall = $instance['showall'];
+
+			if ($showall) {
+				$category_id = $category;
+				$category_link = get_category_link($category_id);
+				$category_name = get_cat_name($category_id);
+							?>
+				<!-- Print a link to this category
+				<a href="<?php echo esc_url( $category_link ); ?>" title="Tutti gli articoli della categoria <?php echo $category_name; ?>">Mostra <?php echo $category_name; ?></a> 
+				-->
+
+				<?php
+			$after_title = "<span class=after_widget_title><a href=". esc_url( $category_link ) ." title='Tutti gli articoli della categoria ". $category_name . "' >Mostra Tutto</a></span>".$after_title;
+			}
+
+            
 
             if ( $title ) {
                 echo $before_widget . $before_title . $title . $after_title;
@@ -84,6 +100,7 @@
               $instance['riassunto'] = strip_tags($new_instance['riassunto']);
               $instance['allineamento'] = strip_tags($new_instance['allineamento']);
               $instance['imgevidenza'] = strip_tags($new_instance['imgevidenza']);
+              $instance['showall'] = strip_tags($new_instance['showall']);
               return $instance;
 
         }
@@ -119,6 +136,11 @@
             <p>
                 <input id="<?php echo $this->get_field_id('imgevidenza'); ?>" name="<?php echo $this->get_field_name('imgevidenza'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['imgevidenza'])); ?>/>
                 <label for="<?php echo $this->get_field_id('imgevidenza'); ?>">Mostra immagine in evidenza</label>
+            </p>
+            
+			<p>
+                <input id="<?php echo $this->get_field_id('showall'); ?>" name="<?php echo $this->get_field_name('showall'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['showall'])); ?>/>
+                <label for="<?php echo $this->get_field_id('showall'); ?>">Mostra link visualizza tutto</label>
             </p>
 
             <p>
