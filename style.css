@@ -1518,6 +1518,17 @@ border-bottom:none;
 
 /**** end paging nav *****/
 
+/**** widget show all category ****/
+.after_widget_title{
+float: right;
+}
+.after_widget_title a{
+font-weight:normal;
+font-size: 0.8em;
+}
+/**** end widget show all category ****/
+
+
 /* ------- Fluid Columns ------- */
 .one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth { position:relative; margin-right:4%; float:left; min-height:1px; height:auto!important; height:1px; }
 .one_half { width:48%; }
