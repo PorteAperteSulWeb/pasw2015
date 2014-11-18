@@ -286,12 +286,11 @@ function pasw2015_customizer_css() { ?>
         a:link, a:visited, a:hover, a:active {
             color: <?php echo $c_principale; ?>;
         }
-        #topbar, #header ul.sito, #footer, #rightsidebar h2 {
+        
+        #topbar, #header ul.sito, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
-        .hdate, .sotto-pagine li:hover, #centrecontent a img:hover {
-            background-color: <?php echo $c_principale; ?>;
-        }
+        
         #wrapper, #topbar, #header ul.sito, #footer {
             box-shadow: 0 0 3px <?php echo $c_principale; ?>;
         }
@@ -299,7 +298,7 @@ function pasw2015_customizer_css() { ?>
             border-color: <?php echo $c_principale; ?>;
         }
 
-        #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a {
+        #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget {
             background-color: <?php echo $c_secondario; ?>;
         }
 
