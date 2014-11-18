@@ -1519,12 +1519,17 @@ border-bottom:none;
 /**** end paging nav *****/
 
 /**** widget show all category ****/
-.after_widget_title{
+.showall_widget {
 float: right;
+font-size: 0.7em;
 }
-.after_widget_title a{
+.showall_widget a:hover {
+color:white;
+}
+.showall_widget a{
 font-weight:normal;
-font-size: 0.8em;
+text-decoration:none;
+padding: 0 3px;
 }
 /**** end widget show all category ****/
 
