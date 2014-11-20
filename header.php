@@ -12,6 +12,7 @@
 <link rel="shortcut icon" type="image/ico" href="<?php echo get_option('pasw_favicon'); ?>" />
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
