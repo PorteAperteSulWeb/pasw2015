@@ -32,6 +32,12 @@
                 update_option('pasw_social', '0');
         }
 
+        if (isset($_POST['pasw_fixedmenu_n'])){
+                update_option('pasw_fixedmenu', '1');
+            } else {
+                update_option('pasw_fixedmenu', '0');
+        }
+
         if (isset($_POST['pasw_secondo_menu_n'])){
                 update_option('pasw_secondo_menu', '1');
             } else {

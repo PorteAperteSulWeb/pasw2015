@@ -22,6 +22,9 @@
         if ( is_plugin_active( 'albo-pretorio-on-line/AlboPretorio.php' ) ) {
             register_widget( 'pasw2015_albo' );
         }
+ 	if (get_option('pasw_taxdest') != 0) {
+            register_widget( 'pasw2015_taxdest' );
+        }
 
     }
 
@@ -447,5 +450,131 @@
 <?php
         }
     }
+	class pasw2015_taxdest extends WP_Widget {
 
+        function pasw2015_taxdest() {
+            parent::__construct( false, 'PASW @ TaxDestinatari' );
+    	}
+
+        function widget( $args, $instance ) {
+
+        	extract( $args );
+            // these are the widget options
+           	$title = apply_filters('widget_title', $instance['titolo']);
+        	$limit = $instance['limite'];
+	        $taxdestinatari = $instance['destinatari'];
+	        $align = $instance['allineamento'];
+	        $excerpt = $instance['riassunto'];
+	        $thumbnail = $instance['imgevidenza'];
+      		$showall = $instance['showall'];
+
+    		if ($showall) {
+        		$taxonomy = 'paswdestinatari';
+              	$term_id = $taxdestinatari;
+              	$term = get_term( $term_id, $taxonomy );
+              	$term_link = get_term_link( $term );
+            	$after_title = '<span class="showall_widget after_widget_title"><a href='. esc_url( $term_link ) .' title="Tutti gli articoli di '. $term->name . '" >Mostra Tutto &rsaquo;</a></span>'.$after_title;
+    		}            
+
+            if ( $title ) {
+                echo $before_widget . $before_title . $title . $after_title;
+            }
+
+            echo '<ul';
+            if ($align != '' && $align != 0) { echo ' style="text-align:center;"'; }
+            echo '>';
+
+			global $post;
+
+			$myquery = get_posts(array(
+				'post_type' => 'post',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'paswdestinatari',
+						'field' => 'term_id',
+						'terms' => $taxdestinatari)
+					))
+			);
+
+            foreach($myquery as $post) :
+    			setup_postdata($post);
+                global $more;
+                $more = 0;
+            	?>
+                <li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
+                <?php
+			    if ( has_post_thumbnail() && $thumbnail ) {
+                    the_post_thumbnail(array(50,50));
+            	}
+                the_title(); ?></a></h3></li>
+                <?php
+                if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>';} //echo '<div class="clear"></div>';
+            endforeach;
+
+            echo '</ul>';
+
+            //FINE WIDGET
+
+            echo $after_widget;
+        }
+
+        function update( $new_instance, $old_instance ) {
+
+            $instance = $old_instance;
+            $instance['titolo'] = strip_tags($new_instance['titolo']);
+	        $instance['destinatari'] = strip_tags($new_instance['destinatari']);
+    	    $instance['limite'] = strip_tags($new_instance['limite']);
+            $instance['riassunto'] = strip_tags($new_instance['riassunto']);
+            $instance['allineamento'] = strip_tags($new_instance['allineamento']);
+            $instance['imgevidenza'] = strip_tags($new_instance['imgevidenza']);
+            $instance['showall'] = strip_tags($new_instance['showall']);
+            return $instance;
+        }
+
+        function form( $instance ) {
+
+            $instance = wp_parse_args( (array) $instance, array( 'limite' => '0' ) ); ?>
+
+            <p>
+                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo:</label>
+                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'titolo' ); ?>" name="<?php echo $this->get_field_name( 'titolo' ); ?>" value="<?php echo $instance['titolo']; ?>" />
+            </p>
+
+            <p>
+                <label for="<?php echo $this->get_field_id( 'limite' ); ?>">Numero post visualizzati:</label>
+                <input type="number" min="1" max="10" class="widefat" id="<?php echo $this->get_field_id( 'limite' ); ?>" name="<?php echo $this->get_field_name( 'limite' ); ?>" value="<?php echo $instance['limite']; ?>" />
+            </p>
+
+            <p>
+                <label for="<?php echo $this->get_field_id( 'destinatari' ); ?>">Destinatari:</label>
+                <select id="<?php echo $this->get_field_id('destinatari'); ?>" name="<?php echo $this->get_field_name('destinatari'); ?>" class="widefat" style="width:100%;">
+                    <?php foreach(get_terms('paswdestinatari','parent=0&hide_empty=0') as $term) { ?>
+                        <option <?php selected( $instance['destinatari'], $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
+                    <?php } ?>
+                </select>
+            </p>
+
+            <p>
+                <input id="<?php echo $this->get_field_id('riassunto'); ?>" name="<?php echo $this->get_field_name('riassunto'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['riassunto'])); ?>/>
+                <label for="<?php echo $this->get_field_id('riassunto'); ?>">Mostra anteprima testuale</label>
+            </p>
+
+            <p>
+                <input id="<?php echo $this->get_field_id('imgevidenza'); ?>" name="<?php echo $this->get_field_name('imgevidenza'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['imgevidenza'])); ?>/>
+                <label for="<?php echo $this->get_field_id('imgevidenza'); ?>">Mostra immagine in evidenza</label>
+            </p>
+            
+			<p>
+                <input id="<?php echo $this->get_field_id('showall'); ?>" name="<?php echo $this->get_field_name('showall'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['showall'])); ?>/>
+                <label for="<?php echo $this->get_field_id('showall'); ?>">Mostra link visualizza tutto</label>
+            </p>
+
+            <p>
+                <input id="<?php echo $this->get_field_id('allineamento'); ?>" name="<?php echo $this->get_field_name('allineamento'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['allineamento'])); ?>/>
+                <label for="<?php echo $this->get_field_id('allineamento'); ?>">Allinea testo centralmente</label>
+            </p>
+
+<?php
+        }
+    }    
 ?>

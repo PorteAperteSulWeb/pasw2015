@@ -15,6 +15,25 @@
 
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
+<?php if (get_option('pasw_fixedmenu') == 1) { ?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+jQuery("document").ready(function($){
+
+    var nav = $('#topbar');
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?>) {
+            nav.addClass("f-nav");
+        } else {
+            nav.removeClass("f-nav");
+        }
+    });
+
+});
+</script>
+<?php } ?>
+
 <?php
     wp_head();
     include(TEMPLATEPATH . '/include/frontend/google-analytics.php');

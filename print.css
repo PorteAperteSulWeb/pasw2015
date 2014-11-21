@@ -1,12 +1,12 @@
 /*
-Theme Name: Nearly-Sprung
-Author: Richard "Jodi" Maxwell
+Theme Name: Pasw2015
+Author: Porteapertesulweb
 
 See style.css for more info.
 */
 
 
-/***************** 3 Column Layout ******************/
+/***************** Layout ******************/
 
 body 
 {
@@ -202,7 +202,7 @@ code
 #header h1 
 {
 	margin: 0 0 0 10px;
-		
+	
 }
 
 #header ul
@@ -431,12 +431,6 @@ p img
 	max-width: 100%;
 }
 
-/*	
-	Using 'class="alignright"' on an image will (who would've
-	thought?!) align the image to the right. And using 'class="centered',
-	will of course center the image. This is much better than using
-	align="center", being much more futureproof (and valid) 
-*/
 .aligncenter,
 div.aligncenter,
 img.centered 
@@ -479,14 +473,6 @@ img.alignleft
 }
 
 
-/****************** Holly Hacks *********************/
-
-/* holly hacks to fix peekabo bugs in IE */
-
-/* Hides from IE5-mac \*/
-* html li {height: 1%;}
-/* End hide from IE5-mac */
-
 /************ tabelle *****************/
 #centrecontent table {
 	margin-left: auto;
@@ -520,7 +506,7 @@ img.alignleft
 }
 
 
-/****************** nascondi menu ****************/
+/****************** nascondi ****************/
 
 #header ul {
 display: none;
@@ -542,6 +528,18 @@ display: none;
 display: none;
 }
 
+.imglinks {
+display: none;
+}
+
+.footer {
+display: none;
+}
+
+.secondo-menu {
+display: none;
+}
+
 /*.postmeta 
 {
 	display:none
@@ -558,31 +556,3 @@ display: none;
 	display:none
 }
 
-/**************** pagina categorie *******************/
-
-.news {
-margin-top:10px;
-padding: 0 0.4em;
-font-size: 95%;
-
-}
-.news h3 {
-color: #000;
-border-bottom: 1px dotted #000099;
-} 
-.news .postmeta {
-margin-top: -6px;
-} 
-.news .postmeta a {
-color: #000;
-} 
-
-/***************** mappa *********************/
-#left {
-         width: 64%;
-         float: left;
-}
-#right {
-         width: 34%;
-         float: right;
-}

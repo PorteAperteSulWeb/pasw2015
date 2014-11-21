@@ -63,15 +63,14 @@ function pasw2015_impostazioni() { ?>
 
         <div id="welcome-panel" class="welcome-panel">
             <div class="welcome-panel-content">
-                <h3>Google Analytics<a style="float:right;" class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla configurazione di Google Analytics</a></h3>
-                <p class="about-description">Personalizza Google Analytics</p>
+                <img src="<?php echo get_bloginfo("template_url").'/images/ga.jpg'; ?>" /><a style="float:right;" class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla configurazione di Google Analytics</a>
                 <div class="welcome-panel-column-container">
                     <div class="welcome-panel-column">
                         <h4>Codice di Monitoraggio</h4>
 
                         <label for="ga-id">ID monitoraggio (es. UA-00000000-0):</label>
                         <input id="ga-id" type="text" name="pasw_ga_id_n" value="<?php echo get_option('pasw_ga_id'); ?>" class="regular-text">
-                        <br/><small>(lascia vuoto per non inserire il codice)</small>
+                        <br/><small>(lascia vuoto per non inserire automaticamente il codice di monitoraggio)</small>
 
                     </div>
                     <div class="welcome-panel-column">
@@ -113,13 +112,15 @@ function pasw2015_impostazioni() { ?>
                         </label>
                     </div>
                     <div class="welcome-panel-column">
-                        <h4></h4>
+                        <h4>Testata</h4>
                         <ul>
                             <li><a href="options-general.php" class="welcome-icon welcome-edit-page">Modifica il titolo o la descrizione del sito</a></li>
                             <li><a href="themes.php?page=custom-header" class="welcome-icon welcome-view-site">Cambia immagine o colore della testata</a></li>
                         </ul>
                     </div>
                     <div class="welcome-panel-column welcome-panel-last">
+
+                        <h4>Menù Principale</h4>
 
                         <input id="loglink" type="checkbox" name="pasw_menu_login_n"
                         <?php $get_pasw_menu_login = get_option('pasw_menu_login');
@@ -128,6 +129,11 @@ function pasw2015_impostazioni() { ?>
                         <input id="secondomenu" type="checkbox" name="pasw_secondo_menu_n"
                         <?php $get_pasw_secondo_menu = get_option('pasw_secondo_menu');
                         if ($get_pasw_secondo_menu == '1') { echo ' checked="checked" '; }?>><label for="secondomenu">Abilita Secondo Menù</label>
+
+                        <br/>
+                        <input id="fixedmenu" type="checkbox" name="pasw_fixedmenu_n"
+                        <?php $get_pasw_fixedmenu = get_option('pasw_fixedmenu');
+                        if ($get_pasw_fixedmenu == '1') { echo ' checked="checked" '; }?>><label for="fixedmenu">Fixed menu</label>
                     </div>
                 </div>
             </div>
@@ -147,7 +153,7 @@ function pasw2015_impostazioni() { ?>
 
                     </div>
                     <div class="welcome-panel-column">
-                        <h4>Info Scuola</h4>
+                        <h4>Informazioni Ente</h4>
 
                         <label for="address">indirizzo:</label>
                         <input id="address" type="text" name="pasw_indirizzo_scuola_n" value="<?php echo stripslashes(get_option('pasw_indirizzo_scuola')); ?>" class="regular-text">
@@ -168,8 +174,7 @@ function pasw2015_impostazioni() { ?>
                             $editor_settings =  array (
                                     'textarea_rows' => 8,
                                     'teeny'         => TRUE,
-                                    'tinymce'       => TRUE,
-                                    'quicktags'     => array ( 'buttons' => 'strong,em,link' )
+                                    'tinymce'       => TRUE
                             );
 
                             wp_editor( $content, 'pasw_loghi_footer_n', $editor_settings );
@@ -182,8 +187,7 @@ function pasw2015_impostazioni() { ?>
                                     'textarea_rows' => 2,
                                     'media_buttons' => FALSE,
                                     'teeny'         => TRUE,
-                                    'tinymce'       => TRUE,
-                                    'quicktags'     => array ( 'buttons' => 'strong,em,link' )
+                                    'tinymce'       => TRUE
                             );
 
                             wp_editor( $content, 'pasw_testo_footer_n', $editor_settings );

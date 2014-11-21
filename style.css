@@ -13,6 +13,14 @@ content:" ";
 display:table;
 }
 
+.f-nav {
+position: fixed!important;
+margin: 0 auto;
+top: 0;
+z-index: 99999999;
+max-width:1150px;
+}
+
 .clear:after {
 clear:both;
 }
@@ -88,6 +96,9 @@ padding-top: 10px;
 	float:right;
 	padding: 3px;
 	margin-right: 2px;
+	position: absolute;
+	right: 0;
+	z-index:1;
 }
 
 .sotto-pagine {
