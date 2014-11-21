@@ -483,8 +483,6 @@
             echo '<ul';
             if ($align != '' && $align != 0) { echo ' style="text-align:center;"'; }
             echo '>';
-			echo '<li>' . $taxdestinatari . ' Dopo term name';
-
 			global $post;
 
 			$myquery = get_posts(array(
