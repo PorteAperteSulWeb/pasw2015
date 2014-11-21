@@ -32,6 +32,7 @@ jQuery("document").ready(function($){
 
 });
 </script>
+<?php if ( is_user_logged_in() ) { echo '<style>.f-nav { top:30px; }</style>'; } ?> 
 <?php } ?>
 
 <?php
