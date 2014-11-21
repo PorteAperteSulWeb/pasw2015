@@ -531,7 +531,6 @@
         }
 
         function form( $instance ) {
-<<<<<<< HEAD
 
             $instance = wp_parse_args( (array) $instance, array( 'limite' => '0' ) ); ?>
 
