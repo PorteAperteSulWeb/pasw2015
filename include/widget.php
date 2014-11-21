@@ -483,10 +483,6 @@
             echo '<ul';
             if ($align != '' && $align != 0) { echo ' style="text-align:center;"'; }
             echo '>';
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 			global $post;
 
 			$myquery = get_posts(array(
