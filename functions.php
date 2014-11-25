@@ -298,6 +298,10 @@ function pasw2015_customizer_css() { ?>
             border-color: <?php echo $c_principale; ?>;
         }
 
+        #centrecontent img {
+            border-color: <?php echo $c_secondario; ?>;
+        }
+        
         #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget {
             background-color: <?php echo $c_secondario; ?>;
         }
