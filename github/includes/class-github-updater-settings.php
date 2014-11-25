@@ -139,10 +139,13 @@ class GitHub_Updater_Settings extends GitHub_Updater {
 	public function ghu_tokens() {
 		$ghu_tokens = array_merge( self::$ghu_plugins, self::$ghu_themes );
 		unset( $ghu_tokens['github-updater'] ); // GHU will never be in a private repo
+		unset( $this->options['github-updater'] ); // GHU should not be in options
 
 		foreach ( $ghu_tokens as $token ) {
-			$type = '';
+			$ghu_options[] = $token->repo;
+			$type          = '';
 			$setting_field = array();
+
 			if ( false !== strpos( $token->type, 'theme') ) {
 				$type = __( 'Theme: ', 'github-updater' );
 			}
@@ -173,6 +176,14 @@ class GitHub_Updater_Settings extends GitHub_Updater {
 			);
 
 		}
+
+		// Unset options that are no longer present
+		foreach ( $this->options as $key => $value ) {
+			if ( ! in_array( $key, $ghu_options, true ) ) {
+				unset( $this->options[ $key ] );
+			}
+			update_site_option( 'github_updater', $this->options );
+		}
 	}
 
 	/**
@@ -194,14 +205,14 @@ class GitHub_Updater_Settings extends GitHub_Updater {
 	 * Print the Section text
 	 */
 	public function print_section_github_info() {
-		print __( 'Enter your GitHub Access Token', 'github-updater' );
+		print __( 'Enter your GitHub Access Token. Leave empty if this is a public repository.', 'github-updater' );
 	}
 
 	/**
 	 * Print the Section text
 	 */
 	public function print_section_bitbucket_info() {
-		print __( 'Enter your Bitbucket password:', 'github-updater' );
+		print __( 'Enter your Bitbucket password. Leave empty if this is a public repository.', 'github-updater' );
 	}
 
 
