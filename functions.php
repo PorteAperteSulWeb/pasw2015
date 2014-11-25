@@ -306,7 +306,7 @@ function pasw2015_customizer_css() { ?>
             background-color: <?php echo $c_secondario; ?>;
         }
 
-        .col-com2, .sotto-pagine, .pagecat, .riassunto, .postmeta {
+        .col-com2, .sotto-pagine, .pagecat, .riassunto, .postmeta, .secondo-menu {
             background-color: <?php echo $c_secondario; ?>;
         }
         input#submit{
