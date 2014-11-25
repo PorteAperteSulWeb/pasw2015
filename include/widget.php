@@ -568,42 +568,6 @@
                 <label for="<?php echo $this->get_field_id('showall'); ?>">Mostra link visualizza tutto</label>
             </p>
 
-            $instance = wp_parse_args( (array) $instance, array( 'limite' => '0' ) ); ?>
-
-            <p>
-                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo:</label>
-                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'titolo' ); ?>" name="<?php echo $this->get_field_name( 'titolo' ); ?>" value="<?php echo $instance['titolo']; ?>" />
-            </p>
-
-            <p>
-                <label for="<?php echo $this->get_field_id( 'limite' ); ?>">Numero post visualizzati:</label>
-                <input type="number" min="1" max="10" class="widefat" id="<?php echo $this->get_field_id( 'limite' ); ?>" name="<?php echo $this->get_field_name( 'limite' ); ?>" value="<?php echo $instance['limite']; ?>" />
-            </p>
-
-            <p>
-                <label for="<?php echo $this->get_field_id( 'destinatari' ); ?>">Destinatari:</label>
-                <select id="<?php echo $this->get_field_id('destinatari'); ?>" name="<?php echo $this->get_field_name('destinatari'); ?>" class="widefat" style="width:100%;">
-                    <?php foreach(get_terms('paswdestinatari','parent=0&hide_empty=0') as $term) { ?>
-                        <option <?php selected( $instance['destinatari'], $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
-                    <?php } ?>
-                </select>
-            </p>
-
-            <p>
-                <input id="<?php echo $this->get_field_id('riassunto'); ?>" name="<?php echo $this->get_field_name('riassunto'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['riassunto'])); ?>/>
-                <label for="<?php echo $this->get_field_id('riassunto'); ?>">Mostra anteprima testuale</label>
-            </p>
-
-            <p>
-                <input id="<?php echo $this->get_field_id('imgevidenza'); ?>" name="<?php echo $this->get_field_name('imgevidenza'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['imgevidenza'])); ?>/>
-                <label for="<?php echo $this->get_field_id('imgevidenza'); ?>">Mostra immagine in evidenza</label>
-            </p>
-            
-			<p>
-                <input id="<?php echo $this->get_field_id('showall'); ?>" name="<?php echo $this->get_field_name('showall'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['showall'])); ?>/>
-                <label for="<?php echo $this->get_field_id('showall'); ?>">Mostra link visualizza tutto</label>
-            </p>
-            
             <p>
                 <input id="<?php echo $this->get_field_id('allineamento'); ?>" name="<?php echo $this->get_field_name('allineamento'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['allineamento'])); ?>/>
                 <label for="<?php echo $this->get_field_id('allineamento'); ?>">Allinea testo centralmente</label>
