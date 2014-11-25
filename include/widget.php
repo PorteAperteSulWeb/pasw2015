@@ -568,8 +568,6 @@
                 <label for="<?php echo $this->get_field_id('showall'); ?>">Mostra link visualizza tutto</label>
             </p>
 
-=======
-
             $instance = wp_parse_args( (array) $instance, array( 'limite' => '0' ) ); ?>
 
             <p>
@@ -605,8 +603,7 @@
                 <input id="<?php echo $this->get_field_id('showall'); ?>" name="<?php echo $this->get_field_name('showall'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['showall'])); ?>/>
                 <label for="<?php echo $this->get_field_id('showall'); ?>">Mostra link visualizza tutto</label>
             </p>
-
->>>>>>> origin/master
+            
             <p>
                 <input id="<?php echo $this->get_field_id('allineamento'); ?>" name="<?php echo $this->get_field_name('allineamento'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['allineamento'])); ?>/>
                 <label for="<?php echo $this->get_field_id('allineamento'); ?>">Allinea testo centralmente</label>
