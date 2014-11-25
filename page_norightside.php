@@ -47,7 +47,7 @@ Template Name: Pagina senza B.L. DX
             $category_link = get_category_link( $categoria_pagina );
             echo '<a style="float:right;padding: 20px;" href="' . esc_url( $category_link ) . '" title="Tutte le ' .  get_cat_name( $categoria_pagina) . '">Visualizza tutto &raquo;</a>';
 
-            echo '<h3>Ultime 5 ' . strtolower ( get_cat_name( $categoria_pagina)) . ' inserite:</h3>';
+            echo '<h3>Ultimi 5 articoli pubblicati in "' . strtolower ( get_cat_name( $categoria_pagina)) . '"</h3>';
             global $post;
                     $myposts = get_posts('numberposts=5&category='.$categoria_pagina);
                     foreach($myposts as $post) :
