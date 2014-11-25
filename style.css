@@ -12,7 +12,6 @@ GitHub Branch: master
 content:" ";
 display:table;
 }
-
 .f-nav {
 position: fixed!important;
 margin: 0 auto;
@@ -1387,7 +1386,7 @@ cursor:help;
 }
 
 #centrecontent img {
-border: 1px solid lightblue;
+border: 1px solid;
 background-color: white;
 padding: 2px;
 border-radius: 5px;
