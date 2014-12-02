@@ -360,4 +360,12 @@ function pasw_get_posts( $query ) {
     }
 }
 
+
+// Replaces the excerpt "more" text by a link
+function new_excerpt_more($more) {
+       global $post;
+	return '&nbsp; &nbsp; <a class="moretag" href="'. get_permalink($post->ID) . '" title="Leggi l&#180;intero articolo">&raquo; &raquo;</a>';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
+
 ?>
