@@ -384,7 +384,7 @@
         function widget( $args, $instance ) {
 
             extract( $args );
-               // these are the widget options
+            // these are the widget options
             $title = apply_filters('widget_title', $instance['titolo']);
             $limit = $instance['limite'];
             $align = $instance['allineamento'];
@@ -399,13 +399,32 @@
             echo '>';
 
             //WordPress loop for custom post type
-            $my_query = new WP_Query('post_type=circolari&showposts=' . $limit);
-            while ($my_query->have_posts()) : $my_query->the_post(); ?>
-                <li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3></li>
-                        <?php
-                          if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
-            endwhile;
-            wp_reset_query();
+            $numCe=0;
+			$args = array( 'category' => $IdCircolari,
+		       'post_type' => array('post','circolari'),
+			   'posts_per_page'  => -1,
+			   'post_status' => 'publish');
+			$my_query = new WP_Query($args);
+			while ($my_query->have_posts() && $numCe<=$limit) : $my_query->the_post(); 
+				$visibilita=get_post_meta($my_query->post->ID, "_visibilita");
+			 	if(count($visibilita)==0)
+			 		$visibilita="p";
+			 	else 
+			 		$visibilita=$visibilita[0];
+			 	if (function_exists(Is_Circolare_per_User))
+			 		$IsPerUser=((Is_Circolare_per_User($my_query->post->ID) and $visibilita=="d") or $visibilita=="p");
+			 	if (function_exists(gcg_Is_Circolare_per_User))
+			 		$IsPerUser=gcg_Is_Circolare_per_User($my_query->post->ID);
+
+				if ($IsPerUser){
+					$numCe++;			
+			?>
+				<li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3></li>
+		        		<?php
+		                  if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>'; }
+		         }
+			endwhile; 
+			wp_reset_query();
 
             echo '</ul>';
 
