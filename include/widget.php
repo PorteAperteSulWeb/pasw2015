@@ -399,8 +399,9 @@
             echo '>';
 
             //WordPress loop for custom post type
-            $numCe=0;
-			$args = array( 'category' => $IdCircolari,
+            $numCe=1;
+            $IdCircolari=get_option('Circolari_Categoria');
+			$args = array( 'cat' => $IdCircolari,
 		       'post_type' => array('post','circolari'),
 			   'posts_per_page'  => -1,
 			   'post_status' => 'publish');
