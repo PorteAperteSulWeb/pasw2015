@@ -66,6 +66,11 @@ function pasw2015_welcome() { ?>
         <span class="title">-</span>
     </li>
     <li class="wp-person">
+        <a href=""><img src="http://www.gravatar.com/avatar/e3ba6cb4b821a6b5b68885bd14dc907b.jpg?s=60" class="gravatar"></a>
+        <a class="web" href="">Christian Ghellere</a>
+        <span class="title">Brendola (VI)</span>
+    </li>
+    <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/a6486b6230464a36ff431d3ef655e1e8.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Guido Spanti</a>
         <span class="title">-</span>
@@ -77,7 +82,7 @@ function pasw2015_welcome() { ?>
     </li>
 </ul>
 <p class="wp-credits-list">
-Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Giorgio Galli, Lillo Sciascia, Paolo Mauri
+Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Giorgio Galli, Lillo Sciascia, Paolo Mauri, Sergio Cortese
 </p>
 <center>
 <a href="http://www.porteapertesulweb.it" target="_blank" alt="Porte Aperte sul Web">
