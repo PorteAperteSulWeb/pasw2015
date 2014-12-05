@@ -389,7 +389,12 @@
             $limit = $instance['limite'];
             $align = $instance['allineamento'];
             $excerpt = $instance['riassunto'];
-
+	    	$pagina_circolari = $instance['pagina_circolari'];
+	
+			if (!empty($pagina_circolari)){
+				$after_title = '<span class="showall_widget after_widget_title"><a href='. $pagina_circolari .' title="link interno pagina circolari" >Vai alla pagina &rsaquo;</a></span>'.$after_title;
+			}
+			
             if ( $title ) {
                 echo $before_widget . $before_title . $title . $after_title;
             }
@@ -440,12 +445,19 @@
               $instance['limite'] = strip_tags($new_instance['limite']);
               $instance['riassunto'] = strip_tags($new_instance['riassunto']);
               $instance['allineamento'] = strip_tags($new_instance['allineamento']);
+              $instance['pagina_circolari'] = strip_tags($new_instance['pagina_circolari']);
               return $instance;
         }
 
         function form( $instance ) {
+        	
+        	$defaults = array(
+				'titolo' => 'Ultime Circolari',
+				'limite' => 5,
+				'pagina_circolari' => NULL,
+            );
 
-            $instance = wp_parse_args( (array) $instance, array( 'limite' => '0' ) ); ?>
+            $instance = wp_parse_args( (array) $instance, $default ); ?>
 
             <p>
                 <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo:</label>
@@ -466,6 +478,28 @@
                 <input id="<?php echo $this->get_field_id('allineamento'); ?>" name="<?php echo $this->get_field_name('allineamento'); ?>" type="checkbox" value="1" <?php checked( '1', esc_attr($instance['allineamento'])); ?>/>
                 <label for="<?php echo $this->get_field_id('allineamento'); ?>">Allinea centralmente</label>
             </p>
+       		
+       		<p>
+            	<label for="<?php echo $this->get_field_id( 'pagina_circolari' ); ?>">
+               		Pagina Circolari:
+            	</label>
+				<select id="<?php echo $this->get_field_id( 'pagina_circolari' ); ?>" name="<?php echo $this->get_field_name( 'pagina_circolari' ); ?>" style="width:270px;"> 
+		 			<option value=""><?php echo esc_attr( __( 'Select page' ) ); ?></option> 
+					<?php 
+		  				$pages = get_pages(); 
+		  				foreach ( $pages as $pagg ) {
+		    				if (get_page_link( $pagg->ID ) == $instance['pagina_circolari'] ) 
+								$Selezionato= 'selected="selected"';
+							else
+								$Selezionato="";
+		  					$option = '<option '.$Selezionato.' value="' . get_page_link( $pagg->ID ) . '">';
+							$option .= $pagg->post_title;
+							$option .= '</option>';
+							echo $option;
+		  					}
+					 ?>
+				</select>
+        	</p>     
 
 <?php
         }
