@@ -82,7 +82,7 @@ function pasw2015_welcome() { ?>
     </li>
 </ul>
 <p class="wp-credits-list">
-Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Giorgio Galli, Lillo Sciascia, Paolo Mauri, Sergio Cortese
+Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Enzo Costantini, Giorgio Galli, Lillo Sciascia, Paolo Mauri, Sergio Cortese
 </p>
 <center>
 <a href="http://www.porteapertesulweb.it" target="_blank" alt="Porte Aperte sul Web">
