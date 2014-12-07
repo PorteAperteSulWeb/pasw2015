@@ -22,7 +22,8 @@ function webtreats_formatter($content) {
         } else {
 
             /* Format and append to content */
-            $new_content .= wptexturize(wpautop($piece));
+            //$new_content .= wptexturize(wpautop($piece));
+            $new_content .= wptexturize($piece);
         }
     }
 
