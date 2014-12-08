@@ -148,12 +148,14 @@ extract(shortcode_atts(array(
 				$returner .= '<div class="post-box-archive">';
 				$returner .= '<span class="hdate">' . get_the_time('j F y') . '</span>';
 
-				$returner .= '<a href="' . get_the_permalink() . '">';
-				$id= get_the_id();
-				if ( has_post_thumbnail($id) ) {
-					$returner .= get_the_post_thumbnail($id, array(100,100));
+				if ( $riassunto =='si' ) {
+					$id= get_the_id();
+					if ( has_post_thumbnail($id) ) {
+						$returner .= '<a href="' . get_the_permalink() . '">';
+						$returner .= get_the_post_thumbnail($id, array(100,100));
+						$returner .= '</a>';
+					}
 				}
-				$returner .= '</a>';
 
 				$returner .= '<h4 class="piccino"><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></h4>';
 				if ( $riassunto =='si' ) {
