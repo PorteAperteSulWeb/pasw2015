@@ -457,7 +457,7 @@
 				'pagina_circolari' => NULL,
             );
 
-            $instance = wp_parse_args( (array) $instance, $default ); ?>
+            $instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
             <p>
                 <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo:</label>
