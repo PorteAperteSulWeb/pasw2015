@@ -64,6 +64,7 @@ extract(shortcode_atts(array(
     'anno' => 'all',
     'link' => 'si',
     'ordine' => 'date', //vuoto: post -> data // pagine -> alfabetico
+	'riassunto' => 'no'
    ), $atts));
 
     if ($utente == '') {
@@ -79,7 +80,7 @@ extract(shortcode_atts(array(
     } else {
         $tipo_cpt = "Contenuti";
         //Sarà necessario fare una query per ogni CPT
-        $tipo =  'post,page';
+        $tipo = 'post,page';
     }
 
     $utente_cpt = strtolower(get_term_by( 'slug', $utente, 'paswdestinatari' )->name);
@@ -90,8 +91,16 @@ extract(shortcode_atts(array(
 
     $returner .= '</h3>';
 
-    $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
-    if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
+	if ($tipo == 'page') {
+		$genere .= 'e';
+	} else {
+		$genere .= 'i';
+	}
+	
+	
+    $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' ordinat' . $genere . ' per ' . $ordine;
+	
+    if ($anno != '') { $returner .= ' inserit' . $genere . ' nel ' . $anno; }
 
     $returner .= '  &bull;  <a href="' . add_query_arg( 'post_type', $tipo , get_term_link( $utente, 'paswdestinatari' ) );
     $returner .='">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
@@ -103,10 +112,9 @@ extract(shortcode_atts(array(
 
     foreach ($arrayposttypes as $ciao) {
 
-        $returner .= '<ul>';
-
-        if (count($arrayposttypes) > 1) {
-            $returner .= '<h4>' .  get_post_type_object( $ciao )->labels->name . '</h4>';
+       
+		if (count($arrayposttypes) > 1) {
+            $returner .= '<p><h4>' .  get_post_type_object( $ciao )->labels->name . '</h4></p>';
         }
 
         if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "pagina") {
@@ -128,24 +136,48 @@ extract(shortcode_atts(array(
             'paswdestinatari' => $utente )
         );
 
+        if ($ciao == "page") {
+			$returner .= '<p>';
+		}
+		
         if ( have_posts() ) : while ( have_posts() ) : the_post();
             global $post;
 
             if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "articolo") {
-                $returner .= '<li>';
-                $returner .= '<div style="float:right;"><small>' .  get_the_date() . '</small></div>';
-                $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a>';
-                $returner .= '</li>';
+			
+				$returner .= '<div class="post-box-archive">';
+				$returner .= '<span class="hdate">' . get_the_time('j F y') . '</span>';
+
+				$returner .= '<a href="' . get_the_permalink() . '">';
+				$id= get_the_id();
+				if ( has_post_thumbnail($id) ) {
+					$returner .= get_the_post_thumbnail($id, array(100,100));
+				}
+				$returner .= '</a>';
+
+				$returner .= '<h4 class="piccino"><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></h4>';
+				if ( $riassunto =='si' ) {
+					$returner .= '<div class="piccino">';
+					$returner .= '<p>' . get_the_excerpt() . '</p>';
+					$returner .= '</div>';
+				}
+				$returner .= '</div>';
+				
             } else if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "pagina") {
                  $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a> &bull; ';
             }
 
 
             endwhile; else:
-            $returner .= 'Nessun risultato...';
+            $returner .= 'Spiacenti, nessun contenuto per questa categoria.';
         endif;
+
+        if ($ciao == "page") {
+			$returner .= '</p>';
+		}
+		
+		
         wp_reset_query();
-        $returner .= '</ul>';
     }
 
 
