@@ -124,11 +124,17 @@
 
             <p>
                 <label for="<?php echo $this->get_field_id( 'categoria' ); ?>">Categoria:</label>
-                <select id="<?php echo $this->get_field_id('categoria'); ?>" name="<?php echo $this->get_field_name('categoria'); ?>" class="widefat" style="width:100%;">
-                    <?php foreach(get_terms('category','parent=0&hide_empty=0') as $term) { ?>
-                        <option <?php selected( $instance['categoria'], $term->term_id ); ?> value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
-                    <?php } ?>
-                </select>
+		<?php 
+			$args = array( 
+				'name' => $this->get_field_name("categoria"),
+				'hierarchical' => 1, 
+				'orderby' => 'name', 
+				'selected' => $instance["categoria"] 
+				);
+				
+			wp_dropdown_categories( $args ); 
+		?>
+
             </p>
 
             <p>
@@ -541,6 +547,7 @@
 
 			$myquery = get_posts(array(
 				'post_type' => 'post',
+				'posts_per_page' => $limit,
 				'tax_query' => array(
 					array(
 						'taxonomy' => 'paswdestinatari',
