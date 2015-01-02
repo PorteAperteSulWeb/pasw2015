@@ -22,7 +22,10 @@
         <div class="post-box-archive">
         <span class="hdate"><?php the_time('j F y'); ?></span>
 
-        <?php if (!is_category()) { ?>
+        <?php
+        /* mostra il tipo "Pagina / Articolo" solo se: "non è una categoria" e "non si è richiesto un tipo specifico"*/
+		$tipo= $_GET['post_type'];
+		if (!is_category() && (!($tipo == 'post' || $tipo == 'page'))) { ?>
         <span class="hdate" style="font-weight:normal;"><?php echo get_post_type_object(get_post_type())->labels->singular_name; ?></span>
         <?php } ?>
 
