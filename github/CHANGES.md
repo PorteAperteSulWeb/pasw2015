@@ -1,3 +1,35 @@
+#### 3.2.2
+* remove scraping of user/pass from Bitbucket URI as it's no longer needed
+* use `Requires WP` header to fill view options detail
+* rename private methods to begin with underscore
+* add screenshot to README for Settings Page (only 70 kB)
+* stop re-creating transient of transients if it already exists
+
+#### 3.2.1
+* refactored adding extra headers to `class GitHub_Updater` to ensure they're added before they're needed, resolves issue with WooThemes Updater plugin
+* update .pot file
+
+#### 3.2.0
+* changed settings page and how Bitbucket Private repos authenticate with your username/password
+* update .pot
+
+#### 3.1.1
+* minor transient cleanup
+* update .pot file
+* fix to get all themes under both single and multisite installs
+
+#### 3.1.0
+* woot!! - updating from Bitbucket private repos now works!!
+* fix to only add HTTP Authentication header under correct circumstances. This obviates need to fix for other APIs that might also use HTTP Authentication.
+* fix to correctly add GitHub Access Token from `$options` to `$download_link` - oops
+* changes `$options` to `private static $options` to save a few database calls
+* Settings page **only** shows private repos, except for initial setup
+* simpler test for checking branch as download endpoint
+* correctly use `parent::` instead of `self::`
+* many updates for translation
+* fix to ensure theme rollback and updating works in both single install and multisite
+* fix to save settings from single site installations
+
 #### 3.0.7
 * more efficient solution to HTTP Authentication issues
 * more efficient options cleanup

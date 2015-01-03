@@ -23,57 +23,7 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 	 */
 	public function __construct( $type ) {
 		$this->type  = $type;
-		self::$hours = 12;
-
-		add_filter( 'http_request_args', array( $this, 'never_authenticate_http' ), 10 );
-	}
-
-	/**
-	 * Add extra headers via filter hooks
-	 */
-	public static function add_headers() {
-		add_filter( 'extra_plugin_headers', array( __CLASS__, 'add_plugin_headers' ) );
-		add_filter( 'extra_theme_headers', array( __CLASS__, 'add_theme_headers' ) );
-	}
-
-	/**
-	 * Add extra headers to get_plugins();
-	 *
-	 * @param $extra_headers
-	 * @return array
-	 */
-	public static function add_plugin_headers( $extra_headers ) {
-		$ghu_extra_headers     = array(
-			'GitHub Plugin URI'   => 'GitHub Plugin URI',
-			'GitHub Branch'       => 'GitHub Branch',
-			'GitHub Access Token' => 'GitHub Access Token',
-			'Requires WP'         => 'Requires WP',
-			'Requires PHP'        => 'Requires PHP',
-		);
-		parent::$extra_headers = array_unique( array_merge( parent::$extra_headers, $ghu_extra_headers ) );
-		$extra_headers         = array_merge( (array) $extra_headers, (array) $ghu_extra_headers );
-
-		return $extra_headers;
-	}
-
-	/**
-	 * Add extra headers to wp_get_themes()
-	 *
-	 * @param $extra_headers
-	 * @return array
-	 */
-	public static function add_theme_headers( $extra_headers ) {
-		$ghu_extra_headers     = array(
-			'GitHub Theme URI'    => 'GitHub Theme URI',
-			'GitHub Branch'       => 'GitHub Branch',
-			'GitHub Access Token' => 'GitHub Access Token',
-			'Requires WP'         => 'Requires WP',
-			'Requires PHP'        => 'Requires PHP',
-		);
-		parent::$extra_headers = array_unique( array_merge( parent::$extra_headers, $ghu_extra_headers ) );
-		$extra_headers         = array_merge( (array) $extra_headers, (array) $ghu_extra_headers );
-
-		return $extra_headers;
+		parent::$hours = 12;
 	}
 
 	/**
@@ -124,8 +74,8 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			$endpoint = str_replace( '/:' . $segment, '/' . $value, $endpoint );
 		}
 
-		if ( ! empty( $this->type->access_token ) ) {
-			$endpoint = add_query_arg( 'access_token', $this->type->access_token, $endpoint );
+		if ( ! empty( parent::$options[ $this->type->repo ] ) ) {
+			$endpoint = add_query_arg( 'access_token', parent::$options[ $this->type->repo ], $endpoint );
 		}
 
 
@@ -169,9 +119,10 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		}
 		$this->type->transient            = $response;
 		$this->type->remote_version       = strtolower( $response['Version'] );
-		$this->type->branch               = ( ! empty( $response['GitHub Branch'] ) ? $response['GitHub Branch'] : 'master' );
-		$this->type->requires_wp_version  = ( ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : $this->type->requires_wp_version );
-		$this->type->requires_php_version = ( ! empty( $response['Requires PHP'] ) ? $response['Requires PHP'] : $this->type->requires_php_version );
+		$this->type->branch               = ! empty( $response['GitHub Branch'] ) ? $response['GitHub Branch'] : 'master';
+		$this->type->requires_php_version = ! empty( $response['Requires PHP'] ) ? $response['Requires PHP'] : $this->type->requires_php_version;
+		$this->type->requires_wp_version  = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : $this->type->requires_wp_version;
+		$this->type->requires             = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : null;
 
 		return true;
 	}
@@ -248,14 +199,14 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			$endpoint .= $rollback;
 		
 		// for users wanting to update against branch other than master or not using tags, else use newest_tag
-		} else if ( ( 'master' != $this->type->branch && ( -1 != version_compare( $this->type->remote_version, $this->type->local_version ) ) || ( '0.0.0' === $this->type->newest_tag ) ) ) {
+		} elseif ( 'master' != $this->type->branch || empty( $this->type->tags ) ) {
 			$endpoint .= $this->type->branch;
 		} else {
 			$endpoint .= $this->type->newest_tag;
 		}
 
-		if ( ! empty( $this->type->access_token ) ) {
-			$endpoint .= '?access_token=' . $this->type->access_token;
+		if ( ! empty( parent::$options[ $this->type->repo ] ) ) {
+			$endpoint .= '?access_token=' . parent::$options[ $this->type->repo ];
 		}
 
 		return $download_link_base . $endpoint;
@@ -319,37 +270,17 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		}
 
 		$this->type->repo_meta = $response->items[0];
-		$this->add_meta_repo_object();
+		$this->_add_meta_repo_object();
 	}
 
 	/**
 	 * Add remote data to type object
 	 */
-	private function add_meta_repo_object() {
+	private function _add_meta_repo_object() {
 		$this->type->rating       = $this->make_rating( $this->type->repo_meta );
 		$this->type->last_updated = $this->type->repo_meta->pushed_at;
 		$this->type->num_ratings  = $this->type->repo_meta->watchers;
-	}
-
-	/**
-	 * Remove any Authorization headers.
-	 * Prevent 401 error from GitHub API.
-	 * Might be coming from added header for Bitbucket.
-	 *
-	 * @param $args
-	 *
-	 * @return mixed
-	 */
-	public function never_authenticate_http( $args ) {
-		// Exit if on other APIs use HTTP Authorization
-		if ( isset( $args['headers']['Authorization'] ) ) {
-			if ( false !== strpos( $args['headers']['Authorization'], 'JETPACK' ) ) {
-				return $args;
-			}
-			unset( $args['headers']['Authorization'] );
-		}
-
-		return $args;
+		$this->type->private      = $this->type->repo_meta->private;
 	}
 
 }
