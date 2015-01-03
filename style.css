@@ -1569,3 +1569,11 @@ padding: 0 3px;
 .two_third .one_third { margin-right:6.1224%; width:29.2517%; }
 .two_third .two_third { margin-right:6.1224%; width:64.6258%; }
 .two_third .one_fourth { margin-right:6.1224%; width:20.4082%; }
+
+/* ------- Class per gestione shortcode destinatari ------- */
+.contentdest {overflow:hidden; padding-bottom:5px;padding-top:15px;font-size: 0.9em;}
+.short_dest_line {overflow:hidden; padding-bottom:5px;}
+.short_dest_col_images {width:90px;float:left;margin-left:5px;margin-top:5px;}
+.short_dest_col_testo_3C {margin-left:100px; padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
+.short_dest_col_testo_2C {padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
+.short_dest_col_date {width:120px;float:right; text-align:right;padding-top:5px;}
