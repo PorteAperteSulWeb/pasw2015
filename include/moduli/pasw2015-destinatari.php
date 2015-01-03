@@ -63,6 +63,8 @@ extract(shortcode_atts(array(
     'numero' => '5',
     'anno' => 'all',
     'link' => 'si',
+    'riassunto' => 'no',
+	'immagine'=>'no',
     'ordine' => 'date', //vuoto: post -> data // pagine -> alfabetico
    ), $atts));
 
@@ -103,8 +105,8 @@ extract(shortcode_atts(array(
 
     foreach ($arrayposttypes as $ciao) {
 
-        $returner .= '<ul>';
-
+   //     $returner .= '<ul>';
+        $returner .= '<div class="contentdest">';
         if (count($arrayposttypes) > 1) {
             $returner .= '<h4>' .  get_post_type_object( $ciao )->labels->name . '</h4>';
         }
@@ -132,10 +134,27 @@ extract(shortcode_atts(array(
             global $post;
 
             if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "articolo") {
-                $returner .= '<li>';
-                $returner .= '<div style="float:right;"><small>' .  get_the_date() . '</small></div>';
-                $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a>';
-                $returner .= '</li>';
+                $returner .= '<div class="short_dest_line">';
+				$returner .= '<div class="short_dest_col_images">';
+					if ( has_post_thumbnail($id) & $immagine == 'si' ) {
+					$style_col='3C';
+					$returner .= get_the_post_thumbnail($id, array(80,80));
+					}
+					else
+					{
+					$style_col='2C';
+					}
+				$returner .= '</div>';
+				$returner .= '<div class="short_dest_col_date">';
+					 $returner .= '<small>' .  get_the_date() . '</small>';
+				$returner .= '</div>';
+				$returner .='<div class="short_dest_col_testo_'. $style_col . '"><a href="' .  get_the_permalink() . '">' . get_the_title() . '</a>';
+						if ( $riassunto == 'si' ) {
+								$returner .= '<p class="piccino">' . get_the_excerpt() . '</p>';
+						}				
+				$returner .='</div>';
+				$returner .= '<div class=”clearer”> </div>';
+				$returner .= '</div>';
             } else if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "pagina") {
                  $returner .= '<a href="' .  get_the_permalink() . '">' . get_the_title() . '</a> &bull; ';
             }
@@ -145,7 +164,8 @@ extract(shortcode_atts(array(
             $returner .= 'Nessun risultato...';
         endif;
         wp_reset_query();
-        $returner .= '</ul>';
+        // $returner .= '</ul>';
+        $returner .= '</div>';
     }
 
 
