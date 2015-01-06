@@ -12,7 +12,7 @@
                 <h2 class="posttitle"><?php the_title(); ?></h2>
 
                 <?php $children = wp_list_pages('depth=1&title_li=&child_of='.$post->ID."&echo=0");
-                if($children && get_option( 'pasw_submenu') != '3') {
+                if($children && (get_option( 'pasw_submenu') != '3' && get_option( 'pasw_submenu') != '4')) {
                     //Genera CSS
                     if (get_option( 'pasw_submenu') == '0') { //Verticale SX
 
