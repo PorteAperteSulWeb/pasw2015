@@ -92,7 +92,11 @@ extract(shortcode_atts(array(
 
     $returner .= '</h3>';
 
-    $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
+    $returner .= '<small>Visualizzazione';
+	if($numero !=""){ 
+		$returner .= ' di ' . $numero; 
+		} 
+	$returner .=	' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
     if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
 	if ($link == 'si') { 	 
     	$returner .= '  &bull;  <a href="' . add_query_arg( 'post_type', $tipo , get_term_link( $utente, 'paswdestinatari' ) );
