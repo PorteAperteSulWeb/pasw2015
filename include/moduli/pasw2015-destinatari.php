@@ -94,9 +94,10 @@ extract(shortcode_atts(array(
 
     $returner .= '<small>Visualizzazione di ' . $numero . ' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
     if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
-
-    $returner .= '  &bull;  <a href="' . add_query_arg( 'post_type', $tipo , get_term_link( $utente, 'paswdestinatari' ) );
-    $returner .='">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
+	if ($link == 'si') { 	 
+    	$returner .= '  &bull;  <a href="' . add_query_arg( 'post_type', $tipo , get_term_link( $utente, 'paswdestinatari' ) );
+    	$returner .='">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
+	}
     $returner .= '</small>';
 
     if (strtolower($ordine) == 'data') { $ordine = 'date'; }
