@@ -47,6 +47,7 @@ function pasw2015_impostazioni() { ?>
                             <option value="0" <?php if (get_option( 'pasw_submenu') == '0') { echo 'selected="selected"'; }?>>Verticale Sinistra</option>
                             <option value="1" <?php if (get_option( 'pasw_submenu') == '1') { echo 'selected="selected"'; }?>>Verticale Destra</option>
                             <option value="2" <?php if (get_option( 'pasw_submenu') == '2') { echo 'selected="selected"'; }?>>Orizzontale</option>
+                            <option value="4" <?php if (get_option( 'pasw_submenu') == '4') { echo 'selected="selected"'; }?>>On Sidebar</option>
                         </select>
                     </div>
                     <div class="welcome-panel-column welcome-panel-last">
