@@ -22,8 +22,20 @@ Template Name: Pagina senza B.L. DX
                 <h2 class="posttitle"><?php the_title(); ?></h2>
 
                 <?php $children = wp_list_pages('depth=1&title_li=&child_of='.$post->ID."&echo=0");
-                if($children){ ?>
-                <div class="sotto-pagine">
+                if($children && (get_option( 'pasw_submenu') != '3' && get_option( 'pasw_submenu') != '4')) {
+                    //Genera CSS
+                    if (get_option( 'pasw_submenu') == '0') { //Verticale SX
+
+                    } else if (get_option( 'pasw_submenu') == '1') { //Verticale DX
+                        $subcss=' style="float:right;"';
+                    } else if (get_option( 'pasw_submenu') == '2') { // Orizzontale
+                        $subcss=' style="width:100%;"';
+                        echo '
+                        <style type="text/css">
+                            .sotto-pagine li { float:left; }
+                        </style>';
+                    } ?>
+                <div class="sotto-pagine" <?php echo $subcss; ?>>
                     <ul>
                         <?php wp_list_pages('depth=1&title_li=&child_of='.$post->ID); ?>
                     </ul>
@@ -38,7 +50,7 @@ Template Name: Pagina senza B.L. DX
 <?php   endwhile; } ?>
 <?php
     $TitoloPagina=$post->post_title;
-    if ( get_post_meta($post->ID, 'usrlo_pagina_categoria', true)!=-1 ) {
+    if ( get_option('pasw_catpage') != 0 && get_post_meta($post->ID, 'usrlo_pagina_categoria', true)!=-1 ) {
         $categoria_pagina = get_post_meta($post->ID, 'usrlo_pagina_categoria', true);
         if(isset($categoria_pagina)){
             echo '<div class="clear"></div>
@@ -55,7 +67,7 @@ Template Name: Pagina senza B.L. DX
                             global $more;
                             $more = 0;
                     ?>
-                        <h4><font class="hdate"><?php the_time('j F Y') ?></font> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+                        <h4><span class="hdate"><?php the_time('j M Y') ?></span> <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                                   <?php the_excerpt();
                     endforeach;
 
