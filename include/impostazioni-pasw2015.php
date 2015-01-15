@@ -167,6 +167,10 @@ function pasw2015_impostazioni() { ?>
                         <label for="email">e-mail:</label>
                         <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo stripslashes(get_option('pasw_email_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "codicemecc@pec.istruzione.it")</small>
+                        
+            			<label for="cfpiva">C.Fisc / P.Iva:</label>
+                        <input id="email" type="text" name="pasw_cfpiva_scuola_n" value="<?php echo stripslashes(get_option('pasw_cfpiva_scuola')); ?>" class="regular-text">
+                        <br/><small>(es. "c.f. xxxxxxxxxxx")</small>
                     </div>
                 </div>
                 <h4>Loghi Footer</h4>
