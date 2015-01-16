@@ -9,6 +9,7 @@
         update_option( 'pasw_autore', $_POST["pasw_autore_n"] );
         update_option( 'pasw_recapito_scuola', $_POST["pasw_recapito_scuola_n"] );
         update_option( 'pasw_email_scuola', $_POST["pasw_email_scuola_n"] );
+        update_option( 'pasw_cfpiva_scuola', $_POST["pasw_cfpiva_scuola_n"] );
         update_option( 'pasw_indirizzo_scuola', $_POST["pasw_indirizzo_scuola_n"] );
         update_option( 'pasw_logo', $_POST["pasw_logo_n"] );
         update_option( 'pasw_favicon', $_POST["pasw_favicon_n"] );
