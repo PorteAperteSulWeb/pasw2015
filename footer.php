@@ -33,6 +33,9 @@ if (get_option('pasw_indirizzo_scuola') != '') {
     if (get_option('pasw_email_scuola') != '') {
         echo stripslashes(get_option('pasw_email_scuola')) . '<br/>';
     }
+    if (get_option('pasw_cfpiva_scuola') != '') {
+        echo stripslashes(get_option('pasw_cfpiva_scuola')) . '<br/>';
+    }
         ?>
                     <?php echo html_entity_decode(get_option('pasw_testo_footer')); ?><br/>
                 </small>
