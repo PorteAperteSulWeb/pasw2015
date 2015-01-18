@@ -102,12 +102,11 @@ function get_pasw2015_version() {
 }
 
 function is_pasw2015_child() {
-	if ( $my_theme->exists( 'pasw2015-child' ) ) {
+	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
 		return true;
 	} else {
 		return false;
 	}
-}
 }
 
 $defaults = array(
