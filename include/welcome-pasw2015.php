@@ -43,6 +43,21 @@ function pasw2015_welcome() { ?>
         <span class="title">-</span>
     </li>
     <li class="wp-person">
+        <a href=""><img src="http://www.gravatar.com/avatar/9474c75c8be90627711a1e69d48f1797.jpg?s=60" class="gravatar"></a>
+        <a class="web" href="">Andrea Smith</a>
+        <span class="title">-</span>
+    </li>
+     <li class="wp-person">
+        <a href=""><img src="http://www.gravatar.com/avatar/e3ba6cb4b821a6b5b68885bd14dc907b.jpg?s=60" class="gravatar"></a>
+        <a class="web" href="">Christian Ghellere</a>
+        <span class="title">Brendola <small>(VI)</small></span>
+    </li>
+    <li class="wp-person">
+        <a href=""><img src="http://www.gravatar.com/avatar/a6486b6230464a36ff431d3ef655e1e8.jpg?s=60" class="gravatar"></a>
+        <a class="web" href="">Guido Spanti</a>
+        <span class="title">-</span>
+    </li>
+    <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/f73d67c77f89c70ef303588aeab44ceb.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Ignazio Scimone</a>
         <span class="title">-</span>
@@ -55,24 +70,6 @@ function pasw2015_welcome() { ?>
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/a5294e8762346dbbfa62e6fee71b3614.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Renata Durighello</a>
-        <span class="title">-</span>
-    </li>
-</ul>
-<h4 class="wp-people-group">...con la collaborazione di:</h4>
-<ul class="wp-people-group ">
-    <li class="wp-person">
-        <a href=""><img src="http://www.gravatar.com/avatar/9474c75c8be90627711a1e69d48f1797.jpg?s=60" class="gravatar"></a>
-        <a class="web" href="">Andrea Smith</a>
-        <span class="title">-</span>
-    </li>
-    <li class="wp-person">
-        <a href=""><img src="http://www.gravatar.com/avatar/e3ba6cb4b821a6b5b68885bd14dc907b.jpg?s=60" class="gravatar"></a>
-        <a class="web" href="">Christian Ghellere</a>
-        <span class="title">Brendola <small>(VI)</small></span>
-    </li>
-    <li class="wp-person">
-        <a href=""><img src="http://www.gravatar.com/avatar/a6486b6230464a36ff431d3ef655e1e8.jpg?s=60" class="gravatar"></a>
-        <a class="web" href="">Guido Spanti</a>
         <span class="title">-</span>
     </li>
     <li class="wp-person">
