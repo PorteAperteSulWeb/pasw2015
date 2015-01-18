@@ -93,7 +93,21 @@ function pasw2015_setup() {
 }
 
 function get_pasw2015_version() {
-  return wp_get_theme()->get( 'Version' );
+	$p2015_theme = wp_get_theme( 'pasw2015' );
+	if ( $p2015_theme->exists() ) {
+  		return wp_get_theme('pasw2015')->get( 'Version' );
+	} else {
+		return '0';
+	}
+}
+
+function is_pasw2015_child() {
+	if ( $my_theme->exists( 'pasw2015-child' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
 }
 
 $defaults = array(
