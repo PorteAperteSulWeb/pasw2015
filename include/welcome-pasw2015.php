@@ -19,7 +19,7 @@ function pasw2015_welcome() { ?>
         <br/>Bello, accessibile e innovativo.</div>
         <div class="wp-badge">Pasw2015
         <?php
-            echo get_option('pasw2015_version') . '<br/>';
+            echo get_option('pasw2015_version') . '<br/>'; if (is_pasw2015_child()) { echo '-C'; } 
             $filename = get_theme_root() . '/pasw2015/style.css';
             if (file_exists($filename)) {
                 echo date ("d M Y", filemtime($filename));
