@@ -14,12 +14,12 @@ function pasw2015_menu() {
 
 function pasw2015_welcome() { ?>
     <div class="wrap about-wrap">
-        <h1>Benvenuto in Pasw 2015 <small><?php echo get_option('pasw2015_version'); ?></small></h1>
+        <h1>Benvenuto in Pasw 2015 <small><?php echo get_option('pasw2015_version') . is_pasw2015_child(true); ?></small></h1>
         <div class="about-text">Pasw2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web.
         <br/>Bello, accessibile e innovativo.</div>
         <div class="wp-badge">Pasw2015
         <?php
-            echo get_option('pasw2015_version') . '<br/>'; if (is_pasw2015_child()) { echo '-C'; } 
+            echo get_option('pasw2015_version') . '<br/>'; 
             $filename = get_theme_root() . '/pasw2015/style.css';
             if (file_exists($filename)) {
                 echo date ("d M Y", filemtime($filename));
