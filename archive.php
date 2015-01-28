@@ -41,7 +41,7 @@
         </div>
         <?php endwhile; ?>
     <?php else : ?>
-        <p><div class="clear"></div><br/><br/>Spiacenti, ma non ci sono articoli per questa categoria.</p>
+        <div class="clear"></div><br/><br/>Spiacenti, ma non ci sono articoli per questa categoria.
     <?php endif; ?>
     <div class="clear"></div>
     <div style="text-align:center;width:100%;">
