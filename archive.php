@@ -13,7 +13,14 @@
             }
         ?>
 
-    <?php if( is_tax( 'tipologie' ) ) { echo '<div class="clear"></div>'; at_archive_buttons(); } ?>
+    <?php if( is_tax( 'tipologie' ) ) { echo '<div class="clear"></div>';
+        if (function_exists('at_archive_buttons_pasw2015')) {
+            at_archive_buttons_pasw2015();
+        } else {
+            at_archive_buttons();
+            
+        }}
+    ?>
     
     <?php global $post; if (have_posts()) : ?>
 
