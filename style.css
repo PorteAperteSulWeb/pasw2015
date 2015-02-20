@@ -263,7 +263,6 @@ box-shadow: 0 0 5px #00004d;
 float:left;
 margin-top:3px;
 min-height:120px;
-overflow:hidden;
 margin:0;
 min-width:122px;
 padding:5px 0 0;
@@ -742,7 +741,8 @@ margin:.6em 0 .3em;
 display:block;
 text-decoration:none;
 color: white;
-text-align: center;
+width: 105%;
+padding-left: 10px;
 }
 
 #rightsidebar h2 a {
