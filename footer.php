@@ -12,9 +12,9 @@
 
 </div>
 
-<div id="footer" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
+<div id="footer">
 
-    <div id="footer-interno">
+    <div id="footer-interno" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
         <div class="footer-column">
             <img style="float:left;padding:10px;max-height:140px;" src="<?php echo get_option('pasw_logo'); ?>" alt=""/>
             <span style="float:left;padding-top: 12px;max-width: 70%;">
