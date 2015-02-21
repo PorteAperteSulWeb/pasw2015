@@ -287,7 +287,7 @@ text-decoration:none;
 
 #footer-interno {
 	margin: 100px auto;
-	width: 1000px;
+	max-width: 1000px;
 }
 
 .footer-column {
