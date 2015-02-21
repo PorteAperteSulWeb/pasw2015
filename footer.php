@@ -12,7 +12,7 @@
 
 </div>
 
-<div id="footer">
+<div id="footer" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
 
     <div id="footer-interno">
         <div class="footer-column">
