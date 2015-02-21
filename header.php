@@ -75,13 +75,14 @@ jQuery("document").ready(function($){
     </div>
 </div>
 
+    <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
+        <div>
+            <label class="screen-reader-text" for="s">Cerca:</label>
+            <input placeholder="Cerca..." type="text" value="" name="s" id="s" />
+        </div>
+    </form>
+        
 <div id="topbar">
-
-        <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
-            <div><label class="screen-reader-text" for="s">Cerca:</label>
-                <input placeholder="Cerca..." type="text" value="" name="s" id="s" />
-            </div>
-        </form>
 
 <?php
     $append_link = '<ul id="%1$s" class="%2$s">%3$s';
