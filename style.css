@@ -258,12 +258,6 @@ float:left;
 margin:10px 10px 10px 0;
 }
 
-#menuorizzontale-superiore {
-margin-right:-20px;
-margin:-10px -10px 0 0;
-box-shadow:0 0 5px #00004d;
-}
-
 #rightsidebar {
 float:left;
 margin-top:3px;
@@ -538,7 +532,7 @@ margin:0;
 color:#F0F0F0;
 float:right;
 clear:both;
-margin:-10px -10px 0 0;
+margin:5px;
 border-radius:0 0 0 5px;
 text-shadow:none;
 position:relative;
