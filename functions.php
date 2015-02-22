@@ -93,40 +93,40 @@ function pasw2015_setup() {
 }
 
 function get_pasw2015_version() {
-	$p2015_theme = wp_get_theme( 'pasw2015' );
-	if ( $p2015_theme->exists() ) {
-  		return wp_get_theme('pasw2015')->get( 'Version' );
-	} else {
-		update_option('pasw_wrongdirectory', 1);
-		return wp_get_theme()->get( 'Version' );
-	}
+    $p2015_theme = wp_get_theme( 'pasw2015' );
+    if ( $p2015_theme->exists() ) {
+          return wp_get_theme('pasw2015')->get( 'Version' );
+    } else {
+        update_option('pasw_wrongdirectory', 1);
+        return wp_get_theme()->get( 'Version' );
+    }
 }
 
 function is_pasw2015_child($c) {
-	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
-		if ($c) {
-			return 'C';
-		} else {
-			return true;
-		}
-	} else {
-		if ($c) {
-			return '';
-		} else {
-			return false;
-		}
-	}
+    if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
+        if ($c) {
+            return 'C';
+        } else {
+            return true;
+        }
+    } else {
+        if ($c) {
+            return '';
+        } else {
+            return false;
+        }
+    }
 }
 
 function pasw2015_stili() {
-	// Main stylesheet
-	wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
-	wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  null, null, 'print' );
+    // Main stylesheet
+    wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
+    wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  null, null, 'print' );
 }
 add_action( 'wp_enqueue_scripts', 'pasw2015_stili' );
 
 function pasw2015_favicon() {
-	echo '<link rel="Shortcut Icon" type="image/x-icon" href="'.get_option('pasw_favicon').'" />';
+    echo '<link rel="Shortcut Icon" type="image/x-icon" href="'.get_option('pasw_favicon').'" />';
 }
 add_action('wp_head', 'pasw2015_favicon');
 
@@ -272,10 +272,37 @@ function ns_trackbacks($comment, $args, $depth) {
 <?php
 }
 
+function example_customizer( $wp_customize ) {
+    $wp_customize->add_section(
+        'example_section_one',
+        array(
+            'title' => 'Example Settings',
+            'description' => 'This is a settings section.',
+            'priority' => 35,
+        )
+    );
+    $wp_customize->add_setting(
+        'copyright_textbox',
+        array(
+            'default' => 'Default copyright text',
+        )
+    );
+    $wp_customize->add_control(
+        'copyright_textbox',
+        array(
+            'label' => 'Copyright text',
+            'section' => 'example_section_one',
+            'type' => 'text',
+        )
+    );
+}
+add_action( 'customize_register', 'example_customizer' );
+
 function pasw2015_colors_register_theme_customizer( $wp_customize ) {
 
     $wp_customize->add_setting( 'pasw2015_colore_principale', array( 'default' => '#00004d', 'transport'   => 'postMessage' ));
     $wp_customize->add_setting( 'pasw2015_colore_secondario', array( 'default' => '#C2E2ED', 'transport'   => 'postMessage' ));
+
 
     $wp_customize->add_control(
         new WP_Customize_Color_Control(
@@ -320,11 +347,15 @@ function pasw2015_customizer_css() { ?>
         a:link, a:visited, a:hover, a:active {
             color: <?php echo $c_principale; ?>;
         }
-        
+
+        #header {
+            box-shadow: inset 0px 0px 10px <?php echo $c_principale; ?>;
+        }
+
         #topbar, #header ul.sito, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
-        
+
         #wrapper, #topbar, #header ul.sito, #footer {
             box-shadow: 0 0 3px <?php echo $c_principale; ?>;
         }
@@ -335,7 +366,7 @@ function pasw2015_customizer_css() { ?>
         #centrecontent img {
             border-color: <?php echo $c_secondario; ?>;
         }
-        
+
         #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget {
             background-color: <?php echo $c_secondario; ?>;
         }
@@ -398,7 +429,7 @@ function pasw_get_posts( $query ) {
 // Replaces the excerpt "more" text by a link
 function new_excerpt_more($more) {
        global $post;
-	return '&nbsp; &nbsp; <a class="moretag" href="'. get_permalink($post->ID) . '" title="Leggi l&#180;intero articolo">&raquo;</a>';
+    return '&nbsp; &nbsp; <a class="moretag" href="'. get_permalink($post->ID) . '" title="Leggi l&#180;intero articolo">&raquo;</a>';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
 

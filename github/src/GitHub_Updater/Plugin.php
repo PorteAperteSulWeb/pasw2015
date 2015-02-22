@@ -8,22 +8,27 @@
  * @link      https://github.com/afragen/github-updater
  */
 
+namespace Fragen\GitHub_Updater;
+
 /**
  * Update a WordPress plugin from a GitHub repo.
  *
- * @package GitHub_Plugin_Updater
+ * Class    Plugin
+ * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  * @author  Codepress
  * @link    https://github.com/codepress/github-plugin-updater
  */
-class GitHub_Plugin_Updater extends GitHub_Updater {
+class Plugin extends Base {
 
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
 
-		// Get details of GitHub-sourced plugins
+		/**
+		 * Get details of git sourced plugins.
+		 */
 		$this->config = $this->get_plugin_meta();
 		
 		if ( empty( $this->config ) ) {
@@ -36,10 +41,10 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 		foreach ( (array) $this->config as $plugin ) {
 			switch( $plugin->type ) {
 				case 'github_plugin':
-					$repo_api = new GitHub_Updater_GitHub_API( $plugin );
+					$repo_api = new GitHub_API( $plugin );
 					break;
 				case 'bitbucket_plugin':
-					$repo_api = new GitHub_Updater_BitBucket_API( $plugin );
+					$repo_api = new Bitbucket_API( $plugin );
 					break;
 			}
 
@@ -64,7 +69,7 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 		add_filter( 'upgrader_source_selection', array( $this, 'upgrader_source_selection' ), 10, 3 );
 		add_filter( 'http_request_args', array( $this, 'no_ssl_http_request_args' ), 10, 2 );
 
-		GitHub_Updater_Settings::$ghu_plugins = $this->config;
+		Settings::$ghu_plugins = $this->config;
 	}
 
 
@@ -114,9 +119,11 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 				$response->tested        = $plugin->tested;
 				$response->downloaded    = $plugin->downloaded;
 				$response->last_updated  = $plugin->last_updated;
-				$response->rating        = $plugin->rating;
-				$response->num_ratings   = $plugin->num_ratings;
 				$response->download_link = $plugin->download_link;
+				if ( ! $plugin->private ) {
+					$response->num_ratings = $plugin->num_ratings;
+					$response->rating      = $plugin->rating;
+				}
 			}
 		}
 
@@ -140,12 +147,15 @@ class GitHub_Plugin_Updater extends GitHub_Updater {
 			if ( $this->can_update( $plugin ) ) {
 				$response = array(
 					'slug'        => dirname( $plugin->slug ),
+					'plugin'      => $plugin->slug,
 					'new_version' => $plugin->remote_version,
 					'url'         => $plugin->uri,
 					'package'     => $plugin->download_link,
 				);
 
-				// if branch is 'master' and plugin is in wp.org repo then pull update from wp.org
+				/**
+				 * If branch is 'master' and plugin is in wp.org repo then pull update from wp.org
+				 */
 				if ( isset( $transient->response[ $plugin->slug]->id ) && 'master' === $plugin->branch ) {
 					continue;
 				}

@@ -8,18 +8,21 @@
  * @link      https://github.com/afragen/github-updater
  */
 
+namespace Fragen\GitHub_Updater;
+
 /**
  * Get remote data from a GitHub repo.
  *
- * @package GitHub_Updater_GitHub_API
+ * Class    GitHub_API
+ * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  */
-class GitHub_Updater_GitHub_API extends GitHub_Updater {
+class GitHub_API extends Base {
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string $type
+	 * @param object $type
 	 */
 	public function __construct( $type ) {
 		$this->type  = $type;
@@ -78,9 +81,10 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			$endpoint = add_query_arg( 'access_token', parent::$options[ $this->type->repo ], $endpoint );
 		}
 
-
-		// If a branch has been given, only check that for the remote info.
-		// If it's not been given, GitHub will use the Default branch.
+		/**
+		 * If a branch has been given, only check that for the remote info.
+		 * If it's not been given, GitHub will use the Default branch.
+		 */
 		if ( ! empty( $this->type->branch ) ) {
 			$endpoint = add_query_arg( 'ref', $this->type->branch, $endpoint );
 		}
@@ -154,11 +158,13 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			return false;
 		}
 
-		// Sort and get newest tag
+		/**
+		 * Sort and get newest tag.
+		 */
 		$tags     = array();
 		$rollback = array();
 		if ( false !== $response ) {
-			foreach ( (array) $response as $num => $tag ) {
+			foreach ( (array) $response as $tag ) {
 				if ( isset( $tag->name ) ) {
 					$tags[]                 = $tag->name;
 					$rollback[ $tag->name ] = $tag->zipball_url;
@@ -166,7 +172,9 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			}
 		}
 
-		// no tags are present, exit early
+		/**
+		 * No tags are present, exit early.
+		 */
 		if ( empty( $tags ) ) {
 			return false;
 		}
@@ -194,11 +202,16 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		$download_link_base = 'https://api.github.com/repos/' . trailingslashit( $this->type->owner ) . $this->type->repo . '/zipball/';
 		$endpoint           = '';
 
-		// check for rollback
+		/**
+		 * Check for rollback.
+		 */
 		if ( ! empty( $_GET['rollback'] ) && 'upgrade-theme' === $_GET['action'] && $_GET['theme'] === $this->type->repo ) {
 			$endpoint .= $rollback;
-		
-		// for users wanting to update against branch other than master or not using tags, else use newest_tag
+
+			/**
+			 * For users wanting to update against branch other than master
+			 * or if not using tags, else use newest_tag.
+			 */
 		} elseif ( 'master' != $this->type->branch || empty( $this->type->tags ) ) {
 			$endpoint .= $this->type->branch;
 		} else {
@@ -239,7 +252,7 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		$changelog = $this->get_transient( 'changelog' );
 
 		if ( ! $changelog ) {
-			$parser    = new Parsedown();
+			$parser    = new Parsedown;
 			$changelog = $parser->text( base64_decode( $response->content ) );
 			$this->set_transient( 'changelog', $changelog );
 		}

@@ -1,3 +1,37 @@
+#### 4.1.2
+* hide star ratings from **View details** screen for private repos
+
+#### 4.1.1
+* add `plugin` to `$response` in `Plugin::pre_set_site_transient_update_plugins` to fix PHP Notice
+* rename `classes` to `src` to follow more conventional naming
+* refactor renaming code to function under all circumstances, I hope ;-)
+
+#### 4.1.0
+* added remote installation of plugins or themes, both public and private
+* remote installation using either full URI or short `<owner><repo>` format
+* created new tabbed interface for settings
+* added another screenshot to readme
+* I'd like to apologize to all my translators for adding new strings often, you guys are great, thanks!
+
+#### 4.0.1
+* hotfix to force an array type when sanitizing settings, it gave me a fatal I wasn't expecting.
+
+#### 4.0.0
+* changed `is_a()` to `instanceof` per https://core.trac.wordpress.org/changeset/31188
+* requires PHP 5.3 or greater as autoloader class requires namespacing 
+* updated all classes for namespacing
+* renamed directory and class names to allow for PSR 4 style loading 
+* clean up a number of foreach loops where I was only using either key or value, not both
+* Special thanks for all my translators, especially @grappler for adding translation key for description
+* bugfix to correctly pick CHANGES.MD or CHANGELOG.MD regardless of case
+* removed reading/saving `GitHub Access Token` header into settings. Must use Settings Page.
+
+#### 3.2.3 - 3.2.6
+* added French translation by @daniel-menard
+* added Italian translation by @overclokk
+* added Portuguese translation by @valeriosouza
+* added Ukrainian translation by @andriiryzhkov (our first translation!!)
+
 #### 3.2.2
 * remove scraping of user/pass from Bitbucket URI as it's no longer needed
 * use `Requires WP` header to fill view options detail

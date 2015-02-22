@@ -1,7 +1,8 @@
 # GitHub Updater
 * Contributors: [Andy Fragen](https://github.com/afragen), [Gary Jones](https://github.com/GaryJones), [Seth Carstens](https://github.com/scarstens), [contributors](https://github.com/afragen/github-updater/graphs/contributors)
-* Tags: plugin, theme, update, updater, github, bitbucket
+* Tags: plugin, theme, update, updater, github, bitbucket, remote install
 * Requires at least: 3.8
+* Requires PHP: 5.3
 * Tested up to: 4.1
 * Stable tag: master
 * License: GPLv2 or later
@@ -25,6 +26,8 @@ or
 `GitHub Plugin URI: https://github.com/afragen/github-updater`
 
 ...where the above URI leads to the __owner/repository__ of your theme or plugin. The URI may be in the format `https://github.com/<owner>/<repo>` or the short format `<owner>/<repo>`. You do not need both. Only one Plugin or Theme URI is required.
+
+Developers please note that your plugin/theme installation directory and remote repository names **must** be identical. This includes case sensitivity. Otherwise issues may arise where certain features fail to work properly. Please be consistent in your naming.
 
 ## Installation
 
@@ -153,19 +156,19 @@ The `Bitbucket Branch` header is supported for both plugins and themes.
 
 Public repositories will not show up in the Settings page.
 
-![Settings Page](./assets/screenshot-1.png)
+![Settings Tab](./assets/screenshot-1.png)
 
 ### GitHub Private Repositories
 
-In order to specify a private repository you will need to obtain a [personal access token](https://github.com/settings/tokens/new). Once you have this, simply add the token to the appropriate plugin or theme in the Settings page.
+In order to specify a private repository you will need to obtain a [personal access token](https://github.com/settings/tokens/new). Once you have this, simply add the token to the appropriate plugin or theme in the Settings tab.
 
 Leave this empty if the plugin or theme is in a public repository.
 
 ### Bitbucket Private Repositories
 
-Add your personal Bitbucket username and password in the Settings page. In order to authenticate with the Bitbucket API you will need to have at least `read` privileges for the Bitbucket private repository.
+Add your personal Bitbucket username and password in the Settings tab. In order to authenticate with the Bitbucket API you will need to have at least `read` privileges for the Bitbucket private repository.
 
-In order to specify a private repository you will need to check the box next to the repository name in the Settings page.
+In order to specify a private repository you will need to check the box next to the repository name in the Settings tab.
 
 Leave this unchecked if the plugin or theme is in a public repository.
 
@@ -179,7 +182,7 @@ Use `Requires WP:` to set the minimum required version of WordPress needed for y
 
 Use `Requires PHP:` to set the minimum required version of PHP needed for your plugin or theme. eg. `Requires PHP: 5.3`
 
-At the moment the default values are **WordPress 0.0.0** and **PHP 5.2.3**
+At the moment the default values are **WordPress 0.0.0** and **PHP 5.3**
 
 ## Deleting Transients
 
@@ -193,10 +196,23 @@ If you develop your plugin on GitHub and it also resides in the WP.org repo, the
 
 The same applies for Bitbucket hosted plugins.
 
+## Remote Installation of Repositories
+
+From the `GitHub Updater Settings Page` there is a tabbed interface for remote installation of plugins or themes. If you install a private repository you must update the Settings tab so updates will be available. You may use either a full URI or short `<owner>/<repo>` format.
+
+![Remote Install of Plugin Tab](./assets/screenshot-2.png)
+
 ## Extras
 
 [szepeviktor](https://github.com/szepeviktor) has created an add-on plugin to GitHub Updater that identifies all plugins with an icon in the plugin view for GitHub or Bitbucket depending upon where they get updates. It's very clever.
 <https://github.com/szepeviktor/wordpress-plugin-construction/tree/master/github-link>
+
+### Translations
+
+* French by [Daniel Ménard](https://github.com/daniel-menard)
+* Italian by [Enea Overclokk](https://github.com/overclokk)
+* Portuguese by [Valerio Souza](https://github.com/valeriosouza)
+* Ukrainian by [Andrii Ryzhkv](https://github.com/andriiryzhkov)
 
 ## Issues
 
@@ -204,7 +220,7 @@ Please log issues on the GitHub at https://github.com/afragen/github-updater/iss
 
 If you are using a WordPress Multisite installation, the plugin **should** be network activated.
 
-When first downloading and installing a plugin from GitHub you might have to do the following, otherwise the next update may not be able to cleanup after itself and re-activate the updated plugin or theme.
+When first downloading and installing a plugin from GitHub you might have to do the following, otherwise the next update may not be able to cleanup after itself and re-activate the updated plugin or theme. Or you can just use the remote install feature and this will be done for you. :wink:
 
 1. Unzip the archive.
 2. Fix the folder name to remove to extra stuff GitHub adds to the download, like _-master_.

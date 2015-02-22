@@ -62,6 +62,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
             }
 
         ?>
+            <img src="<?php echo get_template_directory_uri() . '/images/cc.png'; ?>" width="150" alt=""/>
         </div>
 
         <div id="footer-credits">

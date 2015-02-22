@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 
 <title><?php if ( function_exists('optimal_title') ) { ?><?php optimal_title(); ?><?php bloginfo('name'); ?><?php } else { ?><?php bloginfo('name'); ?> <?php if ( is_single() ) { ?> &raquo; Blog Archive <?php } ?> <?php wp_title(); ?><?php } ?></title>
-
+<meta name="viewport" content="width=device-width">
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
@@ -20,7 +20,7 @@ jQuery("document").ready(function($){
     var nav = $('#topbar');
 
     $(window).scroll(function () {
-        if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?>) {
+        if ( $(window).width() > 1024 && $(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?>) {
             nav.addClass("f-nav");
         } else {
             nav.removeClass("f-nav");
@@ -29,7 +29,7 @@ jQuery("document").ready(function($){
 
 });
 </script>
-<?php if ( is_user_logged_in() ) { echo '<style>.f-nav { top:30px; }</style>'; } ?> 
+<?php if ( is_user_logged_in() ) { echo '<style>.f-nav { top:30px; }</style>'; } ?>
 <?php } ?>
 
 <?php
@@ -75,14 +75,14 @@ jQuery("document").ready(function($){
     </div>
 </div>
 
+<div id="topbar" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
+
     <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
         <div>
             <label class="screen-reader-text" for="s">Cerca:</label>
             <input placeholder="Cerca..." type="text" value="" name="s" id="s" />
         </div>
     </form>
-        
-<div id="topbar">
 
 <?php
     $append_link = '<ul id="%1$s" class="%2$s">%3$s';
@@ -108,3 +108,23 @@ jQuery("document").ready(function($){
 </div>
 
 <div id="container">
+<div id="responsive-controls" style="color:white;">
+  <div id="responsive-nav">NAVIGAZIONE</div>
+</div>
+    <script>
+    $(document).ready(function(){
+        $("#responsive-controls").click(function(){
+            if ( $( "#leftsidebar" ).hasClass( "ls-responsive" ) ) {
+                $( "#leftsidebar" ).removeClass( "ls-responsive" );
+                $( "#rightsidebar" ).removeClass( "rs-responsive" );
+            } else {
+                $( "#leftsidebar" ).addClass( "ls-responsive" );
+                $( "#rightsidebar" ).addClass( "rs-responsive" );
+            }
+        });
+        $("#centrecontent").click(function(){
+            $( "#leftsidebar" ).removeClass( "ls-responsive" );
+            $( "#rightsidebar" ).removeClass( "rs-responsive" );
+        });
+    });
+    </script>

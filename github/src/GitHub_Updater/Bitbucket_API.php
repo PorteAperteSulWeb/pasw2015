@@ -8,18 +8,21 @@
  * @link      https://github.com/afragen/github-updater
  */
 
+namespace Fragen\GitHub_Updater;
+
 /**
  * Get remote data from a Bitbucket repo.
  *
- * @package GitHub_Updater_Bitbucket_API
+ * Class    Bitbucket_API
+ * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  */
-class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
+class Bitbucket_API extends Base {
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string $type
+	 * @param object $type
 	 */
 	public function __construct( $type ) {
 		$this->type  = $type;
@@ -151,7 +154,9 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 			return false;
 		}
 
-		// Sort and get newest tag
+		/**
+		 * Sort and get newest tag.
+		 */
 		$tags     = array();
 		$rollback = array();
 		if ( false !== $response ) {
@@ -185,13 +190,15 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 *
 	 * @param boolean $rollback for theme rollback
 	 * 
-	 * @return URI
+	 * @return string URI
 	 */
 	public function construct_download_link( $rollback = false ) {
 		$download_link_base = 'https://bitbucket.org/' . trailingslashit( $this->type->owner ) . $this->type->repo . '/get/';
 		$endpoint           = '';
 
-		// check for rollback
+		/**
+		 * Check for rollback.
+		 */
 		if ( ! empty( $_GET['rollback'] ) && 'upgrade-theme' === $_GET['action'] && $_GET['theme'] === $this->type->repo ) {
 			$endpoint .= $rollback . '.zip';
 		
@@ -240,7 +247,7 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$changelog = $this->get_transient( 'changelog' );
 
 		if ( ! $changelog ) {
-			$parser    = new Parsedown();
+			$parser    = new Parsedown;
 			$changelog = $parser->text( $response->data );
 			$this->set_transient( 'changelog', $changelog );
 		}
@@ -294,11 +301,37 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 * @return mixed
 	 */
 	public function maybe_authenticate_http( $args, $url ) {
-		if ( ! isset( $this->type ) ) {
+		if ( ! isset( $this->type ) || false === stristr( $url, 'bitbucket' ) ) {
 			return $args;
 		}
 
-		if ( ! empty( parent::$options[ $this->type->repo ] ) && false !== strpos( $url, $this->type->repo ) ) {
+		$bitbucket_private         = false;
+		$bitbucket_private_install = false;
+
+		/**
+		 * Check whether attempting to update private Bitbucket repo.
+		 */
+		if ( isset( $this->type->repo ) &&
+			! empty( parent::$options[ $this->type->repo ] ) &&
+		     false !== strpos( $url, $this->type->repo )
+		) {
+			$bitbucket_private = true;
+		}
+
+		/**
+		 * Check whether attempting to install private Bitbucket repo
+		 * and abort if Bitbucket user/pass not set.
+		 */
+		if ( isset( $_POST['option_page'] ) &&
+		     'github_updater_install' === $_POST['option_page'] &&
+		     'bitbucket' === $_POST['github_updater_api'] &&
+		     isset( $_POST['is_private'] ) &&
+		     ( ! empty( parent::$options['bitbucket_username'] ) || ! empty( parent::$options['bitbucket_password'] ) )
+		) {
+			$bitbucket_private_install = true;
+		}
+
+		if ( $bitbucket_private || $bitbucket_private_install ) {
 			$username = parent::$options['bitbucket_username'];
 			$password = parent::$options['bitbucket_password'];
 			$args['headers']['Authorization'] = 'Basic ' . base64_encode( "$username:$password" );

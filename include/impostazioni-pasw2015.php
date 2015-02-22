@@ -64,7 +64,12 @@ function pasw2015_impostazioni() { ?>
 
         <div id="welcome-panel" class="welcome-panel">
             <div class="welcome-panel-content">
-                <img src="<?php echo get_bloginfo("template_url").'/images/ga.jpg'; ?>" /><a style="float:right;" class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla configurazione di Google Analytics</a>
+                <details>
+                    <summary>
+                        <h3>Google Analytics</h3>
+                        <p class="about-description">Configura le statistiche di monitoraggio</p>
+                    </summary>
+                <a style="float:right;" class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla configurazione di Google Analytics</a>
                 <div class="welcome-panel-column-container">
                     <div class="welcome-panel-column">
                         <h4>Codice di Monitoraggio</h4>
@@ -90,6 +95,7 @@ function pasw2015_impostazioni() { ?>
 
                     </div>
                 </div>
+                </details>
             </div>
         </div>
 
@@ -167,8 +173,8 @@ function pasw2015_impostazioni() { ?>
                         <label for="email">e-mail:</label>
                         <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo stripslashes(get_option('pasw_email_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "codicemecc@pec.istruzione.it")</small>
-                        
-            			<label for="cfpiva">C.Fisc / P.Iva:</label>
+
+                        <label for="cfpiva">C.Fisc / P.Iva:</label>
                         <input id="email" type="text" name="pasw_cfpiva_scuola_n" value="<?php echo stripslashes(get_option('pasw_cfpiva_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "c.f. xxxxxxxxxxx")</small>
                     </div>
