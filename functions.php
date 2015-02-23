@@ -120,6 +120,7 @@ function is_pasw2015_child($c) {
 
 function pasw2015_stili() {
     // Main stylesheet
+    wp_enqueue_style('pasw2015_mainc', pasw2015_customizer_css(), array());
     wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
     wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/include/css/print.css',  null, null, 'print' );
 
@@ -413,7 +414,6 @@ function pasw2015_customizer_css() { ?>
 
     <?php
 }
-add_action( 'wp_head', 'pasw2015_customizer_css' );
 
 function pasw2015_customizer_live_preview() {
 

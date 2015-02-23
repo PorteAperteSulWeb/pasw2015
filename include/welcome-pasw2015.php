@@ -53,11 +53,14 @@ function pasw2015_welcome() { ?>
                 $user = json_decode( wp_remote_retrieve_body(
                     wp_remote_get( 'https://api.github.com/users/'.$contributor->login )
                     ) );
+                $commit = json_decode( wp_remote_retrieve_body(
+                    wp_remote_get( 'https://api.github.com/repos/PorteApertesulWeb/pasw2015/commits?author='.$contributor->login )
+                    ) );
                 if ($user->name == '') { $nome = $contributor->login; } else { $nome = $user->name; }
             echo '<li class="wp-person">';
                 echo '<a href="'.$contributor->html_url.'"><img src="'.$user->avatar_url.'" class="gravatar"></a>';
                 echo '<a class="web" href="'.$contributor->html_url.'">'.$nome.'</a>';
-                echo '<span class="title"><small>'.$user->location.'</small></span>';
+                echo '<span class="title"><small>'.$commit->stats->total.'</small></span>';
             echo '</li>';
             }
         ?>
