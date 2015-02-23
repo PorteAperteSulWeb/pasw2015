@@ -19,7 +19,7 @@ function pasw2015_welcome() { ?>
         <br/>Bello, accessibile e innovativo.</div>
         <div class="wp-badge">Pasw2015
         <?php
-            echo get_option('pasw2015_version') . '<br/>'; 
+            echo get_option('pasw2015_version') . '<br/>';
             $filename = get_theme_root() . '/pasw2015/style.css';
             if (file_exists($filename)) {
                 echo date ("d M Y", filemtime($filename));
@@ -37,6 +37,31 @@ function pasw2015_welcome() { ?>
         </div>
 
 <ul class="wp-people-group ">
+
+        <h2>Sviluppatori</h2>
+        <?php
+            $transient_key = 'pasw2015_contributors';
+            $contributors = get_transient( $transient_key );
+
+            $contributors = json_decode( wp_remote_retrieve_body(
+                wp_remote_get( 'https://api.github.com/repos/PorteApertesulWeb/pasw2015/contributors' )
+            ) );
+
+            set_transient( $transient_key, $contributors, 3600 );
+
+            foreach ( $contributors as $contributor ) {
+                $user = json_decode( wp_remote_retrieve_body(
+                    wp_remote_get( 'https://api.github.com/users/'.$contributor->login )
+                    ) );
+                if ($user->name == '') { $nome = $contributor->login; } else { $nome = $user->name; }
+            echo '<li class="wp-person">';
+                echo '<a href="'.$contributor->html_url.'"><img src="'.$user->avatar_url.'" class="gravatar"></a>';
+                echo '<a class="web" href="'.$contributor->html_url.'">'.$nome.'</a>';
+                echo '<span class="title"><small>'.$user->location.'</small></span>';
+            echo '</li>';
+            }
+        ?>
+        <hr>
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/18434072beb69131948d13ec49b43bc3.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Alberto Ardizzone</a>

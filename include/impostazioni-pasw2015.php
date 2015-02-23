@@ -5,7 +5,7 @@ add_action('admin_enqueue_scripts', 'pasw2015_upload_admin_scripts');
 function pasw2015_upload_admin_scripts() {
     if (isset($_GET['page']) && $_GET['page'] == 'pasw2015-impostazioni') {
         wp_enqueue_media();
-        wp_register_script('pasw2015-upload-admin-js', get_template_directory_uri() . '/js/uploader.js', array('jquery'));
+        wp_register_script('pasw2015-upload-admin-js', get_template_directory_uri() . '/include/js/uploader.js', array('jquery'));
         wp_enqueue_script('pasw2015-upload-admin-js');
     }
 }
@@ -28,6 +28,9 @@ function pasw2015_impostazioni() { ?>
                     <div class="welcome-panel-column">
                         <h4>Stile</h4>
 
+                        <input id="responsive" type="checkbox" name="pasw_responsive_layout_n"
+                        <?php $get_pasw_responsive_layout = get_option('pasw_responsive_layout');
+                        if ($get_pasw_responsive_layout == '1') { echo ' checked="checked" '; } ?>><label for="responsive">layout responsivo</label><br/>
                         <input id="fluid" type="checkbox" name="pasw_fluid_layout_n"
                         <?php $get_pasw_fluid_layout = get_option('pasw_fluid_layout');
                         if ($get_pasw_fluid_layout == '1') { echo ' checked="checked" '; } ?>><label for="fluid">layout allargato</label><br/>

@@ -121,9 +121,35 @@ function is_pasw2015_child($c) {
 function pasw2015_stili() {
     // Main stylesheet
     wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
-    wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  null, null, 'print' );
+    wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/include/css/print.css',  null, null, 'print' );
+
+    if ( get_option('pasw_responsive_layout') ) {
+        wp_enqueue_style( 'pasw2015_styles-responsive', get_template_directory_uri() . '/include/css/responsive.css',  array() );
+        $enqueue_pasw2015_java = true;
+    }
+
+    if ( get_option('pasw_fixedmenu') ) {
+        $enqueue_pasw2015_java = true;
+    }
+
+    if ($enqueue_pasw2015_java) { pasw2015_enqueuejavascript(); }
+
 }
 add_action( 'wp_enqueue_scripts', 'pasw2015_stili' );
+
+function pasw2015_enqueuejavascript() {
+    wp_enqueue_script('jquery' );
+
+    wp_register_script( 'pasw2015_javascript', get_template_directory_uri() . '/include/js/pasw2015.js' );
+    $pasw2015_javascript_param = array(
+        'responsive' => get_option('pasw_responsive_layout'),
+        'fixedmenu' => get_option('pasw_fixedmenu'),
+        'headersizeh' => get_custom_header()->height
+    );
+    wp_localize_script( 'pasw2015_javascript', 'pasw2015_javascript_params', $pasw2015_javascript_param );
+    wp_enqueue_script( 'pasw2015_javascript' );
+
+}
 
 function pasw2015_favicon() {
     echo '<link rel="Shortcut Icon" type="image/x-icon" href="'.get_option('pasw_favicon').'" />';
@@ -337,7 +363,12 @@ function pasw2015_customizer_css() { ?>
         <?php
             $c_principale = get_theme_mod( 'pasw2015_colore_principale', '#00004d');
             $c_secondario = get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED');
+
+            if (get_option('pasw_fixedmenu') == 1 && is_user_logged_in() ) {
+                echo '.f-nav { top:30px; }';
+            }
         ?>
+
         h1, h2, h3, h4 {
             color: <?php echo $c_principale; ?>;
         }
@@ -377,6 +408,7 @@ function pasw2015_customizer_css() { ?>
         input#submit{
             background-color: <?php echo $c_secondario; ?>;
             border-bottom: 1px solid <?php echo $c_principale; ?>;
+        }
     </style>
 
     <?php
@@ -387,7 +419,7 @@ function pasw2015_customizer_live_preview() {
 
     wp_enqueue_script(
         'pasw2015-theme-customizer',
-        get_template_directory_uri() . '/js/theme-customizer.js',
+        get_template_directory_uri() . '/include/js/theme-customizer.js',
         array( 'jquery', 'customize-preview' ),
         '0.3.0',
         true

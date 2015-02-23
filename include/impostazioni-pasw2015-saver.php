@@ -57,5 +57,11 @@
                 update_option('pasw_fluid_layout', '0');
         }
 
+        if (isset($_POST['pasw_responsive_layout_n'])){
+                update_option('pasw_responsive_layout', '1');
+            } else {
+                update_option('pasw_responsive_layout', '0');
+        }
+
     }
 ?>

@@ -12,26 +12,6 @@
 
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
-<?php if (get_option('pasw_fixedmenu') == 1) { ?>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-jQuery("document").ready(function($){
-
-    var nav = $('#topbar');
-
-    $(window).scroll(function () {
-        if ( $(window).width() > 1024 && $(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?>) {
-            nav.addClass("f-nav");
-        } else {
-            nav.removeClass("f-nav");
-        }
-    });
-
-});
-</script>
-<?php if ( is_user_logged_in() ) { echo '<style>.f-nav { top:30px; }</style>'; } ?>
-<?php } ?>
-
 <?php
     wp_head();
     include(TEMPLATEPATH . '/include/frontend/google-analytics.php');
@@ -111,20 +91,3 @@ jQuery("document").ready(function($){
 <div id="responsive-controls" style="color:white;">
   <div id="responsive-nav">NAVIGAZIONE</div>
 </div>
-    <script>
-    $(document).ready(function(){
-        $("#responsive-controls").click(function(){
-            if ( $( "#leftsidebar" ).hasClass( "ls-responsive" ) ) {
-                $( "#leftsidebar" ).removeClass( "ls-responsive" );
-                $( "#rightsidebar" ).removeClass( "rs-responsive" );
-            } else {
-                $( "#leftsidebar" ).addClass( "ls-responsive" );
-                $( "#rightsidebar" ).addClass( "rs-responsive" );
-            }
-        });
-        $("#centrecontent").click(function(){
-            $( "#leftsidebar" ).removeClass( "ls-responsive" );
-            $( "#rightsidebar" ).removeClass( "rs-responsive" );
-        });
-    });
-    </script>
