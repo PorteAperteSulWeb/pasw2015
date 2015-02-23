@@ -16,6 +16,7 @@ function load_modules() {
         require ( get_template_directory() . '/include/moduli/pasw2015-multiple-sidebars.php' );
         pasw_sidebar_generator::init();
     }
+    if (get_option('pasw_eulaw') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-eulaw.php' ); }
 }
 add_action('admin_init', "reg_set_p");
 
