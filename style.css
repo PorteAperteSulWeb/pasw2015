@@ -1542,6 +1542,39 @@ padding: 0 3px;
 }
 /**** end widget show all category ****/
 
+/* coockie */
+.pasw2015cookies {
+    background: none repeat scroll 0 0 #313131;
+    bottom: 0;
+    color: #fff;
+    display: none;
+    position: fixed;
+    width: 100%;
+    z-index: 999999;
+}
+
+.cookie-pop {
+    overflow: hidden;
+    padding: 15px 20px 5px;
+    position: relative;
+    text-align: center;
+}
+
+.cookie-pop a:link  {
+	color: red;
+}
+
+.cookie-pop a:hover {
+color:white;
+}
+
+p.pasw2015cookies-banner-text {
+    display: inline-block;
+    font-size: 10 px;
+    line-height: 1 em;
+    padding: 0 10px 10px 0;
+    position: relative;
+}
 
 /* ------- Fluid Columns ------- */
 .one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth { position:relative; margin-right:4%; float:left; min-height:1px; height:auto!important; height:1px; }
