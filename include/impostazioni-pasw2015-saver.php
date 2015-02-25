@@ -18,6 +18,13 @@
         update_option( 'pasw_ga_user', $_POST["pasw_ga_user_n"] );
         update_option( 'pasw_submenu', $_POST["pasw_submenu_n"] );
 
+        if (get_option('pasw_eulaw') == 1) {
+        update_option( 'pasw_eucookie_button', $_POST["pasw_eucookie_button_n"] );
+        update_option( 'pasw_eucookie_info', $_POST["pasw_eucookie_info_n"] );
+        update_option( 'pasw_eucookie_page', $_POST["pasw_eucookie_page_n"] );
+        update_option( 'pasw_eucookie_msg', htmlentities(stripslashes($_POST["pasw_eucookie_msg_n"])) );
+        }
+
         if ($_POST["pasw_ga_password_n"] != '#OK#') {
             update_option( 'pasw_ga_password', $qEncoded );
         }

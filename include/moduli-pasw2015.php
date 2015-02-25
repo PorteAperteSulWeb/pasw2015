@@ -34,6 +34,13 @@
             }
         }
 
+        if (isset($_GET['switcheulaw']) || wp_verify_nonce($_GET['switcheulaw'], 'switcheulaw')) {
+            if (get_option('pasw_eulaw') == 0) {
+                update_option('pasw_eulaw', '1');
+            } else {
+                update_option('pasw_eulaw', '0');
+            }
+        }
         ?>
 
     <h2>Funzioni aggiuntive integrate</h2>
@@ -115,6 +122,21 @@
             <td class="column-description desc">
                 <div class="plugin-description">
                     <p>Abilita un nuovo sistema di catalogazione delle informazioni basato su destinatari (alunni, genitori, ATA, docenti). Attualmente in <strong>beta</strong>. Documentazione in fase di sviluppo</p>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="<?php if (get_option('pasw_eulaw') == 0) { echo 'in'; } ?>active"><th scope="row" class="check-column"></th>
+            <td class="plugin-title"><strong>EU Cookie Law </strong><div class="row-actions visible">
+                <span class="activate">
+                    <a href="<?php print wp_nonce_url(admin_url('admin.php?page=pasw2015-moduli'), 'switcheulaw', 'switcheulaw');?>" class="edit">
+                        <?php if (get_option('pasw_eulaw') == 0) { echo 'Attiva'; } else { echo 'Disattiva'; } ?>
+                    </a>
+                </span>
+            </td>
+            <td class="column-description desc">
+                <div class="plugin-description">
+                    <p>Questo modulo inserisce un banner informativo sull'uso dei cookie. <strong>Funzione in fase beta.</strong></p>
                 </div>
             </td>
         </tr>

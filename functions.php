@@ -129,7 +129,7 @@ function pasw2015_stili() {
         $enqueue_pasw2015_java = true;
     }
 
-    if ( get_option('pasw_fixedmenu') ) {
+    if ( get_option('pasw_fixedmenu') || get_option('pasw_eulaw') ) {
         $enqueue_pasw2015_java = true;
     }
 
@@ -143,9 +143,18 @@ function pasw2015_enqueuejavascript() {
 
     wp_register_script( 'pasw2015_javascript', get_template_directory_uri() . '/include/js/pasw2015.js' );
     $pasw2015_javascript_param = array(
+
         'responsive' => get_option('pasw_responsive_layout'),
+
         'fixedmenu' => get_option('pasw_fixedmenu'),
-        'headersizeh' => get_custom_header()->height
+        'headersizeh' => get_custom_header()->height,
+
+        'eulaw' => get_option('pasw_eulaw'),
+        'message' => get_option('pasw_eucookie_msg') ,
+        'button'  => get_option('pasw_eucookie_button'),
+        'more'    => get_option('pasw_eucookie_info'),
+        'url'    => get_permalink(get_option('pasw_eucookie_page'))
+
     );
     wp_localize_script( 'pasw2015_javascript', 'pasw2015_javascript_params', $pasw2015_javascript_param );
     wp_enqueue_script( 'pasw2015_javascript' );
@@ -384,12 +393,15 @@ function pasw2015_customizer_css() { ?>
             box-shadow: inset 0px 0px 10px <?php echo $c_principale; ?>;
         }
 
-        #topbar, #header ul.sito, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
+        #topbar, #header ul.sito, .cookie-pop, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
 
         #wrapper, #topbar, #header ul.sito, #footer {
             box-shadow: 0 0 3px <?php echo $c_principale; ?>;
+        }
+        .cookie-pop {
+            box-shadow: 0 0 3px <?php echo $c_secondario; ?>;
         }
         .posttitle, .pagetitle, #leftsidebar h2 {
             border-color: <?php echo $c_principale; ?>;
@@ -399,7 +411,7 @@ function pasw2015_customizer_css() { ?>
             border-color: <?php echo $c_secondario; ?>;
         }
 
-        #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget {
+        #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget, .cookie-pop a {
             background-color: <?php echo $c_secondario; ?>;
         }
 
