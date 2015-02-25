@@ -1,5 +1,7 @@
 <?php 
 
+if (get_option('pasw_eucookie_page') && get_option('pasw_eucookie_msg') && get_option('pasw_eucookie_button') && get_option('pasw_eucookie_info')){
+
 function pasw2015_eu_law_script() {
 
    wp_enqueue_script(
@@ -33,3 +35,5 @@ function pasw2015_eu_law_script() {
 }
 
 add_action('wp_enqueue_scripts', 'pasw2015_eu_law_script'); 
+
+}
