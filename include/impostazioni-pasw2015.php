@@ -140,6 +140,62 @@ function pasw2015_impostazioni() { ?>
             </div>
         </div>
 
+<?php if (get_option('pasw_eulaw') == 1) {?> 
+		<div id="welcome-panel" class="welcome-panel">
+            <div class="welcome-panel-content">
+				<h3>Cookie Law Info</h3>
+				<p class="about-description">direttiva europea Cookie Law recepita nel 2012 in Italia.</p>
+                <div class="welcome-panel-column-container">
+                    					    <br />
+						
+						<label for="eucookie_msg">Messaggio:</label>
+						<?php
+                            $content = html_entity_decode(get_option('pasw_eucookie_msg'));
+							if ($content == '')
+							{
+							$content ='I cookie ci aiutano a migliorare il sito. Utilizzando il sito, accetti l\'utilizzo dei cookie da parte nostra.';
+							}
+                            $editor_settings =  array (
+									'textarea_rows' => 2,
+									'media_buttons' => FALSE,
+                                    'teeny'         => TRUE,
+                                    'tinymce'       => TRUE
+                            );
+                            wp_editor( $content, 'pasw_eucookie_msg_n', $editor_settings );
+                        ?>
+						
+						<br />						
+						<label for="eucookie_button">Testo pulsante accetta cookie:</label>
+                        <input id="eucookie_button" type="text" name="pasw_eucookie_button_n" value="<?php if (get_option('pasw_eucookie_button') != '') {echo stripslashes(get_option('pasw_eucookie_button'));} else {echo 'Accetta';} ?>" class="regular-text">
+                        
+						
+						<br/><label for="eucookie_info">Testo link altre informazioni:</label>
+                        <input id="eucookie_info" type="text" name="pasw_eucookie_info_n" value="<?php if (get_option('paws_eucookie_info') !='') {echo stripslashes(get_option('pasw_eucookie_info'));} else {echo 'Informazioni';} ?>" class="regular-text">
+                        
+						
+						<br/><label for="eucookie_page"><?php _e('Page per EU LAW Cookies') ?></label>
+					
+ <?php $args = array(
+    'depth'                 => 0,
+    'child_of'              => 0,
+    'selected'              => get_option('pasw_eucookie_page'),
+    'echo'                  => 1,
+    'name'                  => 'pasw_eucookie_page_n',
+    'id'                    => null, 
+    'show_option_none'      => null, 
+    'show_option_no_change' => null, 
+    'option_none_value'     => null, 
+); ?>
+
+<?php wp_dropdown_pages($args); ?>
+
+
+
+				</div>	
+			</div>
+		</div>	
+		<?php } ?>
+
         <div id="welcome-panel" class="welcome-panel">
             <div class="welcome-panel-content">
                 <h3>Footer</h3>
