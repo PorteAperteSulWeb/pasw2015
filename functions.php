@@ -311,6 +311,10 @@ function pasw2015_customizer_css() { ?>
         <?php
             $c_principale = get_theme_mod( 'pasw2015_colore_principale', '#00004d');
             $c_secondario = get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED');
+            
+            if ( ! display_header_text() ) {
+                echo '.site-title, .site-description { display:none; }';
+            }
         ?>
         h1, h2, h3, h4 {
             color: <?php echo $c_principale; ?>;
