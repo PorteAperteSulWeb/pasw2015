@@ -61,16 +61,17 @@ jQuery("document").ready(function($){
 
         <a href="<?php bloginfo('url'); ?>"><img style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
 
-            <h1 style="color:#<?php header_textcolor(); ?>;">
+            <h1 style="color:#<?php header_textcolor(); ?>;" class="site-title">
                 <a style="color:#<?php header_textcolor(); ?>;" href="<?php bloginfo('url'); ?>">
                     <?php bloginfo('name'); ?>
                 </a>
             </h1>
-            <?php echo stripslashes(get_bloginfo('description')); ?>
+            <div class="site-description"><?php bloginfo('description'); ?>
             <br/>
             <small>
                 <?php echo stripslashes(get_option('pasw_indirizzo_scuola')) . ' &bull; ' . stripslashes(get_option('pasw_recapito_scuola')); ?>
             </small>
+            </div>
 
     </div>
 </div>
