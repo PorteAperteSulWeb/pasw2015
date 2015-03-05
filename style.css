@@ -8,6 +8,9 @@ Tags: pasw, scuole, pubblica amministrazione, accessibile, trasparente, personal
 GitHub Theme URI: https://github.com/PorteAperteSulWeb/pasw2015
 GitHub Branch: master
 */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
 .clear:before,.clear:after {
 content:" ";
 display:table;
