@@ -1547,24 +1547,32 @@ padding: 0 3px;
 
 /* coockie */
 .pasw2015cookies {
-    background: none repeat scroll 0 0 #313131;
-    bottom: 0;
-    color: #fff;
+    background: none repeat scroll 0 0 #222;
     display: none;
+    color: #ccc;
+    direction: ltr;
+    font: 400 13px/32px "Open Sans",sans-serif;
+    left: 0;
+    min-width: 600px;
     position: fixed;
+    bottom: 0;
     width: 100%;
-    z-index: 999999;
+    z-index: 99999;
 }
 
 .cookie-pop {
     overflow: hidden;
-    padding: 15px 20px 5px;
+    height: 32px;
     position: relative;
     text-align: center;
 }
 
 .cookie-pop a:link  {
 	color: red;
+}
+
+.cookie-pop a:visited  {
+	color: #5F9EA0;
 }
 
 .cookie-pop a:hover {
