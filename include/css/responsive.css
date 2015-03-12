@@ -51,6 +51,12 @@ height: 40px;
 		padding: 0 auto;
 		text-align:center;
 	}
+	#rightsidebar {
+		display:none;
+	}
+	#centrecontent {
+		width: 97%!important;
+	}
 }
 
 @media screen and (max-width: 1024px) {
@@ -81,11 +87,11 @@ height: 40px;
 		padding: 0;
 		height: auto;
 	}
-	#sidebarleft-100-background, #leftsidebar, #rightsidebar {
+	#sidebarleft-100-background, #leftsidebar {
 		display:none;
 	}
 	#centrecontent {
-		width: 97%!important;
+		width: 80%;
 	}
 	#responsive-controls {
 		display:inherit;
