@@ -1679,17 +1679,16 @@ padding-top:5px;
     display: none;
     position: fixed;
     right: 10px;
-    width: 100%;
     z-index: 999999;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .cookie-pop {
-    overflow: hidden;
     padding: 5px 10px;
     position: relative;
     height: 35px;
     padding: 5px 10px;
-    border-radius: 5px;
 }
 
 .cookie-pop a {
