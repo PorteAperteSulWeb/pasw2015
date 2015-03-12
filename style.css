@@ -1674,19 +1674,22 @@ padding-top:5px;
 /* coockie */
 .pasw2015cookies {
     background: none repeat scroll 0 0 #313131;
-    bottom: 0;
+    bottom: 5px;
     color: #fff;
     display: none;
     position: fixed;
+    right: 10px;
     width: 100%;
     z-index: 999999;
 }
 
 .cookie-pop {
     overflow: hidden;
-    padding: 15px 20px 5px;
+    padding: 5px 10px;
     position: relative;
-    text-align: center;
+    height: 35px;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 .cookie-pop a {
