@@ -37,9 +37,6 @@ height: 40px;
 	#header h1 {
 		font-size: 6vw;
 	}
-	#header-interno {
-		font-size: 4vw;
-	}
 	#header img.logo {
 		display:none;
 	}
@@ -77,9 +74,6 @@ height: 40px;
 	}
 	#header h1 {
 		font-size:5vw;
-	}
-	#header-interno {
-		font-size: 4vw;
 	}
 	#header ul.sito {
 		width: 100%;
