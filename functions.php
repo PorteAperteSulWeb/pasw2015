@@ -74,37 +74,21 @@ function reg_set_p() {
 
 }
 
+add_action( 'after_setup_theme', 'pasw2015_setup' );
 add_action('admin_notices', 'pasw_alerts');
-
 function pasw_alerts() {
     if (is_admin() && get_option('pasw_wrongdirectory') == 1) {
         echo '<div class="error"><p>Pasw2015 è installato nella directory "<b>' . get_template() . '</b>". Per un corretto funzionamento è necessario cambiare il nome della cartella in "pasw2015".<br/>
         Questo messaggio scomparirà automaticamente correggendo il problema.</p></div>';
     }
 }
-
 function pasw2015_setup() {
     if (get_template() != 'pasw2015') {
         update_option('pasw_wrongdirectory', 1);
     } else {
         delete_option('pasw_wrongdirectory');
     }
-    
-    $args = array(
-    'width'         => 1150,
-    'height'        => 125,
-    'flex-height'   => true,
-    'flex-width'    => true,
-    'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
-    'default-repeat'=> 'repeat',
-    'default-text-color'    => '#00004d'
-);
-add_theme_support( 'custom-header', $args );
-
-add_theme_support('post-thumbnails');
-add_theme_support( 'title-tag' );
-} 
-add_action( 'after_setup_theme', 'pasw2015_setup' );
+}
 
 function get_pasw2015_version() {
 	$p2015_theme = wp_get_theme( 'pasw2015' );
@@ -150,6 +134,19 @@ $defaults = array(
     'default-repeat'         => 'repeat'
 );
 add_theme_support( 'custom-background', $defaults );
+
+$args = array(
+    'width'         => 1150,
+    'height'        => 125,
+    'flex-height'   => true,
+    'flex-width'    => true,
+    'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
+    'default-repeat'=> 'repeat',
+    'default-text-color'    => '#00004d'
+);
+add_theme_support( 'custom-header', $args );
+add_theme_support('post-thumbnails');
+add_theme_support( 'title-tag' );
 
 /* Menu */
 add_action('init', 'register_my_menus');
