@@ -2,15 +2,15 @@
 <html>
 
 <head>
-
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width">
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 
-<title><?php if ( function_exists('optimal_title') ) { ?><?php optimal_title(); ?><?php bloginfo('name'); ?><?php } else { ?><?php bloginfo('name'); ?> <?php if ( is_single() ) { ?> &raquo; Blog Archive <?php } ?> <?php wp_title(); ?><?php } ?></title>
 <meta name="viewport" content="width=device-width">
+<meta property="og:image" content="<?php echo get_option('pasw_logo'); ?>" />
+<link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-
-<?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
 <?php
     wp_head();
