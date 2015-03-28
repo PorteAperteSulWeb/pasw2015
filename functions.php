@@ -150,9 +150,7 @@ $args = array(
 add_theme_support( 'custom-header', $args );
 
 add_theme_support('post-thumbnails');
-
-/* Hack per visualizzare A.T. e CIRCOLARI (plugin) negli archivi @ M. Milesi 15 settembre 2014 */
-
+add_theme_support( 'title-tag' );
 
 /* Menu */
 add_action('init', 'register_my_menus');
