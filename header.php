@@ -46,11 +46,13 @@
                     <?php bloginfo('name'); ?>
                 </a>
             </h1>
-            <?php echo stripslashes(get_bloginfo('description')); ?>
-            <br/>
-            <small>
-                <?php echo stripslashes(get_option('pasw_indirizzo_scuola')) . ' &bull; ' . stripslashes(get_option('pasw_recapito_scuola')); ?>
-            </small>
+            <span>
+                <?php echo stripslashes(get_bloginfo('description')); ?>
+                <br>
+                <small>
+                    <?php echo stripslashes(get_option('pasw_indirizzo_scuola')) . ' &bull; ' . stripslashes(get_option('pasw_recapito_scuola')); ?>
+                </small>
+            </span>
 
     </div>
 </div>
