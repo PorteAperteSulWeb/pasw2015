@@ -1,6 +1,6 @@
 jQuery("document").ready(function($){
 
-	//if (pasw2015_javascript_params.fixedmenu) {
+	if (pasw2015_javascript_params.fixedmenu) {
 		var nav = $('#topbar');
 
 		$(window).scroll(function () {
@@ -10,7 +10,7 @@ jQuery("document").ready(function($){
 				nav.removeClass("f-nav");
 			}
 		});
-	//}
+	}
 
 	if (pasw2015_javascript_params.responsive) {
 		$("#responsive-controls").click(function(){
