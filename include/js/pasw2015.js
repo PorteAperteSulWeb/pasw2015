@@ -1,9 +1,7 @@
 jQuery("document").ready(function($){
 
-	if (pasw2015_javascript_params.fixedmenu) {
+	if (pasw2015_javascript_params.fixedmenu != 0) {
 		var nav = $('#topbar');
-		
-		alert(pasw2015_javascript_params.fixedmenu);
 
 		$(window).scroll(function () {
 			if ( pasw2015_javascript_params.fixedmenu && $(window).width() > 1024 && $(this).scrollTop() > pasw2015_javascript_params.headersizeh ) {
