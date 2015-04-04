@@ -572,10 +572,9 @@ color:#3A291F!important;
 #topbar {
 height:auto!important;
 min-height:30px;
-width:100%;
 padding:0;
 position:relative;
-float:left;
+float:right;
 color:#F0F0F0;
 }
 
