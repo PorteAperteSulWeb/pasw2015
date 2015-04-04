@@ -383,6 +383,10 @@ function pasw2015_customizer_css() { ?>
             $c_principale = get_theme_mod( 'pasw2015_colore_principale', '#00004d');
             $c_secondario = get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED');
 
+            if ( ! display_header_text() ) {
+                echo '.site-title, .site-description { display:none; }';
+            }
+            
             if (get_option('pasw_fixedmenu') == 1 && is_user_logged_in() ) {
                 echo '.f-nav { top:30px; }';
             }
