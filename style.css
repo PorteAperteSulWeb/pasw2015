@@ -584,8 +584,6 @@ margin-top:0;
 #topbar li a {
 padding:5px 10px;
 float:left;
-border-right:1px solid;
-border-right-color:#F0F0F0;
 }
 
 #topbar ul li {
@@ -596,12 +594,10 @@ display:inline;
 #topbar ul li a {
 text-decoration:none;
 color:#FFF;
-transition:background .5s color .2s;
 }
 
 #topbar ul li a:hover {
 color:#3A291F;
-transition:background .5s color .2s;
 }
 
 #topbar ul li.current_page_item a {
