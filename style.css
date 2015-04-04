@@ -523,10 +523,11 @@ height:25px;
 padding:2px;
 margin:0;
 color:#F0F0F0;
-float:right;
+float:left;
 clear:both;
 text-shadow:none;
 position:relative;
+width:100%;
 }
 
 #header ul li {
