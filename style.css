@@ -27,11 +27,6 @@ z-index:99999999;
 clear:both;
 }
 
-#menu-menu-orizzontale li:first-child a {
-width:18.2%;
-text-align:center;
-}
-
 #sidebarleft-100-background {
 width:20%;
 min-width:170px;
@@ -571,10 +566,11 @@ color:#3A291F!important;
 #topbar {
 height:auto!important;
 min-height:30px;
-padding:0;
-position:relative;
-float:right;
-margin: 60px;
+padding: 0;
+position: relative;
+float: right;
+margin: 60px 20px;
+text-align: right;
 }
 
 #topbar ul {
@@ -589,6 +585,7 @@ float:left;
 #topbar ul li {
 margin:0;
 display:inline;
+float: left;
 }
 
 #topbar ul li a {
