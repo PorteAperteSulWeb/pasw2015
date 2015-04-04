@@ -27,7 +27,7 @@
 
     <div id="header-interno">
 
-        <a href="<?php bloginfo('url'); ?>"><img style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
+        <a href="<?php bloginfo('url'); ?>"><img class="site-title" style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
 
             <h1 style="color:#<?php header_textcolor(); ?>;" class="site-title">
                 <a style="color:#<?php header_textcolor(); ?>;" href="<?php bloginfo('url'); ?>">
