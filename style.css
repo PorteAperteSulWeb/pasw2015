@@ -592,8 +592,10 @@ display:inline;
 }
 
 #topbar ul li a {
-text-decoration:none;
-color:#FFF;
+  font-size: 2.2em;
+  font-family: "Open Sans";
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 #topbar ul li a:hover {
