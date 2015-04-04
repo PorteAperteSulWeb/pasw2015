@@ -397,11 +397,11 @@ function pasw2015_customizer_css() { ?>
             color: <?php echo $c_principale; ?>;
         }
 
-        #header ul.sito, .cookie-pop, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
+        .cookie-pop, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
 
-        #wrapper, #header ul.sito, #footer {
+        #wrapper, #footer {
             box-shadow: 0 0 3px <?php echo $c_principale; ?>;
         }
         .cookie-pop {
@@ -415,7 +415,7 @@ function pasw2015_customizer_css() { ?>
             border-color: <?php echo $c_secondario; ?>;
         }
 
-        #sidebarleft-100-background, #topbar ul li a:hover, .showall_widget, .cookie-pop a {
+        #sidebarleft-100-background, .showall_widget, .cookie-pop a {
             background-color: <?php echo $c_secondario; ?>;
         }
 
