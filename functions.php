@@ -402,10 +402,6 @@ function pasw2015_customizer_css() { ?>
             color: <?php echo $c_principale; ?>;
         }
 
-        #header {
-            box-shadow: inset 0px 0px 10px <?php echo $c_principale; ?>;
-        }
-
         #header ul.sito, .cookie-pop, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
