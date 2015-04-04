@@ -424,7 +424,7 @@ function pasw2015_customizer_css() { ?>
             border-color: <?php echo $c_secondario; ?>;
         }
 
-        #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget, .cookie-pop a {
+        #sidebarleft-100-background, #topbar ul li a:hover, .showall_widget, .cookie-pop a {
             background-color: <?php echo $c_secondario; ?>;
         }
 
