@@ -54,37 +54,25 @@
             </div>
 
     </div>
-</div>
+    
+    <div id="topbar" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
 
-<div id="topbar" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
-
-    <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
-        <div>
-            <label class="screen-reader-text" for="s">Cerca:</label>
-            <input placeholder="Cerca..." type="text" value="" name="s" id="s" />
-        </div>
-    </form>
-
-<?php
-    $append_link = '<ul id="%1$s" class="%2$s">%3$s';
-    if ( is_user_logged_in() ) {
-                $append_link .= '<li><a href="' . wp_logout_url() . '" id="btn-logout">Esci</a></li>';
-        } else if (!get_option('pasw_menu_login')) {
-                $append_link .= '<li><a href="' . wp_login_url() . '" id="btn-login">Log in</a></li>';
-    }
-    $append_link .= '</ul>';
-
-    if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-2' ) ) {
-        wp_nav_menu( array( 'menu' => '', 'items_wrap' => $append_link, 'container' => '', 'menu_class' => 'menu-principale-responsivo', 'theme_location' => 'menu-2' ) );
-    } else     {
-        echo '
-        <ul id="menu-menu-superiore">
-            <li id="menu-item-0" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-0">
-
-            </li>
-        </ul>';
-    }
-?>
+    <?php
+        $append_link = '<ul id="%1$s" class="%2$s">%3$s</ul>';
+    
+        if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-2' ) ) {
+            wp_nav_menu( array( 'menu' => '', 'items_wrap' => $append_link, 'container' => '', 'menu_class' => 'menu-principale-responsivo', 'theme_location' => 'menu-2' ) );
+        } else     {
+            echo '
+            <ul id="menu-menu-superiore">
+                <li id="menu-item-0" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-0">
+    
+                </li>
+            </ul>';
+        }
+    ?>
+    
+    </div>
 
 </div>
 
