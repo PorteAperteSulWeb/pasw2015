@@ -573,6 +573,19 @@ margin: 60px 20px;
 text-align: right;
 }
 
+#topbar li:first-child a {
+color:darkblue;
+}
+#topbar li:nth-child(2) a {
+color:darkred;
+}
+#topbar li:nth-child(3) a {
+color:darkgreen;
+}
+#topbar li:nth-child(4) a {
+color:maroon;
+}
+
 #topbar ul {
 margin-top:0;
 }
