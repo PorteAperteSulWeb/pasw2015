@@ -184,7 +184,7 @@ add_theme_support( 'custom-background', $defaults );
 
 $args = array(
     'width'         => 1150,
-    'height'        => 125,
+    'height'        => 160,
     'flex-height'   => true,
     'flex-width'    => true,
     'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
