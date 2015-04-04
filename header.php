@@ -25,14 +25,6 @@
 
 <div id="header" style="height: <?php echo get_custom_header()->height; ?>px; background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
-        <?php
-            if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
-                wp_nav_menu( array( 'menu' => '', 'container' => 'ul', 'menu_class' => 'sito', 'theme_location' => 'menu-1' ) );
-            } else {
-                echo '<ul class="sito"></ul>';
-            }
-        ?>
-    <div class="clear"></div>
     <div id="header-interno">
 
         <a href="<?php bloginfo('url'); ?>"><img style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="" class="logo"/></a>
