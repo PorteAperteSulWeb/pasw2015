@@ -32,6 +32,8 @@ width:20%;
 min-width:170px;
 position:absolute;
 height:100%;
+box-shadow: 0 0 3px #00004d;
+border-radius:5px;
 }
 
 .shortcode-destinatari small {
@@ -202,7 +204,6 @@ width:98%;
 position:relative;
 background-color:#FFF;
 z-index:1;
-overflow:hidden;
 border-radius:5px;
 }
 
