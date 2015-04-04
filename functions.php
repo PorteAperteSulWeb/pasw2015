@@ -406,7 +406,7 @@ function pasw2015_customizer_css() { ?>
             background-color: <?php echo $c_principale; ?>;
         }
 
-        #wrapper, #header ul.sito, #footer {
+        #sidebarleft-100-background, #header ul.sito, #footer {
             box-shadow: 0 0 3px <?php echo $c_principale; ?>;
         }
         .cookie-pop {
