@@ -598,6 +598,14 @@ display:inline;
   font-weight: 900;
 }
 
+#topbar ul li a span {
+font-size: 13px;
+float: left;
+padding: 10px 5px;
+text-transform: none;
+font-weight: normal;
+}
+
 #topbar ul:first-child {
 color:red;
 }
