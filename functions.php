@@ -201,12 +201,7 @@ add_theme_support('post-thumbnails');
 /* Menu */
 add_action('init', 'register_my_menus');
 function register_my_menus() {
-  if (get_option('pasw_secondo_menu')) {
-    $array_menu = array('menu-1' => 'Menù Superiore', 'menu-2' => 'Menù Principale', 'menu-4' => 'Menù Principale Secondario', 'menu-3' => 'Menù Inferiore');
-  } else {
-    $array_menu = array('menu-1' => 'Menù Superiore', 'menu-2' => 'Menù Principale', 'menu-3' => 'Menù Inferiore');
-  }
-  register_nav_menus($array_menu);
+  register_nav_menus( array('menu-2' => 'Menù Principale', 'menu-3' => 'Menù Inferiore') );
 }
 
 function pasw2015_widgets_init() {
