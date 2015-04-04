@@ -40,8 +40,6 @@
                 <?php echo stripslashes(get_option('pasw_indirizzo_scuola')) . ' &bull; ' . stripslashes(get_option('pasw_recapito_scuola')); ?>
             </small>
             </div>
-
-    </div>
     
     <div id="topbar" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
 
@@ -59,6 +57,8 @@
             </ul>';
         }
     ?>
+    
+    </div>
     
     </div>
 
