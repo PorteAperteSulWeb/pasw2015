@@ -486,7 +486,8 @@ left:0;
 bottom:0;
 right:0;
 max-height:125px;
-padding:10px;
+max-width: 1250px;
+padding: 30px 10px;
 }
 
 #header-interno a, #header img.logo, #header-interno span {
@@ -566,7 +567,7 @@ min-height:30px;
 padding: 0;
 position: relative;
 float: right;
-margin: 60px 20px;
+margin: 40px 20px;
 text-align: right;
 }
 
