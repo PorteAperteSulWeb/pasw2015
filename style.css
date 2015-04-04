@@ -591,6 +591,26 @@ margin-top:0;
 #topbar li a {
 padding:5px 10px;
 float:left;
+ text-shadow: 0 0 10px white,
+                   0 0 20px white,
+                   0 0 30px white,
+                   0 0 40px white,
+                   0 0 70px white,
+                   0 0 80px white,
+                   0 0 100px white,
+                   0 0 150px white;
+}
+#topbar li a {
+padding:5px 10px;
+float:left;
+ text-shadow: 0 0 10px yellow,
+                   0 0 20px yellow,
+                   0 0 30px yellow,
+                   0 0 40px yellow,
+                   0 0 70px yellow,
+                   0 0 80px yellow,
+                   0 0 100px yellow,
+                   0 0 150px yellow;
 }
 
 #topbar ul li {
@@ -616,10 +636,6 @@ font-weight: normal;
 
 #topbar ul:first-child {
 color:red;
-}
-
-#topbar ul li a:hover {
-color:#3A291F;
 }
 
 #topbar ul li.current_page_item a {
