@@ -23,10 +23,6 @@
 
 <body class="custom-background">
 
-<div id="wrapper" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
-
-<div id="sidebarleft-100-background"></div>
-
 <div id="header" style="height: <?php echo get_custom_header()->height; ?>px; background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
         <?php
@@ -75,5 +71,9 @@
     </div>
 
 </div>
+
+<div id="wrapper" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
+
+<div id="sidebarleft-100-background"></div>
 
 <div id="container">
