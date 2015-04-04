@@ -600,9 +600,7 @@ float:left;
                    0 0 100px white,
                    0 0 150px white;
 }
-#topbar li a {
-padding:5px 10px;
-float:left;
+#topbar li a:hover {
  text-shadow: 0 0 10px yellow,
                    0 0 20px yellow,
                    0 0 30px yellow,
