@@ -77,6 +77,3 @@
 </div>
 
 <div id="container">
-<div id="responsive-controls" style="color:white;">
-  <div id="responsive-nav">NAVIGAZIONE</div>
-</div>
