@@ -406,11 +406,11 @@ function pasw2015_customizer_css() { ?>
             box-shadow: inset 0px 0px 10px <?php echo $c_principale; ?>;
         }
 
-        #topbar, #header ul.sito, .cookie-pop, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
+        #header ul.sito, .cookie-pop, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
 
-        #wrapper, #topbar, #header ul.sito, #footer {
+        #wrapper, #header ul.sito, #footer {
             box-shadow: 0 0 3px <?php echo $c_principale; ?>;
         }
         .cookie-pop {
