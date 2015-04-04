@@ -514,23 +514,19 @@ font-size:.75em;
 }
 
 #header ul {
-font-size:.75em;
 text-align:left;
 line-height:15px;
 }
 
 #header ul.sito {
-height:20px;
+height:25px;
 padding:2px;
 margin:0;
 color:#F0F0F0;
 float:right;
 clear:both;
-margin:5px;
-border-radius:0 0 0 5px;
 text-shadow:none;
 position:relative;
-z-index:9;
 }
 
 #header ul li {
