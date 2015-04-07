@@ -3,7 +3,7 @@
 <?php
 if ($children && get_option( 'pasw_submenu') == '4') { ?>
 	<li class="widget widget_nav_menu">
-		<h2 class="widgettitle">Sub-Page</h2>
+		<h2 class="widgettitle"><?php echo $post->post_title; ?></h2>
 	  	<ul id="subpage-sidebar" class="menu">
 	 		<?php wp_list_pages('depth=1&title_li=&child_of='.$post->ID); ?>
 		</ul>
