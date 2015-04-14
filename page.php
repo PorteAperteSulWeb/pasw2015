@@ -67,6 +67,6 @@
 ?>
 </div>
 <?php
-include(TEMPLATEPATH . '/rightsidebar.php');
+<?php get_sidebar('right'); ?>
 get_footer();
 ?>
