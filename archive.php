@@ -55,5 +55,5 @@
         <?php _sds_numeric_posts_nav( 'nav-below' ); ?>
     </div>
     </div>
-<?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
+<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>
