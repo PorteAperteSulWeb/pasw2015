@@ -13,5 +13,5 @@ Template Name: Statistiche
         <?php endwhile; endif; ?>
     </div>
 </div>
-<?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
+<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>
