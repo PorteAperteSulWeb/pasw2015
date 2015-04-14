@@ -15,5 +15,5 @@ Template Name: Home page
 <?php include(TEMPLATEPATH . '/home-widgets.php'); ?>
 
 </div>
-<?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
+<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>
