@@ -77,5 +77,5 @@ echo '</div>';
         <p><?php _e('Spiacenti, ma la pagina richiesta non � stata trovata.'); ?></p>
     <?php endif; ?>
 </div>
-<?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
+<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>
