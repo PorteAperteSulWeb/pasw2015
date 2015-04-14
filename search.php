@@ -17,5 +17,5 @@
         <?php include (TEMPLATEPATH . '/searchform.php'); ?>
     <?php endif; ?>
 </div>
-<?php include(TEMPLATEPATH . '/rightsidebar.php'); ?>
+<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>
