@@ -1620,3 +1620,17 @@ p.pasw2015cookies-banner-text {
 .short_dest_col_testo_3C {margin-left:100px; padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
 .short_dest_col_testo_2C {padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
 .short_dest_col_date {width:120px;float:right; text-align:right;padding-top:5px;}
+
+/* Formattazione dell'immagine in evidenza sulla barra destra */
+.attachment-rightbar-thumb{
+  width: 100%!important;
+  height: 100%!important;
+  
+  border: 1px #aaaacc solid;
+  background-color: white;
+  padding: 1px;
+  border-radius: 5px;
+  -webkit-box-shadow: 3px 3px 4px rgba(127, 126, 127, 0.50);
+  -moz-box-shadow:    3px 3px 4px rgba(127, 126, 127, 0.50);
+  box-shadow:         3px 3px 4px rgba(127, 126, 127, 0.50); 	
+}
