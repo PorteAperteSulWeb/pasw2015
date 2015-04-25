@@ -533,7 +533,7 @@
               	$term_id = $taxdestinatari;
               	$term = get_term( $term_id, $taxonomy );
               	$term_link = get_term_link( $term );
-              	$link = esc_url( $term_link ).'&post_type=post';
+              	$link = esc_url( $term_link ).'?post_type=post';
             	$after_title = '<span class="showall_widget after_widget_title"><a href='. $link .' title="Tutti gli articoli di '. $term->name . '" >Mostra Tutto &rsaquo;</a></span>'.$after_title;
     		}            
 
