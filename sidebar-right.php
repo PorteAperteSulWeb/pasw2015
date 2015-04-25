@@ -1,6 +1,7 @@
 <div id="rightsidebar" class="column">
 <ul>
 <?php
+global $children;
 if ($children && get_option( 'pasw_submenu') == '4') { ?>
 	<li class="widget widget_nav_menu">
 		<h2 class="widgettitle"><?php echo $post->post_title; ?></h2>
