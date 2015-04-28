@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
-<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-
-<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
-<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
 <?php if (get_option('pasw_fixedmenu') == 1) { ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-jQuery("document").ready(function($){
-
+    jQuery("document").ready(function($){
     var nav = $('#topbar');
-
     $(window).scroll(function () {
         if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?>) {
             nav.addClass("f-nav");
@@ -27,10 +23,11 @@ jQuery("document").ready(function($){
 
 });
 </script>
-<?php if ( is_user_logged_in() ) { echo '<style>.f-nav { top:30px; }</style>'; } ?> 
-<?php } ?>
-
 <?php
+    if ( is_user_logged_in() ) {
+        echo '<style>.f-nav { top:30px; }</style>';
+    }
+}
     wp_head();
     include(TEMPLATEPATH . '/include/frontend/google-analytics.php');
 ?>
