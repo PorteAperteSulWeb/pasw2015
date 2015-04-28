@@ -8,18 +8,21 @@
  * @link      https://github.com/afragen/github-updater
  */
 
+namespace Fragen\GitHub_Updater;
+
 /**
  * Get remote data from a GitHub repo.
  *
- * @package GitHub_Updater_GitHub_API
+ * Class    GitHub_API
+ * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  */
-class GitHub_Updater_GitHub_API extends GitHub_Updater {
+class GitHub_API extends Base {
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string $type
+	 * @param object $type
 	 */
 	public function __construct( $type ) {
 		$this->type  = $type;
@@ -37,13 +40,16 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 	 */
 	protected function api( $url ) {
 		$response      = wp_remote_get( $this->get_api_url( $url ) );
-		$code          = wp_remote_retrieve_response_code( $response );
+		$code          = (integer) wp_remote_retrieve_response_code( $response );
 		$allowed_codes = array( 200, 404 );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
 		}
 		if ( ! in_array( $code, $allowed_codes, false ) ) {
+			parent::$error_code = array_merge( parent::$error_code, array( $this->type->repo => $code ) );
+			$this->_ratelimit_reset( $response );
+			$this->create_error_message();
 			return false;
 		}
 
@@ -71,18 +77,28 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		$segments = apply_filters( 'github_updater_api_segments', $segments );
 
 		foreach ( $segments as $segment => $value ) {
-			$endpoint = str_replace( '/:' . $segment, '/' . $value, $endpoint );
+			$endpoint = str_replace( '/:' . sanitize_key( $segment ), '/' . sanitize_text_field( $value ), $endpoint );
 		}
 
 		if ( ! empty( parent::$options[ $this->type->repo ] ) ) {
 			$endpoint = add_query_arg( 'access_token', parent::$options[ $this->type->repo ], $endpoint );
+		} elseif ( ! empty( parent::$options['github_access_token'] ) ) {
+			$endpoint = add_query_arg( 'access_token', parent::$options['github_access_token'], $endpoint );
 		}
 
-
-		// If a branch has been given, only check that for the remote info.
-		// If it's not been given, GitHub will use the Default branch.
+		/**
+		 * If a branch has been given, only check that for the remote info.
+		 * If it's not been given, GitHub will use the Default branch.
+		 */
 		if ( ! empty( $this->type->branch ) ) {
 			$endpoint = add_query_arg( 'ref', $this->type->branch, $endpoint );
+		}
+
+		/**
+		 * If using GitHub Enterprise header return this endpoint.
+		 */
+		if ( ! empty( $this->type->enterprise ) ) {
+			return $this->type->enterprise . remove_query_arg( 'access_token', $endpoint );
 		}
 
 		return 'https://api.github.com' . $endpoint;
@@ -122,7 +138,6 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		$this->type->branch               = ! empty( $response['GitHub Branch'] ) ? $response['GitHub Branch'] : 'master';
 		$this->type->requires_php_version = ! empty( $response['Requires PHP'] ) ? $response['Requires PHP'] : $this->type->requires_php_version;
 		$this->type->requires_wp_version  = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : $this->type->requires_wp_version;
-		$this->type->requires             = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : null;
 
 		return true;
 	}
@@ -154,11 +169,13 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			return false;
 		}
 
-		// Sort and get newest tag
+		/**
+		 * Sort and get newest tag.
+		 */
 		$tags     = array();
 		$rollback = array();
 		if ( false !== $response ) {
-			foreach ( (array) $response as $num => $tag ) {
+			foreach ( (array) $response as $tag ) {
 				if ( isset( $tag->name ) ) {
 					$tags[]                 = $tag->name;
 					$rollback[ $tag->name ] = $tag->zipball_url;
@@ -166,7 +183,9 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 			}
 		}
 
-		// no tags are present, exit early
+		/**
+		 * No tags are present, exit early.
+		 */
 		if ( empty( $tags ) ) {
 			return false;
 		}
@@ -187,34 +206,60 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 	 * @url http://developer.github.com/v3/repos/contents/#get-archive-link
 	 *
 	 * @param boolean $rollback for theme rollback
+	 * @param boolean $branch_switch for direct branch changing
 	 * 
 	 * @return URI
 	 */
-	public function construct_download_link( $rollback = false ) {
-		$download_link_base = 'https://api.github.com/repos/' . trailingslashit( $this->type->owner ) . $this->type->repo . '/zipball/';
+	public function construct_download_link( $rollback = false, $branch_switch = false ) {
+		/**
+		 * Check if using GitHub Enterprise.
+		 */
+		if ( ! empty( $this->type->enterprise ) ) {
+			$github_base = $this->type->enterprise;
+		} else {
+			$github_base = 'https://api.github.com';
+		}
+
+		$download_link_base = $github_base . '/repos/' . trailingslashit( $this->type->owner ) . $this->type->repo . '/zipball/';
+
 		$endpoint           = '';
 
-		// check for rollback
+		/**
+		 * Check for rollback.
+		 */
 		if ( ! empty( $_GET['rollback'] ) && 'upgrade-theme' === $_GET['action'] && $_GET['theme'] === $this->type->repo ) {
 			$endpoint .= $rollback;
-		
-		// for users wanting to update against branch other than master or not using tags, else use newest_tag
+
+			/**
+			 * For users wanting to update against branch other than master
+			 * or if not using tags, else use newest_tag.
+			 */
 		} elseif ( 'master' != $this->type->branch || empty( $this->type->tags ) ) {
 			$endpoint .= $this->type->branch;
 		} else {
 			$endpoint .= $this->type->newest_tag;
 		}
 
+		/**
+		 * Create endpoint for branch switching.
+		 */
+		if ( $branch_switch ) {
+			$endpoint = $branch_switch;
+		}
+
 		if ( ! empty( parent::$options[ $this->type->repo ] ) ) {
-			$endpoint .= '?access_token=' . parent::$options[ $this->type->repo ];
+			$endpoint = add_query_arg( 'access_token', parent::$options[ $this->type->repo ], $endpoint );
+			return $download_link_base . $endpoint;
+		} elseif ( ! empty( parent::$options['github_access_token'] ) && empty( $this->type->enterprise ) ) {
+			$endpoint = add_query_arg( 'access_token', parent::$options['github_access_token'], $endpoint );
+			return $download_link_base . $endpoint;
 		}
 
 		return $download_link_base . $endpoint;
 	}
 
 	/**
-	 * Read the remote CHANGES.md file
-	 *
+	 * Read the remote CHANGES.md file.
 	 * Uses a transient to limit calls to the API.
 	 *
 	 * @param $changes
@@ -239,12 +284,69 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		$changelog = $this->get_transient( 'changelog' );
 
 		if ( ! $changelog ) {
-			$parser    = new Parsedown();
+			$parser    = new \Parsedown;
 			$changelog = $parser->text( base64_decode( $response->content ) );
 			$this->set_transient( 'changelog', $changelog );
 		}
 
 		$this->type->sections['changelog'] = $changelog;
+
+		return true;
+	}
+
+	/**
+	 * Read and parse remote readme.txt.
+	 *
+	 * @return bool
+	 */
+	public function get_remote_readme() {
+		if ( ! file_exists( $this->type->local_path . 'readme.txt' ) ) {
+			return false;
+		}
+
+		$response = $this->get_transient( 'readme' );
+
+		if ( ! $response ) {
+			$response = $this->api( '/repos/:owner/:repo/contents/readme.txt' );
+		}
+
+		if ( ! $response || isset( $response->message ) ) {
+			return false;
+		}
+
+		if ( $response && isset( $response->content ) ) {
+			$parser   = new Readme_Parser;
+			$response = $parser->parse_readme( base64_decode( $response->content ) );
+			$this->set_transient( 'readme', $response );
+		}
+
+		/**
+		 * Set plugin data from readme.txt.
+		 * Prefer changelog from CHANGES.md.
+		 */
+		$readme = array();
+		foreach ( $this->type->sections as $section => $value ) {
+			if ( 'description' === $section ) {
+				continue;
+			}
+			$readme['sections/' . $section ] = $value;
+		}
+		foreach ( $readme as $key => $value ) {
+			$key = explode( '/', $key );
+			if ( ! empty( $value ) && 'sections' === $key[0] ) {
+				unset( $response['sections'][ $key[1] ] );
+			}
+		}
+
+		unset( $response['sections']['screenshots'] );
+		unset( $response['sections']['installation'] );
+		$this->type->sections     = array_merge( (array) $this->type->sections, (array) $response['sections'] );
+		$this->type->tested       = $response['tested_up_to'];
+		$this->type->requires     = $response['requires_at_least'];
+		$this->type->donate       = $response['donate_link'];
+		$this->type->contributors = $response['contributors'];
+
+		return true;
 	}
 
 	/**
@@ -271,6 +373,7 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 
 		$this->type->repo_meta = $response->items[0];
 		$this->_add_meta_repo_object();
+		$this->get_branches();
 	}
 
 	/**
@@ -281,6 +384,49 @@ class GitHub_Updater_GitHub_API extends GitHub_Updater {
 		$this->type->last_updated = $this->type->repo_meta->pushed_at;
 		$this->type->num_ratings  = $this->type->repo_meta->watchers;
 		$this->type->private      = $this->type->repo_meta->private;
+	}
+
+	/**
+	 * Create array of branches and download links as array.
+	 * @return bool
+	 */
+	public function get_branches() {
+		$branches = array();
+		$response = $this->get_transient( 'branches' );
+
+		if ( ! $response ) {
+			$response = $this->api( '/repos/:owner/:repo/branches' );
+
+			if ( $response ) {
+				foreach ( $response as $branch ) {
+					$branches[ $branch->name ] = $this->construct_download_link( false, $branch->name );
+				}
+				$this->type->branches = $branches;
+				$this->set_transient( 'branches', $branches );
+				return true;
+			}
+		}
+
+		if ( ! $response || isset( $response->message ) ) {
+			return false;
+		}
+
+		$this->type->branches = $response;
+
+		return true;
+	}
+
+	/**
+	 * Calculate and store time until rate limit reset.
+	 *
+	 * @param $response
+	 */
+	private function _ratelimit_reset( $response ) {
+		if ( isset( $response['headers']['x-ratelimit-reset'] ) ) {
+			$reset              = (integer) $response['headers']['x-ratelimit-reset'];
+			$wait               = date( 'i', $reset - time() );
+			parent::$error_code = array_merge( parent::$error_code, array( $this->type->repo . '-wait' => $wait ) );
+		}
 	}
 
 }

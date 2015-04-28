@@ -8,22 +8,26 @@
  * @link      https://github.com/afragen/github-updater
  */
 
+namespace Fragen\GitHub_Updater;
+
 /**
  * Get remote data from a Bitbucket repo.
  *
- * @package GitHub_Updater_Bitbucket_API
+ * Class    Bitbucket_API
+ * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  */
-class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
+class Bitbucket_API extends Base {
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string $type
+	 * @param object $type
 	 */
 	public function __construct( $type ) {
 		$this->type  = $type;
 		parent::$hours = 12;
+		add_filter( 'http_request_args', array( $this, 'maybe_authenticate_http' ), 10, 2 );
 
 		if ( ! isset( self::$options['bitbucket_username'] ) ) {
 			self::$options['bitbucket_username'] = null;
@@ -32,7 +36,6 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 			self::$options['bitbucket_password'] = null;
 		}
 		add_site_option( 'github_updater', self::$options );
-		add_filter( 'http_request_args', array( $this, 'maybe_authenticate_http' ), 10, 2 );
 	}
 
 	/**
@@ -44,13 +47,15 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 */
 	protected function api( $url ) {
 		$response      = wp_remote_get( $this->get_api_url( $url ) );
-		$code          = wp_remote_retrieve_response_code( $response );
+		$code          = (integer) wp_remote_retrieve_response_code( $response );
 		$allowed_codes = array( 200, 404 );
 
 		if ( is_wp_error( $response ) ) {
 			return false;
 		}
 		if ( ! in_array( $code, $allowed_codes, false ) ) {
+			parent::$error_code = array_merge( parent::$error_code, array( $this->type->repo => $code ) );
+			$this->create_error_message();
 			return false;
 		}
 
@@ -78,7 +83,7 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$segments = apply_filters( 'github_updater_api_segments', $segments );
 
 		foreach ( $segments as $segment => $value ) {
-			$endpoint = str_replace( '/:' . $segment, '/' . $value, $endpoint );
+			$endpoint = str_replace( '/:' . sanitize_key( $segment ), '/' . sanitize_text_field( $value ), $endpoint );
 		}
 
 		return 'https://bitbucket.org/api/' . $endpoint;
@@ -94,7 +99,7 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$response = $this->get_transient( $file );
 
 		if ( ! $response ) {
-			if ( ! isset( $this->type->branch ) ) {
+			if ( empty( $this->type->branch ) ) {
 				$this->type->branch = 'master';
 			}
 			$response = $this->api( '1.0/repositories/:owner/:repo/src/' . trailingslashit( $this->type->branch ) . $file );
@@ -118,7 +123,6 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$this->type->branch               = ! empty( $response['Bitbucket Branch'] ) ? $response['Bitbucket Branch'] : 'master';
 		$this->type->requires_php_version = ! empty( $response['Requires PHP'] ) ? $response['Requires PHP'] : $this->type->requires_php_version;
 		$this->type->requires_wp_version  = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : $this->type->requires_wp_version;
-		$this->type->requires             = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : null;
 
 		return true;
 	}
@@ -151,7 +155,9 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 			return false;
 		}
 
-		// Sort and get newest tag
+		/**
+		 * Sort and get newest tag.
+		 */
 		$tags     = array();
 		$rollback = array();
 		if ( false !== $response ) {
@@ -184,14 +190,17 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 * Construct $download_link
 	 *
 	 * @param boolean $rollback for theme rollback
+	 * @param boolean $branch_switch for direct branch changing
 	 * 
-	 * @return URI
+	 * @return string URI
 	 */
-	public function construct_download_link( $rollback = false ) {
+	public function construct_download_link( $rollback = false, $branch_switch = false ) {
 		$download_link_base = 'https://bitbucket.org/' . trailingslashit( $this->type->owner ) . $this->type->repo . '/get/';
 		$endpoint           = '';
 
-		// check for rollback
+		/**
+		 * Check for rollback.
+		 */
 		if ( ! empty( $_GET['rollback'] ) && 'upgrade-theme' === $_GET['action'] && $_GET['theme'] === $this->type->repo ) {
 			$endpoint .= $rollback . '.zip';
 		
@@ -200,6 +209,13 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 			$endpoint .= $this->type->branch . '.zip';
 		} else {
 			$endpoint .= $this->type->newest_tag . '.zip';
+		}
+
+		/**
+		 * Create endpoint for branch switching.
+		 */
+		if ( $branch_switch ) {
+			$endpoint = $branch_switch . '.zip';
 		}
 
 		return $download_link_base . $endpoint;
@@ -240,14 +256,78 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 		$changelog = $this->get_transient( 'changelog' );
 
 		if ( ! $changelog ) {
-			$parser    = new Parsedown();
+			$parser    = new \Parsedown;
 			$changelog = $parser->text( $response->data );
 			$this->set_transient( 'changelog', $changelog );
 		}
 
 		$this->type->sections['changelog'] = $changelog;
 	}
-	
+
+	/**
+	 * Read and parse remote readme.txt.
+	 *
+	 * @return bool
+	 */
+	public function get_remote_readme() {
+		if ( ! file_exists( $this->type->local_path . 'readme.txt' ) ) {
+			return false;
+		}
+
+		$response = $this->get_transient( 'readme' );
+
+		if ( ! $response ) {
+			if ( ! isset( $this->type->branch ) ) {
+				$this->type->branch = 'master';
+			}
+			$response = $this->api( '1.0/repositories/:owner/:repo/src/' . trailingslashit( $this->type->branch ) . 'readme.txt' );
+
+			if ( ! $response ) {
+				$response['message'] = 'No changelog found';
+				$response = (object) $response;
+			}
+
+		}
+
+		if ( ! $response || isset( $response->message ) ) {
+			return false;
+		}
+
+		if ( $response && isset( $response->data ) ) {
+			$parser   = new Readme_Parser;
+			$response = $parser->parse_readme( $response->data );
+			$this->set_transient( 'readme', $response );
+		}
+
+		/**
+		 * Set plugin data from readme.txt.
+		 * Prefer changelog from CHANGES.md.
+		 */
+		$readme = array();
+		foreach ( $this->type->sections as $section => $value ) {
+			if ( 'description' === $section ) {
+				continue;
+			}
+			$readme['sections/' . $section ] = $value;
+		}
+		foreach ( $readme as $key => $value ) {
+			$key = explode( '/', $key );
+			if ( ! empty( $value ) && 'sections' === $key[0] ) {
+				unset( $response['sections'][ $key[1] ] );
+			}
+		}
+
+		unset( $response['sections']['screenshots'] );
+		unset( $response['sections']['installation'] );
+		$this->type->sections     = array_merge( (array) $this->type->sections, (array) $response['sections'] );
+		$this->type->tested       = $response['tested_up_to'];
+		$this->type->requires     = $response['requires_at_least'];
+		$this->type->donate       = $response['donate_link'];
+		$this->type->contributors = $response['contributors'];
+
+		return true;
+	}
+
 	/**
 	 * Read the repository meta from API
 	 *
@@ -272,6 +352,37 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 
 		$this->type->repo_meta = $response;
 		$this->_add_meta_repo_object();
+		$this->get_branches();
+	}
+
+	/**
+	 * Create array of branches and download links as array.
+	 * @return bool
+	 */
+	public function get_branches() {
+		$branches = array();
+		$response = $this->get_transient( 'branches' );
+
+		if ( ! $response ) {
+			$response = $this->api( '1.0/repositories/:owner/:repo/branches' );
+
+			if ( $response ) {
+				foreach ( $response as $branch ) {
+					$branches[ $branch->branch ] = $this->construct_download_link( false, $branch->branch );
+				}
+				$this->type->branches = $branches;
+				$this->set_transient( 'branches', $branches );
+				return true;
+			}
+		}
+
+		if ( ! $response || isset( $response->message ) ) {
+			return false;
+		}
+
+		$this->type->branches = $response;
+
+		return true;
 	}
 
 	/**
@@ -294,11 +405,37 @@ class GitHub_Updater_Bitbucket_API extends GitHub_Updater {
 	 * @return mixed
 	 */
 	public function maybe_authenticate_http( $args, $url ) {
-		if ( ! isset( $this->type ) ) {
+		if ( ! isset( $this->type ) || false === stristr( $url, 'bitbucket' ) ) {
 			return $args;
 		}
 
-		if ( ! empty( parent::$options[ $this->type->repo ] ) && false !== strpos( $url, $this->type->repo ) ) {
+		$bitbucket_private         = false;
+		$bitbucket_private_install = false;
+
+		/**
+		 * Check whether attempting to update private Bitbucket repo.
+		 */
+		if ( isset( $this->type->repo ) &&
+			! empty( parent::$options[ $this->type->repo ] ) &&
+		     false !== strpos( $url, $this->type->repo )
+		) {
+			$bitbucket_private = true;
+		}
+
+		/**
+		 * Check whether attempting to install private Bitbucket repo
+		 * and abort if Bitbucket user/pass not set.
+		 */
+		if ( isset( $_POST['option_page'] ) &&
+		     'github_updater_install' === $_POST['option_page'] &&
+		     'bitbucket' === $_POST['github_updater_api'] &&
+		     isset( $_POST['is_private'] ) &&
+		     ( ! empty( parent::$options['bitbucket_username'] ) || ! empty( parent::$options['bitbucket_password'] ) )
+		) {
+			$bitbucket_private_install = true;
+		}
+
+		if ( $bitbucket_private || $bitbucket_private_install ) {
 			$username = parent::$options['bitbucket_username'];
 			$password = parent::$options['bitbucket_password'];
 			$args['headers']['Authorization'] = 'Basic ' . base64_encode( "$username:$password" );

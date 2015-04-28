@@ -1,14 +1,18 @@
+![GitHub Updater](./assets/GitHub_Updater_logo.png)
+
 # GitHub Updater
 * Contributors: [Andy Fragen](https://github.com/afragen), [Gary Jones](https://github.com/GaryJones), [Seth Carstens](https://github.com/scarstens), [contributors](https://github.com/afragen/github-updater/graphs/contributors)
-* Tags: plugin, theme, update, updater, github, bitbucket
+* Tags: plugin, theme, update, updater, github, bitbucket, remote install
 * Requires at least: 3.8
-* Tested up to: 4.1
+* Requires PHP: 5.3
+* Tested up to: 4.2
 * Stable tag: master
+* Donate link: http://bit.ly/github-updater
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
-A simple plugin to enable automatic updates to your GitHub or Bitbucket hosted WordPress plugins and themes.
+A simple plugin to enable automatic updates to your GitHub or Bitbucket hosted WordPress plugins and themes. It also allows for the remote installation of plugins or themes.
 
 This plugin is [not allowed in the wp.org repo](https://github.com/afragen/github-updater/issues/34). :frowning:
 
@@ -16,15 +20,15 @@ This plugin is [not allowed in the wp.org repo](https://github.com/afragen/githu
 
 This plugin was designed to simply update any GitHub hosted WordPress plugin or theme. Your plugin or theme **must** contain a header in the style.css header or in the plugin's header denoting the location on GitHub. The format is as follows.
 
-`GitHub Theme URI: afragen/test-child`  
-`GitHub Theme URI: https://github.com/afragen/test-child`
-
-or 
-
 `GitHub Plugin URI: afragen/github-updater`  
 `GitHub Plugin URI: https://github.com/afragen/github-updater`
 
-...where the above URI leads to the __owner/repository__ of your theme or plugin. The URI may be in the format `https://github.com/<owner>/<repo>` or the short format `<owner>/<repo>`. You do not need both. Only one Plugin or Theme URI is required.
+or 
+
+`GitHub Theme URI: afragen/test-child`  
+`GitHub Theme URI: https://github.com/afragen/test-child`
+
+...where the above URI leads to the __owner/repository__ of your theme or plugin. The URI may be in the format `https://github.com/<owner>/<repo>` or the short format `<owner>/<repo>`. You do not need both. Only one Plugin or Theme URI is required. You **must not** include any extensions like `.git`.
 
 ## Installation
 
@@ -121,6 +125,12 @@ GitHub Branch:     master
 
 `GitHub Branch` and `Bitbucket Branch` are available but not required.
 
+### Enterprise Support
+
+#### GitHub Enterprise Support
+
+Add the `GitHub Enterprise` header to the plugin or theme that is hosted on your GitHub Enterprise installation. The settings should be similar to `GitHub Enterprise: https://github.yourhost.com`.
+
 ### Versions
 
 GitHub Updater reads the `Version` headers from both the local file and the remote file. For an update to show as available the remote version number **must** be greater than the local version number. It is **required** to have a `Version` header in your main plugin file or your theme's `style.css` file. It is better to use [Semantic Versioning](http://semver.org).
@@ -136,6 +146,8 @@ To specify a branch that you would like to use for updating, just add a branch h
 The default state is either `GitHub Branch: master` or nothing at all. They are equivalent.
 
 If you want to update against branch of your repository other than `master` and have that branch push updates out to users make sure you specify the testing branch in a header, i.e. `GitHub Branch: develop`. When you want users to update against the release branch just have them manually change the header to `GitHub Branch: master` or remove it completely. Tags will be ignored when a branch other than `master` is specified. In this case I would suggest semantic versioning similar to the following, `<major>.<minor>.<patch>.<development>`.
+
+In the GitHub Updater Settings there is a new setting to enable branch switching for plugins. When checked there will be a new ability from the Plugins page to switch between plugin branches.
 
 ## Tagging
 
@@ -153,19 +165,19 @@ The `Bitbucket Branch` header is supported for both plugins and themes.
 
 Public repositories will not show up in the Settings page.
 
-![Settings Page](./assets/screenshot-1.png)
+![Settings Tab](./assets/screenshot-1.png)
 
 ### GitHub Private Repositories
 
-In order to specify a private repository you will need to obtain a [personal access token](https://github.com/settings/tokens/new). Once you have this, simply add the token to the appropriate plugin or theme in the Settings page.
+In order to specify a private repository you will need to obtain a [personal access token](https://github.com/settings/tokens/new). Once you have this, simply add the token to the appropriate plugin or theme in the Settings tab.
 
 Leave this empty if the plugin or theme is in a public repository.
 
 ### Bitbucket Private Repositories
 
-Add your personal Bitbucket username and password in the Settings page. In order to authenticate with the Bitbucket API you will need to have at least `read` privileges for the Bitbucket private repository.
+Add your personal Bitbucket username and password in the Settings tab. In order to authenticate with the Bitbucket API you will need to have at least `read` privileges for the Bitbucket private repository.
 
-In order to specify a private repository you will need to check the box next to the repository name in the Settings page.
+In order to specify a private repository you will need to check the box next to the repository name in the Settings tab.
 
 Leave this unchecked if the plugin or theme is in a public repository.
 
@@ -177,9 +189,9 @@ There are now two **optional** headers for setting minimum requirements for both
 
 Use `Requires WP:` to set the minimum required version of WordPress needed for your plugin or theme. eg. `Requires WP: 3.8`
 
-Use `Requires PHP:` to set the minimum required version of PHP needed for your plugin or theme. eg. `Requires PHP: 5.3`
+Use `Requires PHP:` to set the minimum required version of PHP needed for your plugin or theme. eg. `Requires PHP: 5.3.0`
 
-At the moment the default values are **WordPress 0.0.0** and **PHP 5.2.3**
+At the moment the default values are **WordPress 3.8.0** and **PHP 5.3.0**
 
 ## Deleting Transients
 
@@ -193,10 +205,56 @@ If you develop your plugin on GitHub and it also resides in the WP.org repo, the
 
 The same applies for Bitbucket hosted plugins.
 
+## Remote Installation of Repositories
+
+From the `GitHub Updater Settings Page` there is a tabbed interface for remote installation of plugins or themes. You may use either a full URI or short `<owner>/<repo>` format.
+
+![Remote Install of Plugin Tab](./assets/screenshot-2.png)
+
+## Error Messages
+
+GitHub Updater now reports a small error message on certain pages in the dashboard. The error codes are HTTP status codes. Most often the code will be either 403 or 401. If you don't have an Access Token set for a private GitHub repo you will get a 404 error.
+
+### Personal GitHub Access Token
+
+There is a new setting for a personal GitHub Access Token. I **strongly** encourage everyone to create a [personal access token](https://github.com/settings/tokens/new). Create one with at least `public_repo` access and your rate limit will be increased to 5000 API hits per hour. Unauthenticated calls to the GitHub API are limited to 60 API calls per hour and in certain circumstances, like shared hosting, these limits will be more frequently hit. Thanks [mlteal](https://github.com/mlteal).
+
+### 403 - Unauthorized Access
+
+#### GitHub
+* usually this means that you have reached GitHub API's rate limit of 60 hits per hour. This is informative and should go away in less than an hour. See above regarding the setting of a personal access token to eliminate this entirely.
+* a private GitHub repo without an Access Token designated in the Settings.
+* will tell you how long until GitHub API's rate limit will be reset.
+
+### 401 - Incorrect Authentication
+
+#### Bitbucket
+* incorrect Bitbucket user/pass, no `read` access to private Bitbucket repo
+* private Bitbucket repo not checked in Settings
+
+#### GitHub
+* using an incorrect private repo GitHub Access Token for a public repo
+* an incorrect Access Token for a private GitHub repo.
+
 ## Extras
 
 [szepeviktor](https://github.com/szepeviktor) has created an add-on plugin to GitHub Updater that identifies all plugins with an icon in the plugin view for GitHub or Bitbucket depending upon where they get updates. It's very clever.
-<https://github.com/szepeviktor/wordpress-plugin-construction/tree/master/github-link>
+<https://github.com/szepeviktor/github-link>
+
+### Translations
+
+* French by
+    * [Daniel Ménard](https://github.com/daniel-menard)
+    * [fxbenard](https://github.com/fxbenard)
+* Italian by [Enea Overclokk](https://github.com/overclokk)
+* Portuguese by
+    * [Valerio Souza](https://github.com/valeriosouza)
+    * [Pedro Mendonça](https://github.com/pedro-mendonca)
+* Ukrainian by [Andrii Ryzhkv](https://github.com/andriiryzhkov)
+* Swedish by [Andréas Lundgren](https://github.com/Adevade)
+* Arabic by [Hyyan Abo FAkher](https://github.com/hyyan)
+* Spanish by [Jose Miguel Bejarano](https://github.com/xDae)
+* German by [Linus Metzler](https://github.com/limenet)
 
 ## Issues
 
@@ -204,11 +262,13 @@ Please log issues on the GitHub at https://github.com/afragen/github-updater/iss
 
 If you are using a WordPress Multisite installation, the plugin **should** be network activated.
 
-When first downloading and installing a plugin from GitHub you might have to do the following, otherwise the next update may not be able to cleanup after itself and re-activate the updated plugin or theme.
+When first downloading and installing a plugin from GitHub you might have to do the following, otherwise the next update may not be able to cleanup after itself and re-activate the updated plugin or theme. Or you can just use the remote install feature and this will be done for you. :wink:
 
 1. Unzip the archive.
 2. Fix the folder name to remove to extra stuff GitHub adds to the download, like _-master_.
 3. Copy the folder to your plugins directory **or** re-zip folder and add from plugins page.
+
+W3 Total Cache object cache also clears the transient cache. Unfortunately this hampers GitHub Updater's storage of API data using the Transient API. The solution is to turn off the object cache.
 
 ## ChangeLog
 
@@ -220,7 +280,12 @@ This plugin's theme updater class was based upon [Whitelabel Framework's updater
 
 The plugin updater class was based upon [codepress/github-plugin-updater](https://github.com/codepress/github-plugin-updater).
 
-Includes [Emanuil Rusev's](https://github.com/erusev) [Parsedown](https://github.com/erusev/parsedown) for rendering ChangeLogs.
+**Includes**
+
+* [Emanuil Rusev's](https://github.com/erusev) [Parsedown](https://github.com/erusev/parsedown) for rendering ChangeLogs.
+* [Mark Jaquith's](https://github.com/markjaquith) [WordPress-Plugin-Readme-Parser](https://github.com/markjaquith/WordPress-Plugin-Readme-Parser) for parsing `readme.txt` files.
+
+GitHub Updater logo by [LogoMajestic](http://www.logomajestic.com).
 
 ## Pull Requests
 
