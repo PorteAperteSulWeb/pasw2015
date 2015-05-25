@@ -25,6 +25,7 @@ function reg_set_p() {
 
     register_setting( 'pasw2015_options', 'pasw_social');
     register_setting( 'pasw2015_options', 'pasw_email_scuola');
+    register_setting( 'pasw2015_options', 'pasw_pec_scuola');
     register_setting( 'pasw2015_options', 'pasw_recapito_scuola');
     register_setting( 'pasw2015_options', 'pasw_indirizzo_scuola');
     register_setting( 'pasw2015_options', 'pasw_fluid_width');
