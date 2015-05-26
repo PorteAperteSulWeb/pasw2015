@@ -7,7 +7,7 @@
 
       ga('create', '<?php echo get_option('pasw_ga_id'); ?>', 'auto');
         
-        <?php if get_option('pasw_ga_anonymous') { ?>
+        <?php if ( get_option('pasw_ga_anonymous') ) { ?>
       ga('set', 'anonymizeIp', true);
         <?php } ?>
      
