@@ -6,6 +6,11 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
       ga('create', '<?php echo get_option('pasw_ga_id'); ?>', 'auto');
+        
+        <?php if get_option('pasw_ga_anonymous') { ?>
+      ga('set', 'anonymizeIp', true);
+        <?php } ?>
+     
       ga('send', 'pageview');
 
     </script>

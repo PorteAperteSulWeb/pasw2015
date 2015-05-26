@@ -64,6 +64,12 @@
             } else {
                 update_option('pasw_fluid_layout', '0');
         }
+        
+        if (isset($_POST['pasw_ga_anonymous_n'])){
+                update_option('pasw_ga_anonymous', '1');
+            } else {
+                update_option('pasw_ga_anonymous', '0');
+        }
 
     }
 ?>
