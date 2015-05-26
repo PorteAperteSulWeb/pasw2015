@@ -71,9 +71,10 @@ function pasw2015_impostazioni() { ?>
 
                         <label for="ga-id">ID monitoraggio (es. UA-00000000-0):</label>
                         <input id="ga-id" type="text" name="pasw_ga_id_n" value="<?php echo get_option('pasw_ga_id'); ?>" class="regular-text">
-                        <br/><small>(lascia vuoto per non inserire automaticamente il codice di monitoraggio)</small>
+                        <br><small>(lascia vuoto per non inserire automaticamente il codice di monitoraggio)</small>
                         
-                        <input id="ga-anonymous" type="checkbox" name="pasw_social_n"
+                        <br><br>
+                        <input id="ga-anonymous" type="checkbox" name="pasw_ga_anonymous_n"
                         <?php $get_pasw_ga_anonymous = get_option('pasw_ga_anonymous');
                         if ($get_pasw_ga_anonymous == '1') { echo ' checked="checked" '; }?>><label for="ga-anonymous">Anonimizza gli indirizzi IP</label>
 
