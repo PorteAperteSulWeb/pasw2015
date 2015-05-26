@@ -214,17 +214,21 @@ function pasw2015_impostazioni() { ?>
 
                         <label for="address">indirizzo:</label>
                         <input id="address" type="text" name="pasw_indirizzo_scuola_n" value="<?php echo stripslashes(get_option('pasw_indirizzo_scuola')); ?>" class="regular-text">
-                        <br/><small>(es. "Via Papa Giovanni XXIII, 1 - 24016")</small>
+                        <br /><small>(es. "Via Papa Giovanni XXIII, 1 - 24016")</small>
 
                         <br/><label for="phone">numero di telefono:</label>
                         <input id="phone" type="text" name="pasw_recapito_scuola_n" value="<?php echo stripslashes(get_option('pasw_recapito_scuola')); ?>" class="regular-text">
-                        <br/><small>(es. "tel. 0345/ - fax 0345/")</small>
+                        <br /><small>(es. "tel. 0345/ - fax 0345/")</small>
 
-                        <label for="email">e-mail:</label>
+                        <br/><label for="email">e-mail:</label><br />
                         <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo stripslashes(get_option('pasw_email_scuola')); ?>" class="regular-text">
-                        <br/><small>(es. "codicemecc@pec.istruzione.it")</small>
+                        <br /><small>(es. "codicemecc@istruzione.it")</small>
+						
+			<br/><label for="pec">pec:</label><br />
+                        <input id="email" type="text" name="pasw_pec_scuola_n" value="<?php echo stripslashes(get_option('pasw_pec_scuola')); ?>" class="regular-text">
+                        <br /><small>(es. "codicemecc@pec.istruzione.it")</small>
                         
-            			<label for="cfpiva">C.Fisc / P.Iva:</label>
+            		<br/><label for="cfpiva">C.Fisc / P.Iva:</label>
                         <input id="email" type="text" name="pasw_cfpiva_scuola_n" value="<?php echo stripslashes(get_option('pasw_cfpiva_scuola')); ?>" class="regular-text">
                         <br/><small>(es. "c.f. xxxxxxxxxxx")</small>
                     </div>
