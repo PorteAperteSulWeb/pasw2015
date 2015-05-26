@@ -33,6 +33,9 @@ if (get_option('pasw_indirizzo_scuola') != '') {
     if (get_option('pasw_email_scuola') != '') {
         echo stripslashes(get_option('pasw_email_scuola')) . '<br/>';
     }
+    if (get_option('pasw_pec_scuola') != '') {
+        echo stripslashes(get_option('pasw_pec_scuola')) . '<br/>';
+    }
     if (get_option('pasw_cfpiva_scuola') != '') {
         echo stripslashes(get_option('pasw_cfpiva_scuola')) . '<br/>';
     }
