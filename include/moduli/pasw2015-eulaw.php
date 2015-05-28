@@ -42,7 +42,7 @@ function cookie_policy($atts, $content = null)
 	$cookie_name = 'pasw_law_cookie';
 	if(!isset($_COOKIE[$cookie_name])) {
 		$returner = '<div class="pasw2015cookies_block" style="width:auto;height:auto;">';
-		$returner .= '<span>' . get_option('pasw_eucookie_box_msg') .'</span>';
+		$returner .= '<span>' . html_entity_decode(get_option('pasw_eucookie_box_msg')) .'</span>';
 		$returner .= '<!--' . $content . '-->';
 		$returner .='</div><div class="clear"></div>';
 		return $returner;
