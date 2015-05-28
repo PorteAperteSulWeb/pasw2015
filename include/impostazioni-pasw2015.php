@@ -168,7 +168,24 @@ function pasw2015_impostazioni() { ?>
                             );
                             wp_editor( $content, 'pasw_eucookie_msg_n', $editor_settings );
                         ?>
+                        <br />
+			<label for="eucookie_msg">Messaggio Box contenuto bloccato:</label>
+						<?php
+                            $content = html_entity_decode(get_option('pasw_eucookie_box_msg'));
+							if ($content == '')
+							{
+							$content ='Questo contenuto è bloccato come previsto nel D.lgs. 196/2003 e a seguito delle modalità semplificate per l’informativa e l’acquisizione del consenso per l’uso dei cookie pubblicata sulla Gazzetta Ufficiale n.126 del 3 giugno 2014 e relativo registro dei provvedimenti n.229 dell’8 maggio 2014.';
+							}
+                            $editor_settings =  array (
+									'textarea_rows' => 2,
+									'media_buttons' => FALSE,
+                                    'teeny'         => TRUE,
+                                    'tinymce'       => TRUE
+                            );
+                            wp_editor( $content, 'pasw_eucookie_box_msg_n', $editor_settings );
+                        ?>
 						
+										
 						<br />						
 						<label for="eucookie_button">Testo pulsante accetta cookie:</label>
                         <input id="eucookie_button" type="text" name="pasw_eucookie_button_n" value="<?php if (get_option('pasw_eucookie_button') != '') {echo stripslashes(get_option('pasw_eucookie_button'));} else {echo 'Accetta';} ?>" class="regular-text">
