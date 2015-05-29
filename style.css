@@ -1589,13 +1589,13 @@ p.pasw2015cookies-banner-text {
 }
 
 .pasw2015cookies_block {
-border:2px dashed red;
+background: url('images/bg_blocco.jpg');
+border:2px outset red;
 float:left;
 }
 .pasw2015cookies_block span {
 width: 100%;
-margin: 5% auto 5% auto;
-text-align: center;
+margin: 5% auto 5% auto; 
 float:left;
 }
 
