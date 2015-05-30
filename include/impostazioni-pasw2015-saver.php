@@ -24,6 +24,7 @@
 		update_option( 'pasw_eucookie_info', $_POST["pasw_eucookie_info_n"] );
 		update_option( 'pasw_eucookie_page', $_POST["pasw_eucookie_page_n"] );
 		update_option( 'pasw_eucookie_msg', htmlentities(stripslashes($_POST["pasw_eucookie_msg_n"])) );
+		update_option( 'pasw_eucookie_box_msg', htmlentities(stripslashes($_POST["pasw_eucookie_box_msg_n"])) );
 		}
 
         if ($_POST["pasw_ga_password_n"] != '#OK#') {
