@@ -1588,6 +1588,18 @@ p.pasw2015cookies-banner-text {
     position: relative;
 }
 
+.pasw2015cookies_block {
+background: url('images/bg_blocco.jpg');
+border:2px outset red;
+float:left;
+}
+.pasw2015cookies_block span {
+width: 100%;
+margin: 5% auto 5% auto; 
+float:left;
+}
+
+
 /* ------- Fluid Columns ------- */
 .one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth { position:relative; margin-right:4%; float:left; min-height:1px; height:auto!important; height:1px; }
 .one_half { width:48%; }
