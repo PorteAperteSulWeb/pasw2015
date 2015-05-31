@@ -76,7 +76,7 @@ extract(shortcode_atts(array(
 	if(!isset($_COOKIE[$cookie_name])) {
 		if ($showbox == 'si'){
 			$returner = '<div class="pasw2015cookies_block" style="width:auto;height:auto;">';
-			$returner .= '<span>' . html_entity_decode(get_option('pasw_eucookie_box_msg')) .'</span>';
+			$returner .= html_entity_decode(get_option('pasw_eucookie_box_msg'));
 			if ($tipo != ''){
 				$returner .= $html1 . $tipo . $pageprivacy;
 				}
