@@ -94,7 +94,7 @@ extract(shortcode_atts(array(
 	return $returner;
 	}
 }
-add_shortcode('cookie_policy', 'cookie_policy');
+add_shortcode('cookie', 'cookie_policy');
 
 
 
