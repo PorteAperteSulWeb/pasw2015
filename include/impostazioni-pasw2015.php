@@ -169,20 +169,21 @@ function pasw2015_impostazioni() { ?>
                             wp_editor( $content, 'pasw_eucookie_msg_n', $editor_settings );
                         ?>
                         <br />
-			<label for="eucookie_msg">Messaggio Box contenuto bloccato:</label>
-						<?php
-                            $content = html_entity_decode(get_option('pasw_eucookie_box_msg'));
-							if ($content == '')
-							{
-							$content ='Questo contenuto è bloccato come previsto nel D.lgs. 196/2003 e a seguito delle modalità semplificate per l’informativa e l’acquisizione del consenso per l’uso dei cookie pubblicata sulla Gazzetta Ufficiale n.126 del 3 giugno 2014 e relativo registro dei provvedimenti n.229 dell’8 maggio 2014.';
-							}
+			<label for="eucookie_msg_box">Messaggio Box contenuto bloccato:</label>
+				<?php
+                        	$content_eu_box = html_entity_decode(get_option('pasw_eucookie_box_msg'));
+				if ($content_eu_box == '')
+					{
+					$content_eu_box ='<p style="text-align: center;">Il D.lgs. 196/2003 e a seguito delle modalità semplificate per l’informativa e l’acquisizione del consenso per l’uso dei cookie pubblicata sulla Gazzetta Ufficiale n.126 del 3 giugno 2014 e relativo registro dei provvedimenti n.229 dell’8 maggio 2014, prevede l\'accettazione dei cookies da parte degli utenti, il contenuto qui oscurato genera cookies terze parti, pertanto senza l\'accettazione degli stessi non pu&ograve essere visualizzato.</p>
+<p style="text-align: center;">Abilitare i cookie cliccando su - Si  accetto - in basso a destra per sbloccarlo</p>';
+					}
                             $editor_settings =  array (
-									'textarea_rows' => 2,
-									'media_buttons' => FALSE,
-                                    'teeny'         => TRUE,
-                                    'tinymce'       => TRUE
+				'textarea_rows' => 2,
+				'media_buttons' => FALSE,
+                                'teeny'         => TRUE,
+                                'tinymce'       => TRUE
                             );
-                            wp_editor( $content, 'pasw_eucookie_box_msg_n', $editor_settings );
+                            wp_editor( $content_eu_box, 'pasw_eucookie_box_msg_n', $editor_settings );
                         ?>
 						
 										
@@ -191,8 +192,8 @@ function pasw2015_impostazioni() { ?>
                         <input id="eucookie_button" type="text" name="pasw_eucookie_button_n" value="<?php if (get_option('pasw_eucookie_button') != '') {echo stripslashes(get_option('pasw_eucookie_button'));} else {echo 'Accetta';} ?>" class="regular-text">
                         
 						
-						<br/><label for="eucookie_info">Testo link altre informazioni:</label>
-                        <input id="eucookie_info" type="text" name="pasw_eucookie_info_n" value="<?php if (get_option('paws_eucookie_info') !='') {echo stripslashes(get_option('pasw_eucookie_info'));} else {echo 'Informazioni';} ?>" class="regular-text">
+					<br/><label for="eucookie_info">Testo link altre informazioni:</label>
+                        <input id="eucookie_info" type="text" name="pasw_eucookie_info_n" value="<?php if (get_option('pasw_eucookie_info') !='') {echo stripslashes(get_option('pasw_eucookie_info'));} else {echo 'Informazioni';} ?>" class="regular-text">
                         
 						
 						<br/><label for="eucookie_page"><?php _e('Page per EU LAW Cookies') ?></label>
