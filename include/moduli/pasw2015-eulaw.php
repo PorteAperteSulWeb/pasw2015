@@ -36,8 +36,86 @@ function pasw2015_eu_law_script() {
 
 add_action('wp_enqueue_scripts', 'pasw2015_eu_law_script'); 
 
+
+/* =========== Auto Block ============ */
+add_filter( 'the_content', 'pasw_eulaw_autoblock', 11);
+add_filter( 'widget_display_callback','pasw_eulaw_autoblock', 11, 3 );
+
+function pasw_eulaw_autoblock($content) {
+    if ( !cookie_accepted() && get_option('pasw_eucookie_autoblock') ) {
+        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>#is', generate_cookie_notice2('auto', '100%'), $content);
+    }
+    return $content;
+}
+
+/* ======== End Auto Block ========= */
+
+/* =========== Funzioni ============ */
+
+function cookie_accepted() {
+	$cookie_name = 'pasw_law_cookie';
+    return isset( $_COOKIE['$cookie_name'] );
+}
+
+function generate_cookie_notice_text($height, $width, $text, $textpriv= null) {
+    return '<div class="pasw2015cookies_block" style="width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div><div class="clear"></div>';    
+}
+
+function generate_cookie_notice_privacy($privacy, $tipo) {
+	if($privacy != '') {
+		return '<p style="text-align: right;">Contenuto bloccato: '. $tipo .' - pagina <a href="'. $privacy .'" target="_blank" title="link esterno privacy '.$tipo.'">privacy</a> fornitore del servizio</p>';   
+		} else {
+			return '<p style="text-align: right;">Contenuto bloccato: '. $tipo.'</p>';
+		}
+}
+ 
+function generate_cookie_notice($height, $width, $privacy=null, $tipo=null ) {
+    $textpriv = generate_cookie_notice_privacy($privacy, $tipo);
+    $text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
+	return generate_cookie_notice_text($height, $width, $text, $textpriv);
+}
+function generate_cookie_notice2($height, $width) {
+    $text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
+	return generate_cookie_notice_text($height, $width, $text, $textpriv);
+}
+
+function pulisci($content,$ricerca){
+	$caratteri = strlen($ricerca)+6;
+	$stringa = substr($content, strpos($content, $ricerca), $caratteri);
+	$stringa = str_replace($ricerca, '', $stringa);
+	$stringa = trim(str_replace('"', '', $stringa));
+	return $stringa.'px';
+}
+
+/* ========= Buttom Editor ========== */
+function cookie_add_mce_button() {
+	// check user permissions
+	if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
+		return;
+	}
+	// check if WYSIWYG is enabled
+	if ( 'true' == get_user_option( 'rich_editing' ) ) {
+		add_filter( 'mce_external_plugins', 'cookie_add_tinymce_plugin' );
+		add_filter( 'mce_buttons', 'cookie_register_mce_button' );
+	}
+}
+add_action('admin_head', 'cookie_add_mce_button');
+
+// Declare script for new button
+function cookie_add_tinymce_plugin( $plugin_array ) {
+	$plugin_array['my_mce_button'] = get_template_directory_uri() . '/js/buttomeditorcookie.js';
+	return $plugin_array;
+}
+
+// Register new button in the editor
+function cookie_register_mce_button( $buttons ) {
+	array_push( $buttons, 'my_mce_button' );
+	return $buttons;
+}
+/* ======= END Buttom Editor ======== */
+
 /* =========== SHORTCODE ============ */
-function cookie_policy($atts, $content = null)
+function cookie_policy($atts, $content)
 {
 
 extract(shortcode_atts(array(
@@ -63,68 +141,26 @@ extract(shortcode_atts(array(
 			break;
 	}
 	
-	if ($privacy != ''){
-		$pageprivacy = ' - pagina <a href="'. $privacy .'" target="_blank" title="link esterno privacy '.$tipo.'">privacy</a> fornitore del servizio</p>';
-		}
-		else
-		{
-		$pageprivacy = '';
-		}
-		
 	
-	$cookie_name = 'pasw_law_cookie';
-	if(!isset($_COOKIE[$cookie_name])) {
+	if ( cookie_accepted() ) {
+        return do_shortcode( $content );
+    } else {
+        $width = pulisci($content,'width='); 
+        $height = pulisci($content,'height='); 
 		if ($showbox == 'si'){
-			$returner = '<div class="pasw2015cookies_block" style="width:auto;height:auto;">';
-			$returner .= html_entity_decode(get_option('pasw_eucookie_box_msg'));
 			if ($tipo != ''){
-				$returner .= $html1 . $tipo . $pageprivacy;
-				}
-			$returner .= '<!--' . $content . '-->';
-			$returner .='</div><div class="clear"></div>';
-		}
-		else{
-			$returner .= '<!--' . $content . '-->';
-		}
-	    return $returner;
+				return generate_cookie_notice($height, $width, $privacy, $tipo);
+			} else {
+				return generate_cookie_notice2($height, $width);
+			}	
+		}	
 	}
-	else
-	{
-	$returner = $content ;
-	return $returner;
-	}
+	
 }
 add_shortcode('cookie', 'cookie_policy');
 
-
-
 /* ========= END SHORTCODE ========== */
 
-/* ========= Buttom Editor ========== */
-function my_add_mce_button() {
-	// check user permissions
-	if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
-		return;
-	}
-	// check if WYSIWYG is enabled
-	if ( 'true' == get_user_option( 'rich_editing' ) ) {
-		add_filter( 'mce_external_plugins', 'my_add_tinymce_plugin' );
-		add_filter( 'mce_buttons', 'my_register_mce_button' );
-	}
-}
-add_action('admin_head', 'my_add_mce_button');
 
-// Declare script for new button
-function my_add_tinymce_plugin( $plugin_array ) {
-	$plugin_array['my_mce_button'] = get_template_directory_uri() . '/js/buttomeditorcookie.js';
-	return $plugin_array;
-}
-
-// Register new button in the editor
-function my_register_mce_button( $buttons ) {
-	array_push( $buttons, 'my_mce_button' );
-	return $buttons;
-}
-/* ======= END Buttom Editor ======== */
 
 }
