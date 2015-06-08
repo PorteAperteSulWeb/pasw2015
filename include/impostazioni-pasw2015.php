@@ -212,7 +212,10 @@ function pasw2015_impostazioni() { ?>
 
 <?php wp_dropdown_pages($args); ?>
 
-
+			<br/>
+			<br/><input id="eucookie_autoblock" type="checkbox" name="pasw_eucookie_autoblock_n"
+                        <?php $get_pasw_eucookie_autoblock = get_option('pasw_eucookie_autoblock');
+                        if ($get_pasw_eucookie_autoblock == '1') { echo ' checked="checked" '; } ?>><label for="fluid">Questa funzione abilità il blocco automatico di iframe, embed e script nelle pagine, articoli e widget</label><br/>
 
 				</div>	
 			</div>
