@@ -25,6 +25,12 @@
 		update_option( 'pasw_eucookie_page', $_POST["pasw_eucookie_page_n"] );
 		update_option( 'pasw_eucookie_msg', esc_html(stripslashes($_POST["pasw_eucookie_msg_n"])) );
 		update_option( 'pasw_eucookie_box_msg', esc_html(stripslashes($_POST["pasw_eucookie_box_msg_n"])) );
+		if (isset($_POST['pasw_eucookie_autoblock_n'])){
+                	update_option('pasw_eucookie_autoblock', '1');
+            	} else {
+                	update_option('pasw_eucookie_autoblock', '0');
+        	}
+			
 		}
 
         if ($_POST["pasw_ga_password_n"] != '#OK#') {
