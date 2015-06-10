@@ -1,6 +1,7 @@
 <?php
 
 require ( get_template_directory() . '/include/impostazioni-pasw2015.php' );
+if (get_option('pasw_eulaw') == 1) 	{require ( get_template_directory() . '/include/eu-law-pasw2015.php' );}
 
 add_action('admin_menu', 'pasw2015_menu');
 
@@ -10,6 +11,7 @@ function pasw2015_menu() {
     add_submenu_page('pasw2015', 'Personalizza', 'Personalizza', 'manage_options', 'customize.php' );
     add_submenu_page('pasw2015', 'Moduli', 'Moduli', 'manage_options', 'pasw2015-moduli', 'pasw2015_moduli' );
     add_submenu_page('pasw2015', 'Impostazioni', 'Impostazioni', 'manage_options', 'pasw2015-impostazioni', 'pasw2015_impostazioni' );
+    if (get_option('pasw_eulaw') == 1) 	{add_submenu_page('pasw2015', 'Cookie Law Info', 'Cookie Law Info', 'manage_options', 'pasw2015-cookie', 'pasw2015_cookie' );}
 }
 
 function pasw2015_welcome() { ?>
