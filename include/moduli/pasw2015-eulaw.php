@@ -11,12 +11,14 @@ function pasw2015_eu_law_script() {
         '',
         true
     );
-
+    
     $scriptData = array(
-        'message' => get_option('pasw_eucookie_msg') ,
-        'button'  => get_option('pasw_eucookie_button'),
-        'more'    => get_option('pasw_eucookie_info'),
-        'url'    => get_permalink(get_option('pasw_eucookie_page')),
+        'message' 	=> get_option('pasw_eucookie_msg') ,
+        'button'  	=> get_option('pasw_eucookie_button'),
+        'more'    	=> get_option('pasw_eucookie_info'),
+        'url'   	=> get_permalink(get_option('pasw_eucookie_page')),
+		'fine' 		=> get_option('pasw_eucookie_expire'),
+		'bottom_active' => get_option('pasw_eucookie_remove_bottom'),
         );
 
 
@@ -39,14 +41,22 @@ add_action('wp_enqueue_scripts', 'pasw2015_eu_law_script');
 
 /* =========== Auto Block ============ */
 add_filter( 'the_content', 'pasw_eulaw_autoblock', 11);
-add_filter( 'widget_display_callback','pasw_eulaw_autoblock', 11, 3 );
+add_filter( 'widget_display_callback','pasw_eulaw_autoblock_widget', 11, 3 );
 
 function pasw_eulaw_autoblock($content) {
-    if ( !cookie_accepted() && get_option('pasw_eucookie_autoblock') ) {
-        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>#is', generate_cookie_notice2('auto', '100%'), $content);
+    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') ) {
+        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>#is', generate_cookie_notice_lite('auto', '100%'), $content);
     }
     return $content;
 }
+
+function pasw_eulaw_autoblock_widget($content) {
+    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') ) {
+        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>|<object.*?\/object>#is', generate_cookie_notice_widget('auto', '100%'), $content);
+    }
+    return $content;
+}
+
 
 /* ======== End Auto Block ========= */
 
@@ -54,7 +64,12 @@ function pasw_eulaw_autoblock($content) {
 
 function cookie_accepted() {
 	$cookie_name = 'pasw_law_cookie';
-    return isset( $_COOKIE['$cookie_name'] );
+    
+    if ( isset( $_COOKIE[$cookie_name] ) ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function generate_cookie_notice_text($height, $width, $text, $textpriv= null) {
@@ -74,9 +89,15 @@ function generate_cookie_notice($height, $width, $privacy=null, $tipo=null ) {
     $text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
 	return generate_cookie_notice_text($height, $width, $text, $textpriv);
 }
-function generate_cookie_notice2($height, $width) {
+function generate_cookie_notice_lite($height, $width) {
     $text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
 	return generate_cookie_notice_text($height, $width, $text, $textpriv);
+}
+
+function generate_cookie_notice_widget($height, $width) {
+    //$text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
+	$text = '<small>Per la visualizzazione abilitare l\'uso dei coockie</small>';
+	return generate_cookie_notice_text($height, $width, $text);
 }
 
 function pulisci($content,$ricerca){
@@ -122,6 +143,7 @@ extract(shortcode_atts(array(
     'tipo' => '',
     'showbox' => 'no',
     'privacy' => '',
+	'size' => 'auto',
    ), $atts));
 	
 	$html1= '<p style="text-align: right;">contenuto bloccato: ';
@@ -145,19 +167,36 @@ extract(shortcode_atts(array(
 	if ( cookie_accepted() ) {
         return do_shortcode( $content );
     } else {
-        $width = pulisci($content,'width='); 
-        $height = pulisci($content,'height='); 
+        if ($size!='auto') {$width = pulisci($content,'width='); } else {$width='auto';}
+        if ($size!='auto') {$height = pulisci($content,'height=');} else {$height = '100%';}
 		if ($showbox == 'si'){
 			if ($tipo != ''){
 				return generate_cookie_notice($height, $width, $privacy, $tipo);
 			} else {
-				return generate_cookie_notice2($height, $width);
+				return generate_cookie_notice_lite($height, $width);
 			}	
 		}	
 	}
 	
 }
 add_shortcode('cookie', 'cookie_policy');
+
+
+
+function eu_cookie_control_shortcode( $atts ) {
+    if ( cookie_accepted() ) {
+        return '
+            <div class="eu_cookie_control" style="color: white; border-color:#ef7777; background-color: rgba(241, 135, 135, 0.9);">
+				Cookies abilitati <button id="remove-cookie"  href="#">Revoca consenso Cookie</button>
+            </div>';
+    } else {
+        return '
+            <div class="eu_cookie_control" style="color: white; border-color: #A1B8CB; background-color: rgba(161, 184, 203, 0.9);">
+             Cookie disabilitati<br>Accetta i Cookie cliccando "Si, accetto" nel banner. 
+            </div>';            
+    }
+}
+add_shortcode( 'cookie-control', 'eu_cookie_control_shortcode' );
 
 /* ========= END SHORTCODE ========== */
 
