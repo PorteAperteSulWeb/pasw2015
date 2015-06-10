@@ -1546,7 +1546,41 @@ padding: 0 3px;
 }
 /**** end widget show all category ****/
 
-/* coockie */
+/* ------- Fluid Columns ------- */
+.one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth { position:relative; margin-right:4%; float:left; min-height:1px; height:auto!important; height:1px; }
+.one_half { width:48%; }
+.one_third { width:30.6666%; }
+.two_third { width:65.3332%; }
+.one_fourth { width:22%; }
+.two_fourth { width:48%; }
+.three_fourth { width:74%; }
+.one_fifth { width:16.8%; }
+.two_fifth { width:37.6%; }
+.three_fifth { width:58.4%; }
+.four_fifth { width:79.2%; }
+.one_sixth { width:13.3333%; }
+.two_sixth { width:30.6666%; }
+.three_sixth { width:47.9998%; }
+.four_sixth { width:65.3332%; }
+.five_sixth { width:82.6665%; }
+.last { margin-right:0!important; clear:right; }
+.one_half .one_half { margin-right:8.3333%; width:45.8333%; }
+.one_half .one_third { margin-right:8.3333%; width:27.7778%; }
+.one_half .two_third { margin-right:8.3333%; width:63.8889%; }
+.two_third .one_third { margin-right:6.1224%; width:29.2517%; }
+.two_third .two_third { margin-right:6.1224%; width:64.6258%; }
+.two_third .one_fourth { margin-right:6.1224%; width:20.4082%; }
+
+/* ------- Class per gestione shortcode destinatari ------- */
+.contentdest {overflow:hidden; padding-bottom:5px;padding-top:15px;font-size: 0.9em;}
+.short_dest_line {overflow:hidden; padding-bottom:5px;}
+.short_dest_col_images {width:90px;float:left;margin-left:5px;margin-top:5px;}
+.short_dest_col_testo_3C {margin-left:100px; padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
+.short_dest_col_testo_2C {padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
+.short_dest_col_date {width:120px;float:right; text-align:right;padding-top:5px;}
+
+/* ------- Class per gestione eu law ------- */
+
 .pasw2015cookies {
     background: none repeat scroll 0 0 #222;
     display: none;
@@ -1559,6 +1593,18 @@ padding: 0 3px;
     bottom: 0;
     width: 100%;
     z-index: 99999;
+}
+
+.eu_cookie_control {
+	padding: 20px;
+	border: 1px solid;
+	text-align: center;
+	width:80%;
+	margin: 20px auto;
+    padding: 8px 21px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 .cookie-pop {
@@ -1599,36 +1645,47 @@ margin: 5% auto 5% auto;
 float:left;
 }
 
+.remove-cookie {
+	-moz-box-shadow: 3px 4px 0px 0px #899599;
+	-webkit-box-shadow: 3px 4px 0px 0px #899599;
+	box-shadow: 3px 4px 0px 0px #899599;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
+	background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+	background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+	background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+	background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
+	background-color:#ededed;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #d6bcd6;
+	display:inline-block;
+	cursor:pointer;
+	color:#3a8a9e;
+	font-family:Arial;
+	font-size:13px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #e1e2ed;
+}
+.remove-cookie:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
+	background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+	background:-webkit-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+	background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+	background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+	background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
+	background-color:#bab1ba;
+}
 
-/* ------- Fluid Columns ------- */
-.one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth { position:relative; margin-right:4%; float:left; min-height:1px; height:auto!important; height:1px; }
-.one_half { width:48%; }
-.one_third { width:30.6666%; }
-.two_third { width:65.3332%; }
-.one_fourth { width:22%; }
-.two_fourth { width:48%; }
-.three_fourth { width:74%; }
-.one_fifth { width:16.8%; }
-.two_fifth { width:37.6%; }
-.three_fifth { width:58.4%; }
-.four_fifth { width:79.2%; }
-.one_sixth { width:13.3333%; }
-.two_sixth { width:30.6666%; }
-.three_sixth { width:47.9998%; }
-.four_sixth { width:65.3332%; }
-.five_sixth { width:82.6665%; }
-.last { margin-right:0!important; clear:right; }
-.one_half .one_half { margin-right:8.3333%; width:45.8333%; }
-.one_half .one_third { margin-right:8.3333%; width:27.7778%; }
-.one_half .two_third { margin-right:8.3333%; width:63.8889%; }
-.two_third .one_third { margin-right:6.1224%; width:29.2517%; }
-.two_third .two_third { margin-right:6.1224%; width:64.6258%; }
-.two_third .one_fourth { margin-right:6.1224%; width:20.4082%; }
-
-/* ------- Class per gestione shortcode destinatari ------- */
-.contentdest {overflow:hidden; padding-bottom:5px;padding-top:15px;font-size: 0.9em;}
-.short_dest_line {overflow:hidden; padding-bottom:5px;}
-.short_dest_col_images {width:90px;float:left;margin-left:5px;margin-top:5px;}
-.short_dest_col_testo_3C {margin-left:100px; padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
-.short_dest_col_testo_2C {padding-top:5px;margin-right:120px;margin-top:0px;padding-bottom:5px;}
-.short_dest_col_date {width:120px;float:right; text-align:right;padding-top:5px;}
+.remove-cookie {
+	position:fixed;
+	text-align: center;
+	left: 10px;
+	bottom:25px;
+	z-index: 99999;
+	color: white;
+}
