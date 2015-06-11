@@ -187,7 +187,7 @@ function eu_cookie_control_shortcode( $atts ) {
     if ( cookie_accepted() ) {
         return '
             <div class="eu_cookie_control" style="color: white; border-color:#ef7777; background-color: rgba(241, 135, 135, 0.9);">
-				Cookies abilitati <button id="remove-cookie"  href="#">Revoca consenso Cookie</button>
+				Cookies abilitati <button id="remove-cookie-short"  href="#">Revoca consenso Cookie</button>
             </div>';
     } else {
         return '
