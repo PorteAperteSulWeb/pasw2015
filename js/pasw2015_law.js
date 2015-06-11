@@ -13,6 +13,7 @@
 	if ( 'yes' == $.cookie( 'pasw_law_cookie' ) && show == 1 ) {$('body').prepend('<a href="#" id="remove-cookie" class="remove-cookie">Revoca Consenso<br>Cookie</a>');}
 
 	$( '#remove-cookie' ).click(function () {$.removeCookie( 'pasw_law_cookie', {path: '/' });location.reload();});
+	$( '#remove-cookie-short' ).click(function () {$.removeCookie( 'pasw_law_cookie', {path: '/' });location.reload();});
 
 	
 })(jQuery);
