@@ -402,4 +402,36 @@ function new_excerpt_more($more) {
 }
 add_filter('excerpt_more', 'new_excerpt_more');
 
+// widget per visualizzare l'immagine in evidenza di una pagina o di un articolo (ad esempio sulla barra destra) 
+class ThumbWidget extends WP_Widget {
+    function ThumbWidget() {
+        parent::__construct( false, 'Immagine in evidenza' );
+    }
+    function widget( $args, $instance ) {
+        extract($args);
+        echo $before_widget;
+        
+        if ( has_post_thumbnail() ) {
+	         
+           the_post_thumbnail('rightbar-thumb');
+           
+        } 
+ 
+        echo $after_widget;
+    }
+    function update( $new_instance, $old_instance ) {
+        return $new_instance;
+    }
+    function form( $instance ) {
+    }
+}
+ 
+function register_ThumbWidget() {
+    register_widget( 'ThumbWidget' );
+  if ( function_exists( 'add_image_size' ) ) { 
+	add_image_size( 'rightbar-thumb', 180, 9999 );  
+}
+}
+ 
+add_action( 'widgets_init', 'register_ThumbWidget' );
 ?>
