@@ -19,6 +19,7 @@ function pasw2015_eu_law_script() {
         'url'   	=> get_permalink(get_option('pasw_eucookie_page')),
 		'fine' 		=> get_option('pasw_eucookie_expire'),
 		'bottom_active' => get_option('pasw_eucookie_remove_bottom'),
+		'position' 	=> get_option ('pasw_eucookie_position_banner')
         );
 
 

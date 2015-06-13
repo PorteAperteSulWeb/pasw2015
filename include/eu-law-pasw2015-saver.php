@@ -7,6 +7,7 @@
 		update_option( 'pasw_eucookie_msg', esc_html(stripslashes($_POST["pasw_eucookie_msg_n"])) );
 		update_option( 'pasw_eucookie_box_msg', esc_html(stripslashes($_POST["pasw_eucookie_box_msg_n"])) );
 		update_option( 'pasw_eucookie_expire', $_POST["pasw_eucookie_expire_n"] );
+		update_option( 'pasw_eucookie_position_banner', $_POST["pasw_eucookie_position_banner_n"] );
 
 		if (isset($_POST['pasw_eucookie_automatic_n'])){
                 update_option('pasw_eucookie_automatic', '1');

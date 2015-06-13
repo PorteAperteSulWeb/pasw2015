@@ -1582,7 +1582,7 @@ padding: 0 3px;
 /* ------- Class per gestione eu law ------- */
 
 .pasw2015cookies {
-    background: none repeat scroll 0 0 #222;
+    background: none repeat scroll 0 0 rgba(34,34,34,0.75);
     display: none;
     color: #ccc;
     direction: ltr;
@@ -1590,9 +1590,9 @@ padding: 0 3px;
     left: 0;
     min-width: 600px;
     position: fixed;
-    bottom: 0;
+    /* bottom: 0; */
     width: 100%;
-    z-index: 99999;
+    z-index: 999999;
 }
 
 .eu_cookie_control {

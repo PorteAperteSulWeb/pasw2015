@@ -69,6 +69,12 @@ function pasw2015_cookie() { ?>
 							); ?>
 
 							<?php wp_dropdown_pages($args); ?>
+							<br>
+							<label for="eucookie_expire">Posizione Banner:</label><br>
+							<select name="pasw_eucookie_position_banner_n" >
+								<option value="0" <?php if (get_option( 'pasw_eucookie_position_banner') == '0') { echo 'selected="selected"'; }?>>Basso</option>
+								<option value="1" <?php if (get_option( 'pasw_eucookie_position_banner') == '1') { echo 'selected="selected"'; }?>>Alto</option>
+							</select>
 						</div>
 						
 					</div>
