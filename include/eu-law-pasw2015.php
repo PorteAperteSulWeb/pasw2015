@@ -55,7 +55,7 @@ function pasw2015_cookie() { ?>
 						
 						<div class="welcome-panel-column" >
 							<label for="eucookie_page"><?php _e('Page per EU LAW Cookies') ?></label>
-						
+							<br>
 							<?php $args = array(
 								'depth'                 => 0,
 								'child_of'              => 0,
