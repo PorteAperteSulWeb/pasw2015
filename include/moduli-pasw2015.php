@@ -137,7 +137,7 @@
             </td>
             <td class="column-description desc">
                 <div class="plugin-description">
-                    <p>Questo modulo inserisce un banner informativo sull'uso dei cookie. <strong>Funzione in fase beta.</strong></p>
+                    <p>Il modulo è una soluzione leggera, facile da configurare ed utilizzare che consente al sito di rispettare la legge europea sui cookie,  informando gli utenti  che il sito utilizza cookie. Il modulo permette di bloccare gli script e i relativi cookie prima dell'accettazione rispettando in questo modo la normativa italiana. <br> <strong>Attenzione</strong> il modulo funziona solo con il tema Pasw2015, se si utilizza plugin per la visualizzazione del sito nei cellulari il modulo non genera alcun effetto in tale modalit&agrave, in questo caso si consiglia l'uso del plugin EU Cookie Law di Marco Milesi.</p>
                 </div>
             </td>
         </tr>
