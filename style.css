@@ -1628,8 +1628,8 @@ color:white;
 
 p.pasw2015cookies-banner-text {
     display: inline-block;
-    font-size: 10 px;
-    line-height: 1 em;
+   /* font-size: 10 px; */
+   /* line-height: 1 em; */
     padding: 0 10px 10px 0;
     position: relative;
 }
