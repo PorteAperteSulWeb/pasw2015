@@ -37,6 +37,7 @@ width: 20%;
 min-width: 170px;
 position: absolute;
 height: 100%;
+border-radius: 5px 0 0 5px;
 }
 
 .shortcode-destinatari small {
@@ -204,6 +205,7 @@ width:98%;
 position: relative;
 background-color: white;
 z-index:1;
+border-radius: 5px;
 }
 
 #container {
@@ -473,6 +475,7 @@ margin:0;
 min-height:125px;
 position:relative;
 text-align: center;
+border-radius: 5px 0 0 0;
 }
 
 /* Essential Layout (IE7 Fix) */
@@ -529,7 +532,7 @@ line-height:15px;
 #header ul.sito {
 height: 20px;
 padding: 2px;
-margin: 0;
+border-radius: 5px;
 color: #F0F0F0;
 float: right;
 clear: both;
