@@ -326,7 +326,7 @@ function pasw2015_customizer_css() { ?>
         }
         
         #wrapper, #topbar, #header ul.sito, #footer {
-            box-shadow: 0 0 3px <?php echo $c_principale; ?>;
+            box-shadow: 0 0 0.1px <?php echo $c_principale; ?>;
         }
         .posttitle, .pagetitle, #leftsidebar h2 {
             border-color: <?php echo $c_principale; ?>;
