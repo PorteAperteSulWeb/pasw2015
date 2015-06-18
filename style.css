@@ -1581,7 +1581,6 @@ padding: 0 3px;
 /* ------- Class per gestione eu law ------- */
 
 .pasw2015cookies {
-    background: none repeat scroll 0 0 rgba(34,34,34,0.90);
     display: none;
     color: #ccc;
     direction: ltr;
@@ -1595,11 +1594,11 @@ padding: 0 3px;
 }
 
 .eu_cookie_control {
-    padding: 20px;
-    border: 1px solid;
-    text-align: center;
-    width:80%;
-    margin: 20px auto;
+	padding: 20px;
+	/* border: 1px solid; */
+	text-align: center;
+	width:80%;
+	margin: 20px auto;
     padding: 8px 21px;
     border-radius: 10px;
 }
@@ -1625,15 +1624,12 @@ color:white;
 
 p.pasw2015cookies-banner-text {
     display: inline-block;
-   /* font-size: 10 px; */
-   /* line-height: 1 em; */
     padding: 0 10px 10px 0;
     position: relative;
 }
 
 .pasw2015cookies_block {
 background: url('images/bg_blocco.jpg');
-border:2px outset red;
 float:left;
 }
 .pasw2015cookies_block span {

@@ -10,10 +10,19 @@ function pasw2015_upload_eulaw_admin_scripts() {
     }
 }
 
+add_action( 'admin_enqueue_scripts', 'wp_enqueue_color_picker' );
+
+function wp_enqueue_color_picker( ) {
+    wp_enqueue_style( 'wp-color-picker' );
+    wp_enqueue_script( 'wp-color-picker');
+    wp_enqueue_script( 'wp-color-picker-script-handle', get_template_directory_uri() . '/js/pasw2015_law_setting.js', array( 'wp-color-picker' ), false, true );
+}
+
+
 function pasw2015_cookie() { ?>
     <div class="wrap">
         <h2>Cookie Law Info</h2>
-		<?php require ( get_template_directory() . '/include/eu-law-pasw2015-saver.php' ); ?>
+		<?php require ( get_template_directory() . '/include/eu-law/eu-law-pasw2015-saver.php' ); ?>
         <form method="post" name="options" target="_self">
 			<?php wp_nonce_field('update-options') ?>
 
@@ -79,6 +88,56 @@ function pasw2015_cookie() { ?>
 						
 					</div>
 					<br><hr>
+					
+					<h4>Setting Colori</h4>
+					<div class="welcome-panel-column-container">
+					<table style="	width: 100%;">
+						<tr style="font-weight: bold;">							
+							<td style="	width: 15%;">Area<td>
+							<td></td>
+							<td style="	width: 15%;">Colore Sfondo</td>
+							<td style="	width: 15%;">Colore testo</td>
+							<td>Trasparenza background</td>
+						</tr>
+						<tr>
+							<td>Banner<td>
+							<td></td>
+							<td><input id="eucookie_bgcolor_banner" type="text" name="pasw_eucookie_bgcolor_banner_n" value="<?php echo get_option('pasw_eucookie_bgcolor_banner'); ?>" class="colorfield" data-default-color="#222222"/></td>
+							<td><input id="eucookie_textcolor_banner" type="text" name="pasw_eucookie_textcolor_banner_n" value="<?php echo get_option('pasw_eucookie_textcolor_banner'); ?>" class="colorfield" data-default-color="#ffffff"/>	</td>
+							<td><input id="eucookie_bgopacity_banner" type="text" name="pasw_eucookie_bgopacity_banner_n" value="<?php echo get_option('pasw_eucookie_bgopacity_banner'); ?>" size="2">
+							valore compreso tra 0 e 1 ( 0 = trasparente; 1 = opaco) es. 0.9</td>
+						</tr>
+						<tr>
+							<td>Area Blocco codice<td>
+							<td></td>
+							<td><input id="eucookie_bgcolor_blocco" type="text" name="pasw_eucookie_bgcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_bgcolor_blocco'); ?>" class="colorfield" data-default-color="#222222"/></td>
+							<td><input id="eucookie_textcolor_blocco" type="text" name="pasw_eucookie_textcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_textcolor_blocco'); ?>" class="colorfield" data-default-color="#ffffff"/>	</td>
+							<td><input id="eucookie_bgopacity_blocco" type="text" name="pasw_eucookie_bgopacity_blocco_n" value="<?php echo get_option('pasw_eucookie_bgopacity_blocco'); ?>" size="2">
+							valore compreso tra 0 e 1 ( 0 = trasparente; 1 = opaco) es. 0.9</td>
+						
+						</tr>
+						<tr>
+							<td>Shortcode cookie-controll<td>
+							<td>Si Cookie<br/>No Coocki</td>
+							<td>
+							<input id="eucookie_bgcolor_short_ca" type="text" name="pasw_eucookie_bgcolor_short_ca_n" value="<?php echo get_option('pasw_eucookie_bgcolor_short_ca'); ?>" class="colorfield" data-default-color="#FCA182"/><br>
+							<input id="eucookie_bgcolor_short_cd" type="text" name="pasw_eucookie_bgcolor_short_cd_n" value="<?php echo get_option('pasw_eucookie_bgcolor_short_cd'); ?>" class="colorfield" data-default-color="#A1B8CB"/>
+							</td>
+							<td>
+							<input id="eucookie_textcolor_short_ca" type="text" name="pasw_eucookie_textcolor_short_ca_n" value="<?php echo get_option('pasw_eucookie_textcolor_short_ca'); ?>" class="colorfield" data-default-color="#000000"/><br>
+							<input id="eucookie_textcolor_short_cd" type="text" name="pasw_eucookie_textcolor_short_cd_n" value="<?php echo get_option('pasw_eucookie_textcolor_short_cd'); ?>" class="colorfield" data-default-color="#ffffff"/>
+							</td>
+							<td><!-- <input id="eucookie_bgopacity_shortcode" type="text" name="pasw_eucookie_bgopacity_shortcode_n" value="<?php echo get_option('pasw_eucookie_bgopacity_shortcode'); ?>" size="2">
+							valore compreso tra 0 e 1 ( 0 = trasparente; 1 = opaco) es. 0.9 --></td>
+						</tr>
+					</table>					
+						
+					</div>
+					<br><hr>
+					
+					
+					
+					
 					<h4>Testi utilizzati nei vari banner</h4>
 					<div class="welcome-panel-column-container">
 						<div class="welcome-panel-column">

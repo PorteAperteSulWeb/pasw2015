@@ -12,6 +12,8 @@ function pasw2015_eu_law_script() {
         true
     );
     
+	$bgbanner= convertHex(get_option ('pasw_eucookie_bgcolor_banner'),get_option ('pasw_eucookie_bgopacity_banner'));
+	
     $scriptData = array(
         'message' 	=> get_option('pasw_eucookie_msg') ,
         'button'  	=> get_option('pasw_eucookie_button'),
@@ -19,7 +21,9 @@ function pasw2015_eu_law_script() {
         'url'   	=> get_permalink(get_option('pasw_eucookie_page')),
 		'fine' 		=> get_option('pasw_eucookie_expire'),
 		'bottom_active' => get_option('pasw_eucookie_remove_bottom'),
-		'position' 	=> get_option ('pasw_eucookie_position_banner')
+		'position' 	=> get_option ('pasw_eucookie_position_banner'),
+		'bgbanner' => $bgbanner,
+		'textcolor' => get_option ('pasw_eucookie_textcolor_banner')
         );
 
 
@@ -74,7 +78,11 @@ function cookie_accepted() {
 }
 
 function generate_cookie_notice_text($height, $width, $text, $textpriv= null) {
-    return '<div class="pasw2015cookies_block" style="width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div><div class="clear"></div>';    
+	if (get_option ('pasw_eucookie_bgopacity_blocco')!= 0){
+		$bgbox = 'background:'.convertHex(get_option ('pasw_eucookie_bgcolor_blocco'),get_option ('pasw_eucookie_bgopacity_blocco'));
+	}
+	$textboxcolor = get_option('pasw_eucookie_textcolor_blocco');
+    return '<div class="pasw2015cookies_block" style="'. $bgbox .';color:'.$textboxcolor.';width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div><div class="clear"></div>';    
 }
 
 function generate_cookie_notice_privacy($privacy, $tipo) {
@@ -96,8 +104,7 @@ function generate_cookie_notice_lite($height, $width) {
 }
 
 function generate_cookie_notice_widget($height, $width) {
-    //$text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
-	$text = '<small>Per la visualizzazione abilitare l\'uso dei coockie</small>';
+    $text = html_entity_decode(get_option('pasw_eucookie_box_widget'));
 	return generate_cookie_notice_text($height, $width, $text);
 }
 
@@ -108,6 +115,22 @@ function pulisci($content,$ricerca){
 	$stringa = trim(str_replace('"', '', $stringa));
 	return $stringa.'px';
 }
+
+function convertHex($hex,$opacity){
+   $hex = str_replace("#", "", $hex);
+
+   if(strlen($hex) == 3) {
+      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+   } else {
+      $r = hexdec(substr($hex,0,2));
+      $g = hexdec(substr($hex,2,2));
+      $b = hexdec(substr($hex,4,2));
+   }
+    $result = 'rgba('.$r.','.$g.','.$b.','.$opacity.')';
+    return $result;
+} 
 
 /* ========= Buttom Editor ========== */
 function cookie_add_mce_button() {
@@ -187,12 +210,12 @@ add_shortcode('cookie', 'cookie_policy');
 function eu_cookie_control_shortcode( $atts ) {
     if ( cookie_accepted() ) {
         return '
-            <div class="eu_cookie_control" style="color: white; border-color:#ef7777; background-color: rgba(241, 135, 135, 0.9);">
+            <div class="eu_cookie_control" style="color:'.get_option('pasw_eucookie_textcolor_short_ca').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_ca').' ;">
 				Cookies abilitati <button id="remove-cookie-short"  href="#">Revoca consenso Cookie</button>
             </div>';
     } else {
         return '
-            <div class="eu_cookie_control" style="color: white; border-color: #A1B8CB; background-color: rgba(161, 184, 203, 0.9);">
+            <div class="eu_cookie_control" style="color:'.get_option('pasw_eucookie_textcolor_short_cd').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_cd').' ;">
              Cookie disabilitati<br>Accetta i Cookie cliccando "Si, accetto" nel banner. 
             </div>';            
     }
@@ -202,5 +225,7 @@ add_shortcode( 'cookie-control', 'eu_cookie_control_shortcode' );
 /* ========= END SHORTCODE ========== */
 
 
+add_action('admin_init', 'pasw015_eucookie_check_defaults');
+function pasw015_eucookie_check_defaults() { require get_template_directory() . '/include/eu-law/defaults.php'; }
 
 }

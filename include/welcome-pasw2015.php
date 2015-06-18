@@ -1,7 +1,7 @@
 <?php
 
 require ( get_template_directory() . '/include/impostazioni-pasw2015.php' );
-if (get_option('pasw_eulaw') == 1) 	{require ( get_template_directory() . '/include/eu-law-pasw2015.php' );}
+if (get_option('pasw_eulaw') == 1) 	{require ( get_template_directory() . '/include/eu-law/eu-law-pasw2015.php' );}
 
 add_action('admin_menu', 'pasw2015_menu');
 
