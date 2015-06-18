@@ -1630,6 +1630,7 @@ p.pasw2015cookies-banner-text {
 
 .pasw2015cookies_block {
 background: url('images/bg_blocco.jpg');
+border-radius: 5px;
 float:left;
 }
 .pasw2015cookies_block span {

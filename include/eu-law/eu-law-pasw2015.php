@@ -110,8 +110,8 @@ function pasw2015_cookie() { ?>
 						<tr>
 							<td>Area Blocco codice<td>
 							<td></td>
-							<td><input id="eucookie_bgcolor_blocco" type="text" name="pasw_eucookie_bgcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_bgcolor_blocco'); ?>" class="colorfield" data-default-color="#222222"/></td>
-							<td><input id="eucookie_textcolor_blocco" type="text" name="pasw_eucookie_textcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_textcolor_blocco'); ?>" class="colorfield" data-default-color="#ffffff"/>	</td>
+							<td><input id="eucookie_bgcolor_blocco" type="text" name="pasw_eucookie_bgcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_bgcolor_blocco'); ?>" class="colorfield" data-default-color="#d8d8d8"/></td>
+							<td><input id="eucookie_textcolor_blocco" type="text" name="pasw_eucookie_textcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_textcolor_blocco'); ?>" class="colorfield" data-default-color="#7f7f7f"/>	</td>
 							<td><input id="eucookie_bgopacity_blocco" type="text" name="pasw_eucookie_bgopacity_blocco_n" value="<?php echo get_option('pasw_eucookie_bgopacity_blocco'); ?>" size="2">
 							valore compreso tra 0 e 1 ( 0 = trasparente; 1 = opaco) es. 0.9</td>
 						
@@ -124,7 +124,7 @@ function pasw2015_cookie() { ?>
 							<input id="eucookie_bgcolor_short_cd" type="text" name="pasw_eucookie_bgcolor_short_cd_n" value="<?php echo get_option('pasw_eucookie_bgcolor_short_cd'); ?>" class="colorfield" data-default-color="#A1B8CB"/>
 							</td>
 							<td>
-							<input id="eucookie_textcolor_short_ca" type="text" name="pasw_eucookie_textcolor_short_ca_n" value="<?php echo get_option('pasw_eucookie_textcolor_short_ca'); ?>" class="colorfield" data-default-color="#000000"/><br>
+							<input id="eucookie_textcolor_short_ca" type="text" name="pasw_eucookie_textcolor_short_ca_n" value="<?php echo get_option('pasw_eucookie_textcolor_short_ca'); ?>" class="colorfield" data-default-color="#00004d"/><br>
 							<input id="eucookie_textcolor_short_cd" type="text" name="pasw_eucookie_textcolor_short_cd_n" value="<?php echo get_option('pasw_eucookie_textcolor_short_cd'); ?>" class="colorfield" data-default-color="#ffffff"/>
 							</td>
 							<td><!-- <input id="eucookie_bgopacity_shortcode" type="text" name="pasw_eucookie_bgopacity_shortcode_n" value="<?php echo get_option('pasw_eucookie_bgopacity_shortcode'); ?>" size="2">

@@ -11,12 +11,12 @@
 		if (get_option('pasw_eucookie_textcolor_banner') == ''){ update_option('pasw_eucookie_textcolor_banner', '#ffffff'); }
 		if (get_option('pasw_eucookie_bgopacity_banner') == ''){ update_option('pasw_eucookie_bgopacity_banner', '0.9'); }
 		
-		if (get_option('pasw_eucookie_bgcolor_blocco') == ''){ update_option('pasw_eucookie_bgcolor_blocco', '#222222'); }
-		if (get_option('pasw_eucookie_textcolor_blocco') == ''){ update_option('pasw_eucookie_textcolor_blocco', '#ffffff'); }
-		if (get_option('pasw_eucookie_bgopacity_blocco') == ''){ update_option('pasw_eucookie_bgopacity_blocco', '0.9'); }
+		if (get_option('pasw_eucookie_bgcolor_blocco') == ''){ update_option('pasw_eucookie_bgcolor_blocco', '#d8d8d8'); }
+		if (get_option('pasw_eucookie_textcolor_blocco') == ''){ update_option('pasw_eucookie_textcolor_blocco', '#7f7f7f'); }
+		if (get_option('pasw_eucookie_bgopacity_blocco') == ''){ update_option('pasw_eucookie_bgopacity_blocco', '0.5'); }
 		
 		if (get_option('pasw_eucookie_bgcolor_short_ca') == ''){ update_option('pasw_eucookie_bgcolor_short_ca', '#FCA182'); }
-		if (get_option('pasw_eucookie_textcolor_short_ca') == ''){ update_option('pasw_eucookie_textcolor_short_ca', '#000000'); }
+		if (get_option('pasw_eucookie_textcolor_short_ca') == ''){ update_option('pasw_eucookie_textcolor_short_ca', '#00004d'); }
 
 		
 		if (get_option('pasw_eucookie_bgcolor_short_cd') == ''){ update_option('pasw_eucookie_bgcolor_short_cd', '#A1B8CB'); }
