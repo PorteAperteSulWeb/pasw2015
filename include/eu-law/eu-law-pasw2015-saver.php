@@ -10,6 +10,8 @@
 		update_option( 'pasw_eucookie_expire', $_POST["pasw_eucookie_expire_n"] );
 		update_option( 'pasw_eucookie_position_banner', $_POST["pasw_eucookie_position_banner_n"] );
 		update_option( 'pasw_eucookie_cookieName', $_POST["pasw_eucookie_cookieName_n"] );
+		update_option( 'pasw_eucookie_position_revocalr', $_POST["pasw_eucookie_position_revocalr_n"] );
+		update_option( 'pasw_eucookie_position_revocatb', $_POST["pasw_eucookie_position_revocatb_n"] );
 		
 		// Salvataggio colori
 		update_option( 'pasw_eucookie_bgcolor_banner', $_POST["pasw_eucookie_bgcolor_banner_n"] );

@@ -33,7 +33,9 @@ function pasw2015_eu_law_script() {
 		'bgbanner' => $bgbanner,
 		'textcolor' => get_option ('pasw_eucookie_textcolor_banner'),
 		'acceptOnClick' => get_option ('pasw_eucookie_acceptOnClick'),
-		'cookieName' => $cookieName
+		'cookieName' => $cookieName,
+		'positionrevocalr' => get_option ('pasw_eucookie_position_revocalr'),
+		'positionrevocatb' => get_option ('pasw_eucookie_position_revocatb')
         );
 
 

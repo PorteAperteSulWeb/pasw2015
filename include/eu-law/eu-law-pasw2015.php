@@ -52,6 +52,14 @@ function pasw2015_cookie() { ?>
                         <?php $get_pasw_eucookie_remove_bottom = get_option('pasw_eucookie_remove_bottom');
                         if ($get_pasw_eucookie_remove_bottom == '1') { echo ' checked="checked" '; }?>>
 						<label for="eucookie_remove_bottom">Abilita pulsante revoca cookie</label>
+						<select name="pasw_eucookie_position_revocalr_n" >
+								<option value="0" <?php if (get_option( 'pasw_eucookie_position_revocalr') == '0') { echo 'selected="selected"'; }?>>Sx</option>
+								<option value="1" <?php if (get_option( 'pasw_eucookie_position_revocalr') == '1') { echo 'selected="selected"'; }?>>Dx</option>
+						</select>
+						<select name="pasw_eucookie_position_revocatb_n" >
+								<option value="0" <?php if (get_option( 'pasw_eucookie_position_revocatb') == '0') { echo 'selected="selected"'; }?>>Basso</option>
+								<option value="1" <?php if (get_option( 'pasw_eucookie_position_revocatb') == '1') { echo 'selected="selected"'; }?>>Alto</option>
+						</select>
 						<br>
 						<br>
 							<label for="eucookie_expire">Numero giorni cookie attivo:</label>

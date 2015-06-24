@@ -1674,8 +1674,8 @@ float:left;
 .remove-cookie {
 	position:fixed;
 	text-align: center;
-	left: 10px;
-	bottom:25px;
+	/* left: 10px; 
+	bottom:25px;*/
 	z-index: 99999;
 	color: white;
 }
