@@ -35,12 +35,16 @@
         }
 
 		if (isset($_GET['switcheulaw']) || wp_verify_nonce($_GET['switcheulaw'], 'switcheulaw')) {
-            if (get_option('pasw_eulaw') == 0) {
-                update_option('pasw_eulaw', '1');
-				require get_template_directory() . '/include/eu-law/defaults.php';
-            } else {
-                update_option('pasw_eulaw', '0');
-            }
+			if ( is_plugin_active( 'eu-cookie-law/eu-cookie-law.php' ) ) {
+				$checkattiva = '<br>Il modulo non può essere attivato<br>è attivo EU Cookie Law';
+			}else{
+				if (get_option('pasw_eulaw') == 0) {
+					update_option('pasw_eulaw', '1');
+					require get_template_directory() . '/include/eu-law/defaults.php';
+				} else {
+					update_option('pasw_eulaw', '0');
+				}
+			} 
         }
 
         ?>
@@ -132,7 +136,7 @@
             <td class="plugin-title"><strong>EU Cookie Law </strong><div class="row-actions visible">
                 <span class="activate">
                     <a href="<?php print wp_nonce_url(admin_url('admin.php?page=pasw2015-moduli'), 'switcheulaw', 'switcheulaw');?>" class="edit">
-                        <?php if (get_option('pasw_eulaw') == 0) { echo 'Attiva'; } else { echo 'Disattiva'; } ?>
+                        <?php if (get_option('pasw_eulaw') == 0) { echo 'Attiva'; echo $checkattiva;} else { echo 'Disattiva'; } ?>
                     </a>
                 </span>
             </td>
