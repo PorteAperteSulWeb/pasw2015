@@ -1581,51 +1581,36 @@ padding: 0 3px;
 /* ------- Class per gestione eu law ------- */
 
 .pasw2015cookies {
-    display: none;
-    color: #ccc;
-    direction: ltr;
-    font: 400 13px/32px "Open Sans",sans-serif;
-    left: 0;
-    min-width: 600px;
-    position: fixed;
-    /* bottom: 0; */
-    width: 100%;
-    z-index: 999999;
-}
-
-.eu_cookie_control {
-	padding: 20px;
-	/* border: 1px solid; */
+	width:100%;
+	position:fixed;
 	text-align: center;
+	z-index: 999999;
+	color: white;
+}
+
+.pasw2015cookies-cookie-pop {
+    position: relative;
+	box-shadow: 3px 4px 0px 0px #899599;
+	border-radius:5px;
+	border:1px solid #d6bcd6;
+	display:inline-block;
 	width:80%;
-	margin: 20px auto;
-    padding: 8px 21px;
-    border-radius: 10px;
+	
+}
+.pasw2015cookies-cookie-pop button {
+	border-radius:5px;
 }
 
-.cookie-pop {
-    overflow: hidden;
-    height: 32px;
-    position: relative;
-    text-align: center;
+.pasw2015cookies-cookie-pop a {
+background: #E9E9E9;
+border-radius:5px;
+text-decoration:none;
 }
 
-.cookie-pop a:link  {
-	color: red;
-}
-
-.cookie-pop a:visited  {
-	color: #5F9EA0;
-}
-
-.cookie-pop a:hover {
-color:white;
-}
-
-p.pasw2015cookies-banner-text {
+.pasw2015cookies-banner-text {
     display: inline-block;
-    padding: 0 10px 10px 0;
     position: relative;
+	margin: 5px;
 }
 
 .pasw2015cookies_block {
@@ -1638,6 +1623,19 @@ width: 100%;
 margin: 5% auto 5% auto; 
 float:left;
 }
+
+.pasw2015cookies_control {
+	position: relative;
+	box-shadow: 3px 4px 0px 0px #899599;
+	margin: 20px auto;
+    padding: 8px 21px;
+	text-align: center;
+	border-radius:5px;
+	border:1px solid #d6bcd6;
+	display:inline-block;
+	width:80%;
+}
+
 
 .remove-cookie {
 	box-shadow: 3px 4px 0px 0px #899599;
@@ -1674,8 +1672,6 @@ float:left;
 .remove-cookie {
 	position:fixed;
 	text-align: center;
-	/* left: 10px; 
-	bottom:25px;*/
 	z-index: 99999;
 	color: white;
 }

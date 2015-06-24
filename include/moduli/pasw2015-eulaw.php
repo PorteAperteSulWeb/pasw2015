@@ -222,12 +222,12 @@ add_shortcode('cookie', 'cookie_policy');
 function eu_cookie_control_shortcode( $atts ) {
     if ( cookie_accepted() ) {
         return '
-            <div class="eu_cookie_control" style="color:'.get_option('pasw_eucookie_textcolor_short_ca').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_ca').' ;">
+            <div class="pasw2015cookies_control" style="color:'.get_option('pasw_eucookie_textcolor_short_ca').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_ca').' ;">
 				Cookies abilitati <button id="remove-cookie-short"  href="#">Revoca consenso Cookie</button>
             </div>';
     } else {
         return '
-            <div class="eu_cookie_control" style="color:'.get_option('pasw_eucookie_textcolor_short_cd').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_cd').' ;">
+            <div class="pasw2015cookies_control" style="color:'.get_option('pasw_eucookie_textcolor_short_cd').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_cd').' ;">
              Cookie disabilitati<br>Accetta i Cookie cliccando "Si, accetto" nel banner. 
             </div>';            
     }
