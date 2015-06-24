@@ -37,6 +37,7 @@
 		if (isset($_GET['switcheulaw']) || wp_verify_nonce($_GET['switcheulaw'], 'switcheulaw')) {
             if (get_option('pasw_eulaw') == 0) {
                 update_option('pasw_eulaw', '1');
+				require get_template_directory() . '/include/eu-law/defaults.php';
             } else {
                 update_option('pasw_eulaw', '0');
             }

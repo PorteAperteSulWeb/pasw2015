@@ -4,6 +4,7 @@
         if (get_option('pasw_eucookie_msg') == ''){ update_option('pasw_eucookie_msg', 'I cookie ci aiutano a migliorare il sito. Utilizzando il sito, accetti l\'utilizzo dei cookie da parte nostra.'); }
         if (get_option('pasw_eucookie_box_msg') == ''){ update_option('pasw_eucookie_box_msg', 'Contenuto bloccato, accetta i cookie per visualizzare il contenuto'); }
         if (get_option('pasw_eucookie_position_banner') == ''){ update_option('pasw_eucookie_position_banner', '0'); }
+		if (get_option('pasw_eucookie_expire') == ''){ update_option('pasw_eucookie_expire', '30'); }
 		
 		// Default colore
 		

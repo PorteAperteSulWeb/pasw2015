@@ -12,7 +12,15 @@ function pasw2015_eu_law_script() {
         true
     );
     
-	$bgbanner= convertHex(get_option ('pasw_eucookie_bgcolor_banner'),get_option ('pasw_eucookie_bgopacity_banner'));
+	$bgbanner= convertHex(get_option('pasw_eucookie_bgcolor_banner'),get_option('pasw_eucookie_bgopacity_banner'));
+	
+	if (get_option('pasw_eucookie_cookieName') == ""){
+	$cookieName = 'pasw_law_cookie';
+	}
+	else
+	{
+	$cookieName = get_option('pasw_eucookie_cookieName');
+	}
 	
     $scriptData = array(
         'message' 	=> get_option('pasw_eucookie_msg') ,
@@ -23,7 +31,9 @@ function pasw2015_eu_law_script() {
 		'bottom_active' => get_option('pasw_eucookie_remove_bottom'),
 		'position' 	=> get_option ('pasw_eucookie_position_banner'),
 		'bgbanner' => $bgbanner,
-		'textcolor' => get_option ('pasw_eucookie_textcolor_banner')
+		'textcolor' => get_option ('pasw_eucookie_textcolor_banner'),
+		'acceptOnClick' => get_option ('pasw_eucookie_acceptOnClick'),
+		'cookieName' => $cookieName
         );
 
 
@@ -223,9 +233,5 @@ function eu_cookie_control_shortcode( $atts ) {
 add_shortcode( 'cookie-control', 'eu_cookie_control_shortcode' );
 
 /* ========= END SHORTCODE ========== */
-
-
-add_action('admin_init', 'pasw015_eucookie_check_defaults');
-function pasw015_eucookie_check_defaults() { require get_template_directory() . '/include/eu-law/defaults.php'; }
 
 }

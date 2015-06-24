@@ -35,12 +35,18 @@ function pasw2015_cookie() { ?>
 					<div class="welcome-panel-column-container">
 						
 						<div class="welcome-panel-column" >
-						
+										
 						<input id="eucookie_automatic" type="checkbox" name="pasw_eucookie_automatic_n"
                         <?php $get_pasw_eucookie_automatic = get_option('pasw_eucookie_automatic');
                         if ($get_pasw_eucookie_automatic == '1') { echo ' checked="checked" '; }?>>
 						<label for="eucookie_automatic">Abilita blocco automatico</label>
 						<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; blocca iframe, embed, object, script</p>
+						
+						<input id="eucookie_acceptOnClick" type="checkbox" name="pasw_eucookie_acceptOnClick_n"
+                        <?php $get_pasw_eucookie_acceptOnClick = get_option('pasw_eucookie_acceptOnClick');
+                        if ($get_pasw_eucookie_acceptOnClick == '1') { echo ' checked="checked" '; }?>>
+						<label for="eucookie_acceptOnClick">Abilita accetta cookie su click</label>
+						<br>
 						
 						<input id="eucookie_remove_bottom" type="checkbox" name="pasw_eucookie_remove_bottom_n"
                         <?php $get_pasw_eucookie_remove_bottom = get_option('pasw_eucookie_remove_bottom');
@@ -55,7 +61,7 @@ function pasw2015_cookie() { ?>
 						
 						</div>
 						
-						<div class="welcome-panel-column" >
+						<div class="welcome-panel-column" >		
 							<label for="eucookie_button">Testo pulsante accetta cookie:</label>
 							<input id="eucookie_button" type="text" name="pasw_eucookie_button_n" value="<?php if (get_option('pasw_eucookie_button') != '') {echo stripslashes(get_option('pasw_eucookie_button'));} else {echo 'Accetta';} ?>" class="regular-text">
 							<br/><label for="eucookie_info">Testo link altre informazioni:</label>
@@ -84,6 +90,10 @@ function pasw2015_cookie() { ?>
 								<option value="0" <?php if (get_option( 'pasw_eucookie_position_banner') == '0') { echo 'selected="selected"'; }?>>Basso</option>
 								<option value="1" <?php if (get_option( 'pasw_eucookie_position_banner') == '1') { echo 'selected="selected"'; }?>>Alto</option>
 							</select>
+							<br>
+							<label for="eucookie_cookieName">Nome da assegnare al cookie:</label><br>
+							<input id="eucookie_cookieName" type="text" name="pasw_eucookie_cookieName_n" value="<?php echo get_option('pasw_eucookie_cookieName'); ?>" size="20">
+							<br><small>se vuoto il cookie assumerà nome <strong>pasw_law_cookie</strong></small><br>
 						</div>
 						
 					</div>
@@ -146,10 +156,6 @@ function pasw2015_cookie() { ?>
 						<div class="welcome-panel-column" style="width: 60% !important;">
 							<?php
 								$content = html_entity_decode(get_option('pasw_eucookie_msg'));
-								if ($content == '')
-								{
-								$content ='I cookie ci aiutano a migliorare il sito. Utilizzando il sito, accetti l\'utilizzo dei cookie da parte nostra.';
-								}
 								$editor_settings =  array (
 										'textarea_rows' => 2,
 										'media_buttons' => FALSE,
@@ -157,7 +163,7 @@ function pasw2015_cookie() { ?>
 										'tinymce'       => TRUE
 								);
 								wp_editor( $content, 'pasw_eucookie_msg_n', $editor_settings );
-							?>
+							?> 
 						</div>	
 					</div>
 					<div class="welcome-panel-column-container">
@@ -167,11 +173,6 @@ function pasw2015_cookie() { ?>
 						<div class="welcome-panel-column" style="width: 60% !important;">			
 							<?php
 								$content_eu_box = html_entity_decode(get_option('pasw_eucookie_box_msg'));
-								if ($content_eu_box == '')
-								{
-								$content_eu_box ='<p style="text-align: center;">Il D.lgs. 196/2003 e a seguito delle modalità semplificate per l’informativa e l’acquisizione del consenso per l’uso dei cookie pubblicata sulla Gazzetta Ufficiale n.126 del 3 giugno 2014 e relativo registro dei provvedimenti n.229 dell’8 maggio 2014, prevede l\'accettazione dei cookies da parte degli utenti, il contenuto qui oscurato genera cookies terze parti, pertanto senza l\'accettazione degli stessi non pu&ograve essere visualizzato.</p>
-									<p style="text-align: center;">Abilitare i cookie cliccando su - Si  accetto - in basso a destra per sbloccarlo</p>';
-								}
 								$editor_settings =  array (
 									'textarea_rows' => 2,
 									'media_buttons' => FALSE,
@@ -189,10 +190,6 @@ function pasw2015_cookie() { ?>
 						<div class="welcome-panel-column" style="width: 60% !important;">
 							<?php
 								$content_eu_widget = html_entity_decode(get_option('pasw_eucookie_box_widget'));
-								if ($content_eu_widget == '')
-								{
-								$content_eu_widget ='<p style="text-align: center;">Abilitare i cookie cliccando su - Si  accetto - in basso a destra per sbloccarlo</p>';
-								}
 								$editor_settings =  array (
 											'textarea_rows' => 2,
 											'media_buttons' => FALSE,

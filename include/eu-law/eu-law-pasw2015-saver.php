@@ -9,6 +9,7 @@
 		update_option( 'pasw_eucookie_box_widget', esc_html(stripslashes($_POST["pasw_eucookie_box_widget_n"])) );
 		update_option( 'pasw_eucookie_expire', $_POST["pasw_eucookie_expire_n"] );
 		update_option( 'pasw_eucookie_position_banner', $_POST["pasw_eucookie_position_banner_n"] );
+		update_option( 'pasw_eucookie_cookieName', $_POST["pasw_eucookie_cookieName_n"] );
 		
 		// Salvataggio colori
 		update_option( 'pasw_eucookie_bgcolor_banner', $_POST["pasw_eucookie_bgcolor_banner_n"] );
@@ -38,5 +39,11 @@
                 update_option('pasw_eucookie_remove_bottom', '1');
             } else {
                 update_option('pasw_eucookie_remove_bottom', '0');
+        }
+		
+		if (isset($_POST['pasw_eucookie_acceptOnClick_n'])){
+                update_option('pasw_eucookie_acceptOnClick', '1');
+            } else {
+                update_option('pasw_eucookie_acceptOnClick', '0');
         }
 	}
