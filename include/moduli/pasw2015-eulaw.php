@@ -80,6 +80,14 @@ function pasw_eulaw_autoblock_widget($content) {
 /* =========== Funzioni ============ */
 
 function cookie_accepted() {
+	
+	if (get_option('pasw_eucookie_cookieName') == ""){
+	$cookieName = 'pasw_law_cookie';
+	}
+	else
+	{
+	$cookieName = get_option('pasw_eucookie_cookieName');
+	}
     
     if ( isset( $_COOKIE[$cookieName] ) ) {
         return true;
