@@ -19,8 +19,9 @@ display:table;
 position: fixed!important;
 margin: 0 auto;
 top: 0;
-z-index: 99999999;
+z-index: 1000;
 max-width:1150px;
+left: initial!important;
 }
 
 .clear:after {
@@ -28,7 +29,7 @@ clear:both;
 }
 
 #menu-menu-orizzontale li:first-child a {
-width: 18.2%;
+width: 18.6%;
 text-align: center;
 }
 
@@ -574,7 +575,9 @@ color:#3A291F!important;
 #topbar {
 height:auto!important;
 min-height:30px;
-width:100%;
+width:101%;
+left:-0.5%;
+border-radius:2px;
 padding:0;
 position: relative;
 float:left;
