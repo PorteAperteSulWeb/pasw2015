@@ -4,7 +4,7 @@
         echo '<select name="archive-dropdown" onChange="document.location.href=this.options[this.selectedIndex].value;">';
         echo '<option value="">Sottocategorie</option>';
         foreach ($categories as $category) {
-            $option = '<option value="' . get_site_url() . '/category/'.$category->category_nicename.'">';
+            $option = '<option value="' . get_home_url() . '/category/'.$category->category_nicename.'">';
             $option .= $category->cat_name;
             $option .= ' ('.$category->category_count.')';
             $option .= '</option>';
