@@ -62,7 +62,7 @@ add_filter( 'widget_display_callback','pasw_eulaw_autoblock_widget', 11, 3 );
 
 function pasw_eulaw_autoblock($content) {
     if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') ) {
-        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>#is', generate_cookie_notice_lite('auto', '100%'), $content);
+        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>|<object.*?\/object>#is', generate_cookie_notice_lite('auto', '100%'), $content);
     }
     return $content;
 }
