@@ -18,6 +18,81 @@ function wp_enqueue_color_picker( ) {
     wp_enqueue_script( 'wp-color-picker-script-handle', get_template_directory_uri() . '/js/pasw2015_law_setting.js', array( 'wp-color-picker' ), false, true );
 }
 
+//  START BOX EXCLUDE PAGE
+
+function pasw2015_exclude_page_add_meta_box() {
+	
+	$screens = array( 'post', 'page' );
+	
+	foreach ( $screens as $screen ) {
+		add_meta_box(
+				'exclude_page_id',
+				'Disable Autobloc Eu Cookie law',
+				'exclude_page_meta_box_callback',
+				$screen,
+				'side',
+				'high'
+			);
+	}
+}
+
+if (get_option('pasw_eulaw') == 1) {
+add_action( 'add_meta_boxes', 'pasw2015_exclude_page_add_meta_box' );  
+}
+
+
+// Disegna il box nella schermata
+function exclude_page_meta_box_callback( $post ) {
+	wp_nonce_field( 'pasw2015_exclude_page_meta_box', 'pasw2015_exclude_page_meta_box_nonce' );
+
+	if (get_post_meta($post->ID, '_is_pasw2015_exclude_page', true)){ 
+    $value = 'checked';
+	} 
+	
+  echo '<p font-size: 0.90em;><em>Questo parametro disabilita la funzione '; 
+  echo 'di autobloc script del modulo EU Law per questa pagina / articolo.</em>';
+  echo '<div style="margin: 15px 0 10px 0;">';
+  echo '<label for="pasw2015_exclude_page_field"><input type="checkbox" name="pasw2015_exclude_page_field" value="1" ' . $value . '>';
+  echo '&nbsp;Disabilita Autobloc EU Law Coockie</label></div></p>';
+}
+
+// Salva i dati del checkbox quando viene salvata la pagina
+function pasw2015_exclude_page_save_meta_box_data( $post_id ) {
+
+	if ( ! isset( $_POST['pasw2015_exclude_page_meta_box_nonce'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( $_POST['pasw2015_exclude_page_meta_box_nonce'], 'pasw2015_exclude_page_meta_box' ) ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
+
+		if ( ! current_user_can( 'edit_page', $post_id ) ) {
+			return;
+		}
+		} else {
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+	}
+
+	$value = isset($_POST['pasw2015_exclude_page_field']) && $_POST['pasw2015_exclude_page_field'];
+  
+	update_post_meta( $post_id, '_is_pasw2015_exclude_page', $value );
+}
+
+if (get_option('pasw_eulaw') == 1) {
+  add_action( 'save_post', 'pasw2015_exclude_page_save_meta_box_data' );  
+}
+
+//  END BOX EXCLUDE PAGE
 
 function pasw2015_cookie() { ?>
     <div class="wrap">

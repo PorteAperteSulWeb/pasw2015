@@ -61,15 +61,20 @@ add_filter( 'the_content', 'pasw_eulaw_autoblock', 11);
 add_filter( 'widget_display_callback','pasw_eulaw_autoblock_widget', 11, 3 );
 
 function pasw_eulaw_autoblock($content) {
-    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') ) {
-        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>|<object.*?\/object>#is', generate_cookie_notice_lite('auto', '100%'), $content);
+	global $post;
+	$is_exclude_page = get_post_meta($post->ID, '_is_pasw2015_exclude_page', true);
+    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') && (!$is_exclude_page)) {
+		$content = preg_replace('#<script.*?\/script>#is', '', $content);
+		$content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>|<object.*?\/object>#is', generate_cookie_notice_lite('auto', '100%'), $content);
     }
     return $content;
 }
 
 function pasw_eulaw_autoblock_widget($content) {
-    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') ) {
-        return preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>|<object.*?\/object>#is', generate_cookie_notice_widget('auto', '100%'), $content);
+
+    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic')) {
+		$content = preg_replace('#<script.*?\/script>#is', '', $content);
+        $content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<object.*?\/object>#is', generate_cookie_notice_widget('auto', '100%'), $content);
     }
     return $content;
 }
