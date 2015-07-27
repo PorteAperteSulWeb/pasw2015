@@ -65,7 +65,7 @@ function pasw_eulaw_autoblock($content) {
 	$is_exclude_page = get_post_meta($post->ID, '_is_pasw2015_exclude_page', true);
     if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') && (!$is_exclude_page)) {
 		$content = preg_replace('#<script.*?\/script>#is', '', $content);
-		$content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<script.*?\/script>|<object.*?\/object>#is', generate_cookie_notice_lite('auto', '100%'), $content);
+		$content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<object.*?\/object>#is', generate_cookie_notice_lite('auto', '100%'), $content);
     }
     return $content;
 }
