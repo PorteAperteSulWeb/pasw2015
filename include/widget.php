@@ -76,15 +76,15 @@
                     global $more;
                     $more = 0;
             ?>
-                <li><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
-
-                    <?php
+					<li <?php if ( has_post_thumbnail() && $thumbnail ) { echo 'style="min-height:51px;"';}?>><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
+				    <?php
                         if ( has_post_thumbnail() && $thumbnail ) {
                             the_post_thumbnail(array(50,50));
                         }
-                        the_title(); ?></a></h3></li>
+                        the_title(); ?></a></h3>
                           <?php
-                          if ($excerpt != '' && $excerpt != 0) { echo '<li>'; the_excerpt(); echo '</li>';} //echo '<div class="clear"></div>';
+                          if ($excerpt != '' && $excerpt != 0) { the_excerpt();} //echo '<div class="clear"></div>';
+						 echo '</li>';
             endforeach;
 
             echo '</ul>';

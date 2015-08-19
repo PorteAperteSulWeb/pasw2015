@@ -106,7 +106,7 @@ function generate_cookie_notice_text($height, $width, $text, $textpriv= null) {
 		$bgbox = 'background:'.convertHex(get_option ('pasw_eucookie_bgcolor_blocco'),get_option ('pasw_eucookie_bgopacity_blocco'));
 	}
 	$textboxcolor = get_option('pasw_eucookie_textcolor_blocco');
-    return '<div class="pasw2015cookies_block" style="'. $bgbox .';color:'.$textboxcolor.';width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div><div class="clear"></div>';    
+    return '<div class="pasw2015cookies_block" style="'. $bgbox .';color:'.$textboxcolor.';width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div>';    
 }
 
 function generate_cookie_notice_privacy($privacy, $tipo) {
