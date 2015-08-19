@@ -11,6 +11,13 @@
 
 namespace Fragen\GitHub_Updater;
 
+/*
+ * Exit if called directly.
+ */
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Update a WordPress plugin or theme from a Git-based repo.
  *
@@ -29,47 +36,57 @@ class Base {
 	protected $config;
 
 	/**
-	 * Class Object for API
+	 * Class Object for API.
 	 *
 	 * @var object
 	 */
  	protected $repo_api;
 
 	/**
-	 * Variable for setting update transient hours
+	 * Variable for setting update transient hours.
 	 *
 	 * @var integer
 	 */
 	protected static $hours;
 
 	/**
-	 * Variable for holding transient ids
+	 * Variable for holding transient ids.
 	 *
 	 * @var array
 	 */
 	protected static $transients = array();
 
 	/**
-	 * Variable for holding extra theme and plugin headers
+	 * Variable for holding extra theme and plugin headers.
 	 *
 	 * @var array
 	 */
 	protected static $extra_headers = array();
 
 	/**
-	 * Holds the values to be used in the fields callbacks
+	 * Holds the values to be used in the fields callbacks.
+	 *
 	 * @var array
 	 */
 	protected static $options;
 
 	/**
+	 * Holds the values for remote management settings.
+	 *
+	 * @var mixed
+	 */
+	protected static $options_remote;
+
+	/**
 	 * Holds HTTP error code from API call.
+	 *
 	 * @var array ( $this->type-repo => $code )
 	 */
 	protected static $error_code = array();
 
 	/**
 	 * Holds git server types.
+	 *
 	 * @var array
 	 */
 	protected static $git_servers = array(
@@ -80,6 +97,7 @@ class Base {
 
 	/**
 	 * Holds extra repo header types.
+	 *
 	 * @var array
 	 */
 	protected static $extra_repo_headers = array(
@@ -89,53 +107,124 @@ class Base {
 	);
 
 	/**
-	 * Constructor
-	 *
+	 * Constructor.
 	 * Loads options to private static variable.
 	 */
 	public function __construct() {
-		self::$options = get_site_option( 'github_updater', array() );
+		self::$options        = get_site_option( 'github_updater', array() );
+		self::$options_remote = get_site_option( 'github_updater_remote_management', array() );
 		$this->add_headers();
+
+		/*
+		 * Calls in init hook for user capabilities.
+		 */
+		add_action( 'init', array( &$this, 'init' ) );
+		add_action( 'init', array( &$this, 'background_update' ) );
+		add_action( 'init', array( &$this, 'token_distribution' ) );
+
+		add_filter( 'http_request_args', array( 'Fragen\\GitHub_Updater\\API', 'http_request_args' ), 10, 2 );
 	}
 
 	/**
-	 * Instantiate Fragen\GitHub_Updater\Plugin and Fragen\GitHub_Updater\Theme
-	 * for proper user capabilities.
+	 * Instantiate Plugin, Theme, and Settings for proper user capabilities.
+	 *
+	 * @return bool
 	 */
-	public static function init() {
+	public function init() {
+		global $pagenow;
+
+		// Set $force_meta_update = true on appropriate admin pages.
+		$force_meta_update = false;
+		$admin_pages  = array(
+			'plugins.php', 'plugin-install.php',
+			'themes.php', 'theme-install.php',
+			'update-core.php', 'update.php',
+			'options-general.php', 'settings.php',
+		);
+		foreach ( array_keys( Settings::$remote_management ) as $key ) {
+			// Remote management only needs to be active for admin pages.
+			if ( is_admin() && ! empty( self::$options_remote[ $key ] ) ) {
+				$admin_pages = array_merge( $admin_pages, array( 'index.php' ) );
+			}
+		}
+
+		if ( in_array( $pagenow, array_unique( $admin_pages ) ) ) {
+			$force_meta_update = true;
+		}
+
 		if ( current_user_can( 'update_plugins' ) ) {
-			new Plugin();
+			Plugin::$object = Plugin::instance( $force_meta_update );
 		}
 		if ( current_user_can( 'update_themes' ) ) {
-			new Theme();
+			Theme::$object = Theme::instance( $force_meta_update );
 		}
-		if ( is_admin() && ( current_user_can( 'update_plugins' ) || current_user_can( 'update_themes' ) ) ) {
+		if ( is_admin() &&
+		     ( current_user_can( 'update_plugins' ) || current_user_can( 'update_themes' ) ) &&
+		     ! apply_filters( 'github_updater_hide_settings', false )
+		) {
 			new Settings();
 		}
+
+		return true;
 	}
 
 	/**
-	 * Add extra headers via filter hooks
+	 * Piggyback on built-in update function to get metadata.
 	 */
-	public static function add_headers() {
-		add_filter( 'extra_plugin_headers', array( __CLASS__, 'add_plugin_headers' ) );
-		add_filter( 'extra_theme_headers', array( __CLASS__, 'add_theme_headers' ) );
+	public function background_update() {
+		add_action( 'wp_update_plugins', array( &$this, 'forced_meta_update' ) );
+		add_action( 'wp_update_themes', array( &$this, 'forced_meta_update' ) );
+		add_action( 'wp_ajax_nopriv_ithemes_sync_request', array( &$this, 'forced_meta_update' ) );
 	}
 
 	/**
-	 * Add extra headers to get_plugins();
+	 * Performs actual metadata fetching.
+	 */
+	function forced_meta_update() {
+		Plugin::$object = Plugin::instance( true );
+		Theme::$object  = Theme::instance( true );
+	}
+
+	/**
+	 * Allows developers to use 'github_updater_token_distribution' hook to set GitHub Access Tokens.
+	 * Saves results of filter hook to self::$options.
+	 *
+	 * Hook requires return of single element array.
+	 * $key === repo-name and $value === token
+	 * e.g.  array( 'repo-name' => 'access_token' );
+	 */
+	public function token_distribution() {
+		$config = apply_filters( 'github_updater_token_distribution', array() );
+		if ( ! empty( $config ) && 1 === count( $config ) ) {
+			$config        = Settings::sanitize( $config );
+			self::$options = array_merge( get_site_option( 'github_updater' ), $config );
+			update_site_option( 'github_updater', self::$options );
+		}
+	}
+
+	/**
+	 * Add extra headers via filter hooks.
+	 */
+	public function add_headers() {
+		add_filter( 'extra_plugin_headers', array( &$this, 'add_plugin_headers' ) );
+		add_filter( 'extra_theme_headers', array( &$this, 'add_theme_headers' ) );
+	}
+
+	/**
+	 * Add extra headers to get_plugins().
 	 *
 	 * @param $extra_headers
+	 *
 	 * @return array
 	 */
-	public static function add_plugin_headers( $extra_headers ) {
+	public function add_plugin_headers( $extra_headers ) {
 		$ghu_extra_headers = array(
 			'Requires WP'  => 'Requires WP',
 			'Requires PHP' => 'Requires PHP',
 		);
 
 		foreach ( self::$git_servers as $server ) {
-			$ghu_extra_headers[ $server . 'Plugin URI' ] = $server . ' Plugin URI';
+			$ghu_extra_headers[ $server . ' Plugin URI' ] = $server . ' Plugin URI';
 			foreach ( self::$extra_repo_headers as $header ) {
 				$ghu_extra_headers[ $server . ' ' . $header ] = $server . ' ' . $header;
 			}
@@ -148,12 +237,13 @@ class Base {
 	}
 
 	/**
-	 * Add extra headers to wp_get_themes()
+	 * Add extra headers to wp_get_themes().
 	 *
 	 * @param $extra_headers
+	 *
 	 * @return array
 	 */
-	public static function add_theme_headers( $extra_headers ) {
+	public function add_theme_headers( $extra_headers ) {
 		$ghu_extra_headers = array(
 			'Requires WP'  => 'Requires WP',
 			'Requires PHP' => 'Requires PHP',
@@ -175,16 +265,27 @@ class Base {
 	/**
 	 * Get details of Git-sourced plugins from those that are installed.
 	 *
+	 * @param bool|false $force whether we should force meta updating from WP.org
 	 * @return array Indexed array of associative arrays of plugin details.
 	 */
-	protected function get_plugin_meta() {
+	protected function get_plugin_meta( $force = false ) {
 		/*
 		 * Ensure get_plugins() function is available.
 		 */
 		include_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
-		$plugins     = get_plugins();
-		$git_plugins = array();
+		$plugins        = get_plugins();
+		$git_plugins    = array();
+		$all_plugins    = array();
+		$update_plugins = get_site_transient( 'update_plugins' );
+
+		if ( empty( $update_plugins ) && $force ) {
+			wp_update_plugins();
+			$update_plugins = get_site_transient( 'update_plugins' );
+		}
+		if ( isset( $update_plugins->response, $update_plugins->no_update ) ) {
+			$all_plugins = array_merge( (array) $update_plugins->response, (array) $update_plugins->no_update );
+		}
 
 		foreach ( (array) $plugins as $plugin => $headers ) {
 			$git_plugin = array();
@@ -238,15 +339,21 @@ class Base {
 				$git_plugin['enterprise']              = $repo_enterprise_uri;
 				$git_plugin['owner']                   = $header['owner'];
 				$git_plugin['repo']                    = $header['repo'];
-				$git_plugin['local_path']              = WP_PLUGIN_DIR . '/' . $header['repo'] . '/';
-				$git_plugin['branch']                  = $headers[ $repo_parts['branch'] ];
+				$git_plugin['extended_repo']           = implode( '-', array( $repo_parts['git_server'], $header['owner'], $header['repo'] ) );
+				$git_plugin['branch']                  = ! empty( $headers[ $repo_parts['branch'] ] ) ? $headers[ $repo_parts['branch'] ] : 'master';
 				$git_plugin['slug']                    = $plugin;
+				$git_plugin['local_path']              = WP_PLUGIN_DIR . '/' . $header['repo'] . '/';
+				$git_plugin['local_path_extended']     = WP_PLUGIN_DIR . '/' . $git_plugin['extended_repo'] . '/';
 
 				$plugin_data                           = get_plugin_data( WP_PLUGIN_DIR . '/' . $git_plugin['slug'] );
 				$git_plugin['author']                  = $plugin_data['AuthorName'];
 				$git_plugin['name']                    = $plugin_data['Name'];
 				$git_plugin['local_version']           = strtolower( $plugin_data['Version'] );
 				$git_plugin['sections']['description'] = $plugin_data['Description'];
+				$git_plugin['dot_org']                 = false;
+			}
+			if ( isset( $all_plugins[ $plugin ]->id )  ) {
+				$git_plugin['dot_org']                 = true;
 			}
 
 			$git_plugins[ $git_plugin['repo'] ] = (object) $git_plugin;
@@ -257,7 +364,9 @@ class Base {
 
 	/**
 	 * Reads in WP_Theme class of each theme.
-	 * Populates variable array
+	 * Populates variable array.
+	 *
+	 * @return array Indexed array of associative arrays of theme details.
 	 */
 	protected function get_theme_meta() {
 		$git_themes = array();
@@ -310,12 +419,14 @@ class Base {
 				$git_theme['enterprise']              = $repo_enterprise_uri;
 				$git_theme['owner']                   = $header['owner'];
 				$git_theme['repo']                    = $header['repo'];
+				$git_theme['extended_repo']           = $header['repo'];
 				$git_theme['name']                    = $theme->get( 'Name' );
 				$git_theme['theme_uri']               = $theme->get( 'ThemeURI' );
 				$git_theme['author']                  = $theme->get( 'Author' );
 				$git_theme['local_version']           = strtolower( $theme->get( 'Version' ) );
 				$git_theme['sections']['description'] = $theme->get( 'Description' );
 				$git_theme['local_path']              = get_theme_root() . '/' . $git_theme['repo'] .'/';
+				$git_theme['local_path_extended']     = null;
 				$git_theme['branch']                  = $theme->get( $repo_parts['branch'] );
 			}
 
@@ -326,14 +437,14 @@ class Base {
 				continue;
 			}
 
-			$git_themes[ $theme->stylesheet ] = (object) $git_theme;
+			$git_themes[ $git_theme['repo'] ] = (object) $git_theme;
 		}
 
 		return $git_themes;
 	}
 
 	/**
-	 * Set default values for plugin/theme
+	 * Set default values for plugin/theme.
 	 *
 	 * @param $type
 	 */
@@ -372,113 +483,92 @@ class Base {
 	}
 
 	/**
-	 * Rename the zip folder to be the same as the existing repository folder.
+	 * Use upgrader_post_install hook to ensure correct directory name.
 	 *
-	 * Github delivers zip files as <User>-<Repo>-<Branch|Hash>.zip
+	 * @global $wp_filesystem \WP_Filesystem_Direct
+	 * @param $true
+	 * @param array $extra_hook
+	 * @param array $result
 	 *
-	 * @global object $wp_filesystem
-	 *
-	 * @param string $source
-	 * @param string $remote_source Optional.
-	 * @param object $upgrader      Optional.
-	 *
-	 * @return string
+	 * @return mixed
 	 */
-	public function upgrader_source_selection( $source, $remote_source , $upgrader ) {
-
+	public function upgrader_post_install( $true, $extra_hook, $result ) {
 		global $wp_filesystem;
-		$repo = null;
+		$slug = null;
 
-		/*
-		 * Check for upgrade process, return if both are false.
-		 */
-		if ( ( ! $upgrader instanceof \Plugin_Upgrader ) && ( ! $upgrader instanceof \Theme_Upgrader ) ) {
-			return $source;
-		}
-
-		/*
-		 * Return $source if name already corrected.
-		 */
-		foreach ( (array) $this->config as $git_repo ) {
-			if ( basename( $source ) === $git_repo->repo ) {
-				return $source;
-			}
-		}
-		if (
-			( ! empty( $upgrader->skin->options['plugin' ] ) &&
-			  ( basename( $source ) === $upgrader->skin->options['plugin'] ) ) ||
-			( ! empty( $upgrader->skin->options['theme'] ) &&
-			  ( basename( $source ) === $upgrader->skin->options['theme'] ) )
+		if ( ( $this instanceof Plugin && isset( $extra_hook['theme'] ) ) ||
+		     ( $this instanceof Plugin && in_array( 'theme', $extra_hook ) ) ||
+		     ( $this instanceof Theme && isset( $extra_hook['plugin'] ) ) ||
+		     ( $this instanceof Theme && in_array( 'plugin', $extra_hook ) )
 		) {
-			return $source;
+			return $result;
 		}
 
 		/*
-		 * Get correct repo name based upon $upgrader instance if present.
+		 * Use $extra_hook to derive repo, safer.
 		 */
-		if ( $upgrader instanceof \Plugin_Upgrader ) {
-			if ( ! empty( $upgrader->skin->options['plugin'] ) &&
-			     stristr( basename( $source ), $upgrader->skin->options['plugin'] ) ) {
-				$repo = $upgrader->skin->options['plugin'];
-			}
+		if ( $this instanceof Plugin && isset( $extra_hook['plugin'] ) ) {
+			$slug = dirname( $extra_hook['plugin'] );
+		} elseif ( $this instanceof Theme && isset( $extra_hook['theme'] ) ) {
+			$slug = $extra_hook['theme'];
 		}
-		if ( $upgrader instanceof \Theme_Upgrader ) {
-			if ( ! empty( $upgrader->skin->options['theme'] ) &&
-			     stristr( basename( $source ), $upgrader->skin->options['theme'] ) ) {
-				$repo = $upgrader->skin->options['theme'];
-			}
+
+		$repo = $this->get_repo_slugs( $slug );
+
+		/*
+		 * Not GitHub Updater plugin/theme.
+		 */
+		if ( ! isset( $_POST['github_updater_repo'] ) && empty( $repo ) ) {
+			return $result;
+		}
+
+		if ( isset( self::$options['github_updater_install_repo'] ) ) {
+			$proper_destination = trailingslashit( $result['local_destination'] ) . self::$options['github_updater_install_repo'];
+		} else {
+			$proper_destination = $this->config[ $repo['repo'] ]->local_path;
 		}
 
 		/*
-		 * Get repo for automatic update process.
+		 * Extended naming.
+		 * Only for plugins and not for 'master' === branch && .org hosted.
 		 */
-		if ( empty( $repo ) ) {
-			foreach ( (array) $this->config as $git_repo ) {
-				if ( $upgrader instanceof \Plugin_Upgrader && ( false !== stristr( $git_repo->type, 'plugin' ) ) ) {
-					if ( stristr( basename( $source ), $git_repo->repo ) ) {
-						$repo = $git_repo->repo;
-						break;
-					}
-				}
-				if ( $upgrader instanceof \Theme_Upgrader && ( false !== stristr( $git_repo->type, 'theme' ) ) ) {
-					if ( stristr( basename( $source ), $git_repo->repo ) ) {
-						$repo = $git_repo->repo;
-						break;
-					}
-				}
-			}
+		if ( isset( $extra_hook['plugin'] ) &&
+			( defined( 'GITHUB_UPDATER_EXTENDED_NAMING' ) && GITHUB_UPDATER_EXTENDED_NAMING ) &&
+		     ( ! $this->config[ $repo['repo'] ]->dot_org ||
+		       ( $this->tag && 'master' !== $this->tag ) )
+		) {
+			$proper_destination = $this->config[ $repo['repo'] ]->local_path_extended;
+			printf(
+				esc_html__( 'Rename successful using extended name to %1$s', 'github-updater' ) . '&#8230;<br>',
+				'<strong>' . $this->config[ $repo['repo'] ]->extended_repo . '</strong>'
+			);
+		}
 
-			/*
-			 * Return already corrected $source or wp.org $source.
-			 */
-			if ( empty( $repo ) ) {
-				return $source;
+		$wp_filesystem->move( $result['destination'], $proper_destination );
+		$result['destination']       = $proper_destination;
+		$result['clear_destination'] = true;
+
+		return $result;
+	}
+
+	/**
+	 * Set array with normal and extended repo names.
+	 *
+	 * @param $slug
+	 *
+	 * @return array
+	 */
+	protected function get_repo_slugs( $slug ) {
+		$arr = array();
+		foreach ( $this->config as $repo ) {
+			if ( $slug === $repo->repo || $slug === $repo->extended_repo ) {
+				$arr['repo']          = $repo->repo;
+				$arr['extended_repo'] = $repo->extended_repo;
+				break;
 			}
 		}
 
-		$corrected_source = trailingslashit( $remote_source ) . trailingslashit( $repo );
-
-		$upgrader->skin->feedback(
-			sprintf(
-				__( 'Renaming %1$s to %2$s', 'github-updater' ) . '&#8230;',
-				'<span class="code">' . basename( $source ) . '</span>',
-				'<span class="code">' . basename( $corrected_source ) . '</span>'
-			)
-		);
-
-		/*
-		 * If we can rename, do so and return the new name.
-		 */
-		if ( $wp_filesystem->move( $source, $corrected_source, true ) ) {
-			$upgrader->skin->feedback( __( 'Rename successful', 'github-updater' ) . '&#8230;' );
-			return $corrected_source;
-		}
-
-		/*
-		 * Otherwise, return an error.
-		 */
-		$upgrader->skin->feedback( __( 'Unable to rename downloaded repository.', 'github-updater' ) );
-		return new \WP_Error();
+		return $arr;
 	}
 
 	/**
@@ -548,21 +638,25 @@ class Base {
 	}
 
 	/**
-	 * Get filename of changelog and return
+	 * Get filename of changelog and return.
 	 *
 	 * @param $type
 	 *
 	 * @return bool or variable
 	 */
 	protected function get_changelog_filename( $type ) {
-		$changelogs = array( 'CHANGES.md', 'CHANGELOG.md', 'changes.md', 'changelog.md' );
-		$changes    = null;
+		$changelogs  = array( 'CHANGES.md', 'CHANGELOG.md', 'changes.md', 'changelog.md' );
+		$changes     = null;
+		$local_files = null;
 
 		if ( is_dir( $this->$type->local_path ) ) {
 			$local_files = scandir( $this->$type->local_path );
-			$changes = array_intersect( (array) $local_files, $changelogs );
-			$changes = array_pop( $changes );
+		} elseif ( is_dir( $this->$type->local_path_extended ) ) {
+			$local_files = scandir( $this->$type->local_path_extended );
 		}
+
+		$changes = array_intersect( (array) $local_files, $changelogs );
+		$changes = array_pop( $changes );
 
 		if ( ! empty( $changes ) ) {
 			return $changes;
@@ -596,11 +690,12 @@ class Base {
 	 *
 	 * @return array
 	 */
-	protected static function parse_header_uri( $repo_header ) {
+	protected function parse_header_uri( $repo_header ) {
 		$header_parts         = parse_url( $repo_header );
 		$header['scheme']     = isset( $header_parts['scheme'] ) ? $header_parts['scheme'] : null;
 		$header['host']       = isset( $header_parts['host'] ) ? $header_parts['host'] : null;
 		$owner_repo           = trim( $header_parts['path'], '/' );  // strip surrounding slashes
+		$owner_repo           = str_replace( '.git', '', $owner_repo ); //strip incorrect URI ending
 		$header['path']       = $owner_repo;
 		$owner_repo           = explode( '/', $owner_repo );
 		$header['owner']      = $owner_repo[0];
@@ -638,9 +733,10 @@ class Base {
 		);
 
 		if ( array_key_exists( $repo, $repo_types ) ) {
-			$arr['type']     = $repo_types[ $repo ];
-			$arr['base_uri'] = $repo_base_uris[ $repo ];
-			$arr['bool']     = true;
+			$arr['type']       = $repo_types[ $repo ];
+			$arr['git_server'] = strtolower( $repo );
+			$arr['base_uri']   = $repo_base_uris[ $repo ];
+			$arr['bool']       = true;
 			foreach ( self::$extra_repo_headers as $key => $value ) {
 				$arr[ $key ] = $repo . ' ' . $value;
 			}
@@ -650,7 +746,7 @@ class Base {
 	}
 
 	/**
-	 * Used to set_site_transient and checks/stores transient id in array
+	 * Used to set_site_transient and checks/stores transient id in array.
 	 *
 	 * @param $id
 	 * @param $response
@@ -668,7 +764,7 @@ class Base {
 	}
 
 	/**
-	 * Returns site_transient and checks/stores transient id in array
+	 * Returns site_transient and checks/stores transient id in array.
 	 *
 	 * @param $id
 	 *
@@ -684,7 +780,7 @@ class Base {
 	}
 
 	/**
-	 * Delete all transients from array of transient ids
+	 * Delete all transients from array of transient ids.
 	 *
 	 * @param $type
 	 *
@@ -700,12 +796,15 @@ class Base {
 			delete_site_transient( $transient );
 		}
 		delete_site_transient( 'ghu-' . $type );
+
+		return true;
 	}
 
 	/**
-	 * Create transient of $type transients for force-check
+	 * Create transient of $type transients for force-check.
 	 *
 	 * @param $type
+	 *
 	 * @return void|bool
 	 */
 	protected function make_force_check_transient( $type ) {
@@ -713,21 +812,20 @@ class Base {
 		if ( $transient ) {
 			return false;
 		}
-		set_site_transient( 'ghu-' . $type , self::$transients, self::$hours * HOUR_IN_SECONDS );
+		set_site_transient( 'ghu-' . $type, self::$transients, ( self::$hours * HOUR_IN_SECONDS ) );
 		self::$transients = array();
+
+		return true;
 	}
 
 	/**
 	 * Set repo object file info.
 	 *
 	 * @param $response
-	 * @param $repo
 	 */
-	protected function set_file_info( $response, $repo ) {
-		$repo_parts = $this->_get_repo_parts( $repo, $this->type->type );
+	protected function set_file_info( $response ) {
 		$this->type->transient            = $response;
 		$this->type->remote_version       = strtolower( $response['Version'] );
-		$this->type->branch               = ! empty( $response[ $repo_parts['branch'] ] ) ? $response[$repo_parts['branch'] ] : 'master';
 		$this->type->requires_php_version = ! empty( $response['Requires PHP'] ) ? $response['Requires PHP'] : $this->type->requires_php_version;
 		$this->type->requires_wp_version  = ! empty( $response['Requires WP'] ) ? $response['Requires WP'] : $this->type->requires_wp_version;
 	}
@@ -747,7 +845,7 @@ class Base {
 			switch ( $repo_type['repo'] ) {
 				case 'github':
 					foreach ( (array) $response as $tag ) {
-						if ( isset( $tag->name ) && isset( $tag->zipball_url ) ) {
+						if ( isset( $tag->name, $tag->zipball_url ) ) {
 							$tags[]                 = $tag->name;
 							$rollback[ $tag->name ] = $tag->zipball_url;
 						}
@@ -766,7 +864,7 @@ class Base {
 					foreach ( (array) $response as $tag ) {
 						$download_link = implode( '/', array( $repo_type['base_download'], $this->type->owner, $this->type->repo, 'repository/archive.zip' ) );
 						$download_link = add_query_arg( 'ref', $tag->name, $download_link );
-						if ( isset( $tag->name) ) {
+						if ( isset( $tag->name ) ) {
 							$tags[] = $tag->name;
 							$rollback[ $tag->name ] = $download_link;
 						}
@@ -828,8 +926,8 @@ class Base {
 	}
 
 	/**
-	 * Create some sort of rating from 0 to 100 for use in star ratings
-	 * I'm really just making this up, more based upon popularity
+	 * Create some sort of rating from 0 to 100 for use in star ratings.
+	 * I'm really just making this up, more based upon popularity.
 	 *
 	 * @param $repo_meta
 	 *

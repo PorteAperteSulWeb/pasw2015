@@ -5,7 +5,7 @@
 * Tags: plugin, theme, update, updater, github, bitbucket, gitlab, remote install
 * Requires at least: 3.8
 * Requires PHP: 5.3
-* Tested up to: 4.2.x
+* Tested up to: 4.3
 * Stable tag: master
 * Donate link: http://bit.ly/github-updater
 * License: GPLv2 or later
@@ -85,7 +85,7 @@ This way you get automatic updates and cannot deactivate the plugin.
 
 ### Plugins 
 
-There must be a `GitHub Plugin URI`, `Bitbucket Plugin URI`, or `GitLab Plugin URI` declaration in the plugin's header. The plugin's primary file **must** be named similarly to the repo name.
+There must be a `GitHub Plugin URI`, `Bitbucket Plugin URI`, or `GitLab Plugin URI` declaration in the plugin's header.
 
 ~~~php
 /*
@@ -105,7 +105,7 @@ GitHub Branch:     master
 
 ### Themes
 
-There must be a `GitHub Theme URI`, `Bitbucket Theme URI`, or `GitLab Theme URI` declaration in the `style.css` file.
+There must be a `GitHub Theme URI`, `Bitbucket Theme URI`, or `GitLab Theme URI` declaration in the `style.css` file. When initially adding a theme, the directory **must** be identical to the repo name.
 
 ~~~css
 /*
@@ -151,7 +151,7 @@ The default state is either `GitHub Branch: master` or nothing at all. They are 
 
 If you want to update against branch of your repository other than `master` and have that branch push updates out to users make sure you specify the testing branch in a header, i.e. `GitHub Branch: develop`. When you want users to update against the release branch just have them manually change the header to `GitHub Branch: master` or remove it completely. Tags will be ignored when a branch other than `master` is specified. In this case I would suggest semantic version numbering similar to the following, `<major>.<minor>.<patch>.<development>`.
 
-In the GitHub Updater Settings there is a new setting to enable branch switching for plugins. When checked there will be a new ability from the Plugins page to switch between plugin branches. Switching to the current branch will reinstall the current branch.
+In the GitHub Updater Settings there is a new setting to enable branch switching for plugins. When checked there will be a new ability from the Plugins page to switch between plugin branches. Switching to the current branch will reinstall the current branch. Plugins may need to be re-activated after branch switching.
 
 ## Tagging
 
@@ -179,7 +179,7 @@ You must set a GitLab private token. Go to your GitLab profile page under Edit A
 
 ## Private Repositories
 
-Public repositories will not show up in the Settings page.
+Only private repositories will show up in the Settings page.
 
 ![Settings Tab](./assets/screenshot-1.png)
 
@@ -256,6 +256,39 @@ There is a new setting for a personal GitHub Access Token. I **strongly** encour
 
 I've seen this error code occasionally with Bitbucket.
 
+## Remote Management Services
+
+Currently, GitHub Updater works with both iThemes Sync and InfiniteWP. If you desire support for another remote management service please invite the developer of that service to engage in discussion here. I am more that amenable to supporting any service. I will need some testing and support to add support for additional services.
+
+Please go the Remote Management tab of the Settings page and check which remote management service you wish to use. There may be a small amount of overhead related to using any of these services which may impact performance, but only for **admin** level users in the dashboard.
+
+![Remote Management Tab](./assets/screenshot-3.png)
+
+## Extended Naming
+
+There's a hidden preference to use extended naming for plugin directories. Extended Naming follows the convention `<git>-<owner>-<repo>`. The normal method is to name the plugin directory `<repo>`. Unfortunately there may be a _potential_ conflict with a WP.org plugin. This preference mitigates that potential conflict. If you switch between normal and extended naming you might have to reactivate your plugins.
+
+To set Extended Naming add `define( 'GITHUB_UPDATER_EXTENDED_NAMING', true );` in your `wp-config.php` or your theme's `functions.php`.
+
+## Developer Hooks
+
+There are 2 added filter hooks specifically for developers wanting to distribute private themes/plugins to clients without the client having to interact with the Settings page.
+
+The first allows the developer to set the GitHub Access Token for a specific plugin or theme. The anonymous function must return a **single** key/value pair where the key is the plugin/theme repo slug and the value is the token.
+
+~~~php
+add_filter( 'github_updater_token_distribution',
+	function () {
+		return array( 'my-private-theme' => 'kjasdp984298asdvhaljsg984aljhgosrpfiu' );
+	} );
+~~~
+
+The second hook will simply make the Settings page unavailable.
+
+~~~php
+add_filter( 'github_updater_hide_settings', '__return_true' );
+~~~
+
 ## Extras
 
 [szepeviktor](https://github.com/szepeviktor) has created an add-on plugin to GitHub Updater that identifies all plugins with an icon in the plugin view for GitHub or Bitbucket depending upon where they get updates. It's very clever.
@@ -275,6 +308,9 @@ I've seen this error code occasionally with Bitbucket.
 * Arabic by [Hyyan Abo FAkher](https://github.com/hyyan)
 * Spanish by [Jose Miguel Bejarano](https://github.com/xDae)
 * German by [Linus Metzler](https://github.com/limenet)
+* Romanian by [Corneliu Cirlan](https://github.com/corneliucirlan)
+* Japanese by [ishihara](https://github.com/1shiharat)
+* Russian by [Anatoly Yumashev](https://github.com/yumashev)
 
 ## Issues
 
@@ -304,9 +340,10 @@ Includes
 
 * [Emanuil Rusev's](https://github.com/erusev) [Parsedown](https://github.com/erusev/parsedown) for rendering ChangeLogs.
 * [Mark Jaquith's](https://github.com/markjaquith) [WordPress Plugin Readme Parser](https://github.com/markjaquith/WordPress-Plugin-Readme-Parser/tree/WordPress.org) for parsing `readme.txt`.
+* [Coen Jacobs'](https://github.com/coenjacobs) [WPupdatePHP library](https://github.com/WPupdatePHP/wp-update-php)
 
 GitHub Updater logo by [LogoMajestic](http://www.logomajestic.com).
 
 ## Pull Requests
 
-Please fork and submit pull requests against the `develop` branch.
+Pull requests are welcome. Please fork and submit pull requests against the `develop` branch.

@@ -10,6 +10,12 @@
 
 namespace Fragen\GitHub_Updater;
 
+/*
+ * Exit if called directly.
+ */
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
  * Install <author>/<repo> directly from GitHub Updater.
@@ -21,22 +27,27 @@ class Install extends Base {
 
 	/**
 	 * Class options.
+	 *
 	 * @var array
 	 */
 	protected static $install = array();
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * Need class-wp-upgrader.php for upgrade classes.
+	 *
 	 * @param $type
 	 */
 	public function __construct( $type ) {
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		$this->install( $type );
+
+		wp_enqueue_script( 'ghu-install', plugins_url( basename( dirname( dirname( __DIR__ ) ) ) . '/js/ghu_install.js' ), array(), false, true );
 	}
 
 	/**
 	 * Install remote plugin or theme.
+	 *
 	 * @param $type
 	 *
 	 * @return bool
@@ -53,7 +64,7 @@ class Install extends Base {
 			 */
 			if ( empty( $_POST['github_updater_repo'] ) ) {
 				echo '<h3>';
-				_e( 'A repository URI is required.', 'github-updater' );
+				esc_html_e( 'A repository URI is required.', 'github-updater' );
 				echo '</h3>';
 
 				return false;
@@ -140,7 +151,16 @@ class Install extends Base {
 					} else {
 						parent::$options['gitlab_enterprise_token'] = self::$install['gitlab_private_token'];
 					}
+				} elseif ( ! empty( parent::$options['gitlab_private_token'] ) ) {
+					self::$install['download_link'] = add_query_arg( 'private_token', parent::$options['gitlab_private_token'], self::$install['download_link'] );
 				}
+			}
+
+			parent::$options['github_updater_install_repo'] = self::$install['repo'];
+			if ( ( defined( 'GITHUB_UPDATER_EXTENDED_NAMING' ) && GITHUB_UPDATER_EXTENDED_NAMING ) &&
+			     'plugin' === $type
+			) {
+				parent::$options['github_updater_install_repo'] = implode( '-', array( self::$install['github_updater_api'], $headers['owner'], self::$install['repo'] ) );
 			}
 
 			update_site_option( 'github_updater', parent::$options );
@@ -176,10 +196,13 @@ class Install extends Base {
 		if ( ! isset( $_POST['option_page'] ) || ! ( 'github_updater_install' === $_POST['option_page'] ) ) {
 			$this->create_form( $type );
 		}
+
+		return true;
 	}
 
 	/**
 	 * Create Install Plugin or Install Theme page.
+	 *
 	 * @param $type
 	 */
 	public function create_form( $type ) {
@@ -190,10 +213,10 @@ class Install extends Base {
 			settings_fields( 'github_updater_install' );
 			do_settings_sections( 'github_updater_install_' . $type );
 			if ( 'plugin' === $type ) {
-				submit_button( __( 'Install Plugin', 'github-updater' ) );
+				submit_button( esc_html__( 'Install Plugin', 'github-updater' ) );
 			}
 			if ( 'theme' === $type ) {
-				submit_button( __( 'Install Theme', 'github-updater' ) );
+				submit_button( esc_html__( 'Install Theme', 'github-updater' ) );
 			}
 			?>
 		</form>
@@ -202,6 +225,7 @@ class Install extends Base {
 
 	/**
 	 * Add settings sections.
+	 *
 	 * @param $type
 	 */
 	public function register_settings( $type ) {
@@ -210,10 +234,10 @@ class Install extends Base {
 		 * Place translatable strings into variables.
 		 */
 		if ( 'plugin' === $type ) {
-			$repo_type = __( 'Plugin', 'github-updater' );
+			$repo_type = esc_html__( 'Plugin', 'github-updater' );
 		}
 		if ( 'theme' === $type ) {
-			$repo_type = __( 'Theme', 'github-updater' );
+			$repo_type = esc_html__( 'Theme', 'github-updater' );
 		}
 
 		register_setting(
@@ -224,38 +248,38 @@ class Install extends Base {
 
 		add_settings_section(
 			$type,
-			sprintf(__( 'GitHub Updater Install %s', 'github-updater' ), $repo_type ),
+			sprintf( esc_html__( 'GitHub Updater Install %s', 'github-updater' ), $repo_type ),
 			array(),
 			'github_updater_install_' . $type
 		);
 
 		add_settings_field(
 			$type . '_repo',
-			sprintf( __( '%s URI', 'github-updater' ), $repo_type ),
+			sprintf( esc_html__( '%s URI', 'github-updater' ), $repo_type ),
 			array( $this, 'get_repo' ),
 			'github_updater_install_' . $type,
 			$type
 		);
 
 		add_settings_field(
-			$type . '_api',
-			__( 'Remote Repository Host', 'github-updater' ),
-			array( $this, 'install_api' ),
-			'github_updater_install_' . $type,
-			$type
-		);
-
-		add_settings_field(
 			$type . '_branch',
-			__( 'Repository Branch', 'github-updater' ),
+			esc_html__( 'Repository Branch', 'github-updater' ),
 			array( $this, 'branch' ),
 			'github_updater_install_' . $type,
 			$type
 		);
 
 		add_settings_field(
+			$type . '_api',
+			esc_html__( 'Remote Repository Host', 'github-updater' ),
+			array( $this, 'install_api' ),
+			'github_updater_install_' . $type,
+			$type
+		);
+
+		add_settings_field(
 			'is_private',
-			__( 'Private Bitbucket Repository', 'github-updater' ),
+			esc_html__( 'Private Bitbucket Repository', 'github-updater' ),
 			array( $this, 'is_private' ),
 			'github_updater_install_' . $type,
 			$type
@@ -263,18 +287,18 @@ class Install extends Base {
 
 		add_settings_field(
 			'github_access_token',
-			__( 'GitHub Access Token', 'github-updater' ),
+			esc_html__( 'GitHub Access Token', 'github-updater' ),
 			array( $this, 'access_token' ),
 			'github_updater_install_' . $type,
 			$type
 		);
 
-		if ( empty( parent::$options['gitlab_private_token'] ) ||
+		if ( empty( parent::$options['gitlab_private_token'] ) &&
 		     empty( parent::$options['gitlab_enterprise_token'] )
 		) {
 			add_settings_field(
 				'gitlab_private_token',
-				__( 'GitLab Private Token', 'github-updater' ),
+				esc_html__( 'GitLab Private Token', 'github-updater' ),
 				array( $this, 'private_token' ),
 				'github_updater_install_' . $type,
 				$type
@@ -302,7 +326,7 @@ class Install extends Base {
 		<label for="github_updater_branch">
 			<input type="text" style="width:50%;" name="github_updater_branch" value="" placeholder="master">
 			<p class="description">
-				<?php _e( 'Enter branch name or leave empty for `master`', 'github-updater' ) ?>
+				<?php esc_html_e( 'Enter branch name or leave empty for `master`', 'github-updater' ) ?>
 			</p>
 		</label>
 	<?php
@@ -316,8 +340,8 @@ class Install extends Base {
 		<label for="github_updater_api">
 			<select name="github_updater_api">
 				<?php foreach ( parent::$git_servers as $key => $value ): ?>
-					<option value="<?php echo $key ?>" <?php selected( $key, true, true ) ?> >
-						<?php echo $value ?>
+					<option value="<?php esc_attr_e( $key ) ?>" <?php selected( $key, true, true ) ?> >
+						<?php esc_html_e( $value ) ?>
 					</option>
 				<?php endforeach ?>
 			</select>
@@ -331,7 +355,10 @@ class Install extends Base {
 	public function is_private() {
 		?>
 		<label for="is_private">
-			<input type="checkbox" name="is_private" <?php checked( '1', false, true ) ?> >
+			<input class="bitbucket_setting" type="checkbox" name="is_private" <?php checked( '1', false, true ) ?> >
+			<p class="description">
+				<?php esc_html_e( 'Check for private Bitbucket repositories.', 'github-updater' ) ?>
+			</p>
 		</label>
 		<?php
 	}
@@ -342,9 +369,9 @@ class Install extends Base {
 	public function access_token() {
 		?>
 		<label for="github_access_token">
-			<input type="text" style="width:50%;" name="github_access_token" value="" >
+			<input class="github_setting" type="text" style="width:50%;" name="github_access_token" value="" >
 			<p class="description">
-				<?php _e( 'Enter GitHub Access Token for private GitHub repositories.', 'github-updater' ) ?>
+				<?php esc_html_e( 'Enter GitHub Access Token for private GitHub repositories.', 'github-updater' ) ?>
 			</p>
 		</label>
 		<?php
@@ -356,9 +383,9 @@ class Install extends Base {
 	public function private_token() {
 		?>
 		<label for="gitlab_private_token">
-			<input type="text" style="width:50%;" name="gitlab_private_token" value="" >
+			<input class="gitlab_setting" type="text" style="width:50%;" name="gitlab_private_token" value="" >
 			<p class="description">
-				<?php _e( 'Enter GitLab Private Token for private GitLab repositories.', 'github-updater' ) ?>
+				<?php esc_html_e( 'Enter GitLab Private Token for private GitLab repositories.', 'github-updater' ) ?>
 			</p>
 		</label>
 	<?php

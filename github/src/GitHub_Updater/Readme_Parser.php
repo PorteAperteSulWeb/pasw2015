@@ -10,6 +10,13 @@
 
 namespace Fragen\GitHub_Updater;
 
+/*
+ * Exit if called directly.
+ */
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Class Readme_Parser
  * @package Fragen\GitHub_Updater
@@ -19,9 +26,7 @@ class Readme_Parser extends \Automattic_Readme {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-
-	}
+	public function __construct() {}
 
 	/**
 	 * @param $file_contents

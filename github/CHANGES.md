@@ -1,3 +1,64 @@
+#### 5.0.1
+* updated to current `erusev/parsedown` release, fixes PHP7 issue
+* updated to current `WPupdatePHP/wp-update-php/release-1-1-0` branch
+
+#### 5.0.0
+* fix rollback for GitLab themes
+* add branch switcher for themes
+* escape all printed strings
+* changed from using `upgrader_source_selection` hook to `upgrader_post_install`, this greatly simplifies renaming
+* removed `class Remote_Update` as it's no longer needed when using `upgrader_post_install` hook
+* added **Remote Management** settings tab more cleanly support those services that currently integrate with GitHub Updater
+* modified the process loading so faster for admin level users. Much thanks @khromov
+* added hooks for devs to set GitHub Access Tokens and hide the Settings page. Please be sure your client will never need access to the Settings page. Thanks @oncecoupled
+* fixed [#267](https://github.com/afragen/github-updater/issues/267) thanks @stevehenty and @rocketgenius
+
+#### 4.6.2
+* refactor remote update services to new `class Remote_Update`
+* general security fixes, don't call files directly...
+* fix/test for remote updating via InfiniteWP. Child themes are not identified by IWP as needing updates, otherwise it seems to work as expected.
+
+#### 4.6.1
+* fix for remote updating via iThemes Sync
+* fix for renaming when AJAX updating of plugins
+
+#### 4.6.0
+* newer, much more precise method for renaming based upon selected repos from the dashboard. Yes, I tested on staging server. :-)
+* added feature to use extended naming of plugin directories to avoid potential conflict with WP.org slugs. Props @reinink for the idea.
+* strip `.git` from the end of the plugin or theme URI for those who haven't gotten to the README yet.
+* added javascript show/hide options on the Install page.
+* fixed boolean logic to _not_ display GitLab Private Token input on Install if it's already set.
+* updated screenshots in README
+* switched a number of methods to be non-static, anticipation of testing.
+* [broken: renaming during updates from upgrade services](https://github.com/afragen/github-updater/issues/262)
+
+#### 4.5.7
+* hotfix GitLab private updating/installing
+* fix some PHP notices
+
+#### 4.5.6
+* bugfix for renaming code to properly strip `<owner>-`
+* most of Russian translation by [Anatoly Yumashev](https://github.com/yumashev)
+
+#### 4.5.5
+* back to simplifying the renaming code, always remember to test renaming on live server.
+* strip `<owner>-` and `-<hash>` from beginning and end of update for more precise renaming
+* I think this is the end of renaming for a while. :P
+
+#### 4.5.4
+* hotfix for renaming, I reverted back a bunch with more extensive testing on server. It's amazing how different renaming is locally vs on server.
+
+#### 4.5.3
+* updated language files -- oops
+
+#### 4.5.2
+* cleanup and refactor of renaming code.
+* added Romanian translation by [Corneliu Cirlan](https://github.com/corneliucirlan)
+* added Japanese translation by [ishihara](https://github.com/1shiharat)
+
+#### 4.5.1
+* fix bug so updates display without having to randomly refresh.
+
 #### 4.5.0
 * fix some PHP notices
 * add update by GitHub release asset in lieu of update by tag when asset is present

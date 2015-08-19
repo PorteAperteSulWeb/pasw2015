@@ -10,6 +10,13 @@
 
 namespace Fragen\GitHub_Updater;
 
+/*
+ * Exit if called directly.
+ */
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Get remote data from a GitLab repo.
  *
@@ -32,7 +39,7 @@ class GitLab_API extends API {
 	 * @param object $type
 	 */
 	public function __construct( $type ) {
-		$this->type  = $type;
+		$this->type    = $type;
 		parent::$hours = 12;
 
 		if ( ! isset( self::$options['gitlab_private_token'] ) ) {
@@ -64,7 +71,12 @@ class GitLab_API extends API {
 			$id           = $this->get_gitlab_id();
 			self::$method = 'file';
 
+			if ( empty( $this->type->branch ) ) {
+				$this->type->branch = 'master';
+			}
+
 			$response = $this->api( '/projects/' . $id . '/repository/files?file_path=' . $file );
+
 			if ( empty( $response ) ) {
 				return false;
 			}
@@ -76,11 +88,11 @@ class GitLab_API extends API {
 			}
 		}
 
-		if ( API::validate_response( $response ) || ! is_array( $response ) ) {
+		if ( $this->validate_response( $response ) || ! is_array( $response ) ) {
 			return false;
 		}
 
-		$this->set_file_info( $response, 'GitLab' );
+		$this->set_file_info( $response );
 
 		return true;
 	}
@@ -110,7 +122,7 @@ class GitLab_API extends API {
 			}
 		}
 
-		if ( API::validate_response( $response ) ) {
+		if ( $this->validate_response( $response ) ) {
 			return false;
 		}
 
@@ -139,7 +151,7 @@ class GitLab_API extends API {
 			}
 		}
 
-		if ( API::validate_response( $response ) ) {
+		if ( $this->validate_response( $response ) ) {
 			return false;
 		}
 
@@ -162,7 +174,9 @@ class GitLab_API extends API {
 	 * @return bool
 	 */
 	public function get_remote_readme() {
-		if ( ! file_exists( $this->type->local_path . 'readme.txt' ) ) {
+		if ( ! file_exists( $this->type->local_path . 'readme.txt' ) &&
+		     ! file_exists( $this->type->local_path_extended . 'readme.txt' )
+		) {
 			return false;
 		}
 
@@ -181,7 +195,7 @@ class GitLab_API extends API {
 		}
 
 
-		if ( API::validate_response( $response ) ) {
+		if ( $this->validate_response( $response ) ) {
 			return false;
 		}
 
@@ -202,6 +216,12 @@ class GitLab_API extends API {
 		if ( ! $response ) {
 			self::$method = 'meta';
 			$projects     = $this->get_transient( 'projects' );
+
+			// exit if transient is empty
+			if ( ! $projects ) {
+				return false;
+			}
+
 			foreach ( $projects as $project ) {
 				if ( $this->type->repo === $project->name ) {
 					$response = $project;
@@ -213,7 +233,7 @@ class GitLab_API extends API {
 			}
 		}
 
-		if ( API::validate_response( $response ) ) {
+		if ( $this->validate_response( $response ) ) {
 			return false;
 		}
 
@@ -248,7 +268,7 @@ class GitLab_API extends API {
 			}
 		}
 
-		if ( API::validate_response( $response ) ) {
+		if ( $this->validate_response( $response ) ) {
 			return false;
 		}
 
@@ -258,12 +278,12 @@ class GitLab_API extends API {
 	}
 
 	/**
-	 * Construct $this->type->download_link using GitLab API
+	 * Construct $this->type->download_link using GitLab API.
 	 *
 	 * @param boolean $rollback for theme rollback
 	 * @param boolean $branch_switch for direct branch changing
 	 *
-	 * @return string URI
+	 * @return string $endpoint
 	 */
 	public function construct_download_link( $rollback = false, $branch_switch = false ) {
 		/*
@@ -282,10 +302,10 @@ class GitLab_API extends API {
 		 * Check for rollback.
 		 */
 		if ( ! empty( $_GET['rollback'] ) &&
-		     'upgrade-theme' === $_GET['action'] &&
-		     $_GET['theme'] === $this->type->repo
+		     ( isset( $_GET['action'] ) && 'upgrade-theme' === $_GET['action'] ) &&
+		     ( isset( $_GET['theme'] ) && $this->type->repo === $_GET['theme'] )
 		) {
-			$endpoint .= $rollback;
+			$endpoint = add_query_arg( 'ref', esc_attr( $_GET['rollback'] ), $endpoint );
 		} elseif ( ! empty( $this->type->branch ) ) {
 			$endpoint = add_query_arg( 'ref', $this->type->branch, $endpoint );
 		}
@@ -308,11 +328,29 @@ class GitLab_API extends API {
 			$endpoint = add_query_arg( 'ref', $branch_switch, $endpoint );
 		}
 
+		if ( ! empty( parent::$options[ 'gitlab_private_token' ] ) ) {
+			$endpoint = add_query_arg( 'private_token', parent::$options['gitlab_private_token'], $endpoint );
+		}
+
+		/*
+		 * If using GitLab CE/Enterprise header return this endpoint.
+		 */
+		if ( ! empty( $this->type->enterprise ) ) {
+			$endpoint = remove_query_arg( 'private_token', $endpoint );
+			if ( ! empty( parent::$options['gitlab_enterprise_token'] ) ) {
+				$endpoint = add_query_arg( 'private_token', parent::$options['gitlab_enterprise_token'], $endpoint );
+			}
+
+			return $this->type->enterprise . $endpoint;
+		}
+
+
 		return $download_link_base . $endpoint;
 	}
 
 	/**
-	 * Add remote data to type object
+	 * Add remote data to type object.
+	 * @access private
 	 */
 	private function _add_meta_repo_object() {
 		//$this->type->rating       = $this->make_rating( $this->type->repo_meta );
@@ -329,7 +367,7 @@ class GitLab_API extends API {
 	 *
 	 * @return string
 	 */
-	protected static function add_endpoints( $git, $endpoint ) {
+	protected function add_endpoints( $git, $endpoint ) {
 		if ( ! empty( parent::$options['gitlab_private_token'] ) ) {
 			$endpoint = add_query_arg( 'private_token', parent::$options['gitlab_private_token'], $endpoint );
 		}
@@ -375,7 +413,7 @@ class GitLab_API extends API {
 		if ( ! $response ) {
 			self::$method = 'projects';
 			$response = $this->api( '/projects' );
-			if ( empty( $response ) ) {
+			if ( empty( $response ) && isset( $this->type->slug ) ) {
 				$id = rtrim( urlencode( $this->type->slug ), '.php' );
 				return $id;
 			}

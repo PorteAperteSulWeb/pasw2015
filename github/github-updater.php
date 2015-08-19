@@ -11,8 +11,8 @@
 /*
 Plugin Name:       GitHub Updater
 Plugin URI:        https://github.com/afragen/github-updater
-Description:       A plugin to automatically update GitHub, Bitbucket or GitLab hosted plugins and themes. It also allows for remote installation of plugins or themes into WordPress. Plugin class based upon <a href="https://github.com/codepress/github-plugin-updater">codepress/github-plugin-updater</a>. Theme class based upon <a href="https://github.com/WordPress-Phoenix/whitelabel-framework">Whitelabel Framework</a> modifications.
-Version:           4.5.0
+Description:       A plugin to automatically update GitHub, Bitbucket or GitLab hosted plugins and themes. It also allows for remote installation of plugins or themes into WordPress.
+Version:           5.0.1
 Author:            Andy Fragen
 License:           GNU General Public License v2
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,7 +33,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require_once ( plugin_dir_path( __FILE__ ) . '/vendor/WPUpdatePhp.php' );
+if ( ! class_exists( 'WPUpdatePhp' ) ) {
+	require_once ( plugin_dir_path( __FILE__ ) . '/vendor/wp-update-php/src/WPUpdatePhp.php' );
+}
 $updatePhp = new WPUpdatePhp( '5.3.0' );
 $updatePhp->set_plugin_name( 'GitHub Updater' );
 
@@ -49,8 +51,8 @@ $root = array( 'Fragen\\GitHub_Updater' => __DIR__ . '/src/GitHub_Updater' );
 
 // Add extra classes
 $extra_classes = array(
-	'Parsedown'         => __DIR__ . '/vendor/Parsedown.php',
-	'WPUpdatePHP'       => __DIR__ . '/vendor/WPUpdatePhp.php',
+	'Parsedown'         => __DIR__ . '/vendor/parsedown/Parsedown.php',
+	'WPUpdatePHP'       => __DIR__ . '/vendor/wp-update-php/src/WPUpdatePhp.php',
 	'Automattic_Readme' => __DIR__ . '/vendor/parse-readme.php',
 	);
 
@@ -62,10 +64,3 @@ new $loader( $root, $extra_classes );
 // Instantiate class GitHub_Updater
 $instantiate = 'Fragen\\GitHub_Updater\\Base';
 new $instantiate;
-
-/*
- * Calls Fragen\GitHub_Updater\Base::init() in init hook so other remote upgrader apps like
- * InfiniteWP, ManageWP, MainWP, and iThemes Sync will load and use all
- * of GitHub_Updater's methods, especially renaming.
- */
-add_action( 'init', array( 'Fragen\\GitHub_Updater\\Base', 'init' ) );

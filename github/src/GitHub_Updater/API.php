@@ -10,6 +10,18 @@
 
 namespace Fragen\GitHub_Updater;
 
+/*
+ * Exit if called directly.
+ */
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
+/**
+ * Class API
+ *
+ * @package Fragen\GitHub_Updater
+ */
 abstract class API extends Base {
 
 	/*
@@ -22,9 +34,9 @@ abstract class API extends Base {
 	abstract public function get_repo_meta();
 	abstract public function get_remote_branches();
 	abstract public function construct_download_link();
+	abstract protected function add_endpoints( $git, $endpoint );
 
 	/**
-	 * Fixes {@link https://github.com/UCF/Theme-Updater/issues/3}.
 	 * Adds custom user agent for GitHub Updater.
 	 *
 	 * @param  array $args Existing HTTP Request arguments.
@@ -110,9 +122,10 @@ abstract class API extends Base {
 	/**
 	 * Return API url.
 	 *
+	 * @access private
 	 * @param string $endpoint
 	 *
-	 * @return string
+	 * @return string $endpoint
 	 */
 	private function _get_api_url( $endpoint ) {
 		$type     = $this->return_repo_type();
@@ -158,7 +171,7 @@ abstract class API extends Base {
 	 *
 	 * @return bool true if invalid
 	 */
-	protected static function validate_response( $response ) {
+	protected function validate_response( $response ) {
 		if ( empty( $response ) || isset( $response->message ) ) {
 			return true;
 		}
