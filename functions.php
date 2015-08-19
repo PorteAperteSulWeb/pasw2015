@@ -104,7 +104,7 @@ function get_pasw2015_version() {
 function is_pasw2015_child($c) {
 	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
 		if ($c) {
-			return 'C';
+			return apply_filters( 'pasw2015childedition', 'C' );
 		} else {
 			return true;
 		}
