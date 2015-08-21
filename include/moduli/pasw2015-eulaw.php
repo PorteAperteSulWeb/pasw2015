@@ -58,7 +58,7 @@ add_action('wp_enqueue_scripts', 'pasw2015_eu_law_script');
 
 /* =========== Auto Block ============ */
 add_filter( 'the_content', 'pasw_eulaw_autoblock', 11);
-add_filter( 'widget_display_callback','pasw_eulaw_autoblock_widget', 11, 3 );
+add_filter( 'widget_text','pasw_eulaw_autoblock_widget', 11, 3 );
 
 function pasw_eulaw_autoblock($content) {
 	global $post;
@@ -72,10 +72,11 @@ function pasw_eulaw_autoblock($content) {
 
 function pasw_eulaw_autoblock_widget($content) {
 
-    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') && eu_cookie_exclusions_check_widget($content)) {
+	   if ( !cookie_accepted() && get_option('pasw_eucookie_automatic')) {
 		$content = preg_replace('#<script.*?\/script>#is', '', $content);
         $content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<object.*?\/object>#is', generate_cookie_notice_widget('auto', '100%'), $content);
     }
+	
     return $content;
 }
 
@@ -247,15 +248,5 @@ function eu_cookie_control_shortcode( $atts ) {
 add_shortcode( 'cookie-control', 'eu_cookie_control_shortcode' );
 
 /* ========= END SHORTCODE ========== */
-
-/* Esclusioni incompatibilità plugin */
-function eu_cookie_exclusions_check_widget($content)
-{
-	if (in_array("widget_utcw", $content)) { // esclude il blocco automatico per Ultimate Tag Cloud Widget
-		return false;
-	}
-	return true;
-}
-
 
 }
