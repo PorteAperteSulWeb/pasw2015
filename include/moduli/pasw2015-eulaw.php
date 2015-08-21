@@ -72,7 +72,7 @@ function pasw_eulaw_autoblock($content) {
 
 function pasw_eulaw_autoblock_widget($content) {
 
-    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic')) {
+    if ( !cookie_accepted() && get_option('pasw_eucookie_automatic') && eu_cookie_exclusions_check_widget($content)) {
 		$content = preg_replace('#<script.*?\/script>#is', '', $content);
         $content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<object.*?\/object>#is', generate_cookie_notice_widget('auto', '100%'), $content);
     }
@@ -247,5 +247,15 @@ function eu_cookie_control_shortcode( $atts ) {
 add_shortcode( 'cookie-control', 'eu_cookie_control_shortcode' );
 
 /* ========= END SHORTCODE ========== */
+
+/* Esclusioni incompatibilità plugin */
+function eu_cookie_exclusions_check_widget($content)
+{
+	if (in_array("widget_utcw", $content)) { // esclude il blocco automatico per Ultimate Tag Cloud Widget
+		return false;
+	}
+	return true;
+}
+
 
 }

@@ -76,7 +76,7 @@
                     global $more;
                     $more = 0;
             ?>
-					<li <?php if ( has_post_thumbnail() && $thumbnail ) { echo 'style="min-height:51px;"';}?>><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
+					<li <?php if ( has_post_thumbnail() && $thumbnail ) { echo 'style="min-height:52px;"';}?>><h3><span class="hdate"><?php the_time('j M y') ?></span> <a href="<?php the_permalink(); ?>">
 				    <?php
                         if ( has_post_thumbnail() && $thumbnail ) {
                             the_post_thumbnail(array(50,50));
