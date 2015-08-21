@@ -182,7 +182,7 @@ function pasw2015_impostazioni() { ?>
                         <br/><small>(es. "c.f. xxxxxxxxxxx")</small>
                     </div>
                 </div>
-                <div clas="clear"></div>
+                <div class="clear"></div>
                 <h4>Loghi Footer</h4>
                         <?php
                             $content = html_entity_decode(get_option('pasw_loghi_footer'));
