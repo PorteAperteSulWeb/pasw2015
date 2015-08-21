@@ -72,7 +72,7 @@ class Bitbucket_API extends API {
 			return false;
 		}
 
-		$this->set_file_info( $response );
+		$this->set_file_info( $response, 'Bitbucket' );
 
 		return true;
 	}
@@ -91,7 +91,6 @@ class Bitbucket_API extends API {
 			$arr_resp = (array) $response;
 
 			if ( ! $response || ! $arr_resp ) {
-				$response = new \stdClass();
 				$response->message = 'No tags found';
 			}
 
@@ -148,8 +147,6 @@ class Bitbucket_API extends API {
 		}
 
 		$this->type->sections['changelog'] = $changelog;
-
-		return true;
 	}
 
 	/**
@@ -269,7 +266,7 @@ class Bitbucket_API extends API {
 		 */
 		if ( ! empty( $_GET['rollback'] ) &&
 		     ( isset( $_GET['action'] ) && 'upgrade-theme' === $_GET['action'] ) &&
-		     ( isset( $_GET['theme'] ) && $this->type->repo === $_GET['theme'] )
+		     ( isset( $_GET['theme'] ) && $_GET['theme'] === $this->type->repo )
 		) {
 			$endpoint .= $rollback . '.zip';
 
@@ -292,7 +289,6 @@ class Bitbucket_API extends API {
 
 	/**
 	 * Add remote data to type object.
-	 * @access private
 	 */
 	private function _add_meta_repo_object() {
 		$this->type->rating       = $this->make_rating( $this->type->repo_meta );
@@ -332,9 +328,10 @@ class Bitbucket_API extends API {
 		 * Check whether attempting to install private Bitbucket repo
 		 * and abort if Bitbucket user/pass not set.
 		 */
-		if ( isset( $_POST['option_page'], $_POST['is_private'] ) &&
+		if ( isset( $_POST['option_page'] ) &&
 		     'github_updater_install' === $_POST['option_page'] &&
 		     'bitbucket' === $_POST['github_updater_api'] &&
+		     isset( $_POST['is_private'] ) &&
 		     ( ! empty( parent::$options['bitbucket_username'] ) || ! empty( parent::$options['bitbucket_password'] ) )
 		) {
 			$bitbucket_private_install = true;

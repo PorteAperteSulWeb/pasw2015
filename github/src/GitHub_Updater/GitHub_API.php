@@ -63,7 +63,7 @@ class GitHub_API extends API {
 			return false;
 		}
 
-		$this->set_file_info( $response );
+		$this->set_file_info( $response, 'GitHub' );
 
 		return true;
 	}
@@ -253,7 +253,7 @@ class GitHub_API extends API {
 		 */
 		if ( ! empty( $_GET['rollback'] ) &&
 		     ( isset( $_GET['action'] ) && 'upgrade-theme' === $_GET['action'] ) &&
-		     ( isset( $_GET['theme'] ) && $this->type->repo === $_GET['theme'] )
+		     ( isset( $_GET['theme'] ) && $_GET['theme'] === $this->type->repo )
 		) {
 			$endpoint .= $rollback;
 
@@ -290,7 +290,6 @@ class GitHub_API extends API {
 
 	/**
 	 * Add remote data to type object.
-	 * @access private
 	 */
 	private function _add_meta_repo_object() {
 		$this->type->rating       = $this->make_rating( $this->type->repo_meta );
@@ -397,8 +396,6 @@ class GitHub_API extends API {
 
 			return $response;
 		}
-
-		return false;
 	}
 
 }

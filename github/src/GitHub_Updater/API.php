@@ -37,6 +37,7 @@ abstract class API extends Base {
 	abstract protected function add_endpoints( $git, $endpoint );
 
 	/**
+	 * Fixes {@link https://github.com/UCF/Theme-Updater/issues/3}.
 	 * Adds custom user agent for GitHub Updater.
 	 *
 	 * @param  array $args Existing HTTP Request arguments.
@@ -122,7 +123,6 @@ abstract class API extends Base {
 	/**
 	 * Return API url.
 	 *
-	 * @access private
 	 * @param string $endpoint
 	 *
 	 * @return string $endpoint

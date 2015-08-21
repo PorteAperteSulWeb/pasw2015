@@ -29,13 +29,6 @@ if ( ! defined( 'WPINC' ) ) {
 class Plugin extends Base {
 
 	/**
-	 * Plugin object.
-	 *
-	 * @var bool|Plugin
-	 */
-	protected static $object = false;
-
-	/**
 	 * Rollback variable
 	 *
 	 * @var string branch
@@ -43,32 +36,20 @@ class Plugin extends Base {
 	protected $tag = false;
 
 	/**
-	 * Force meta update toggle
-	 *
-	 * @var bool
+	 * Constructor.
 	 */
-	protected $force_meta_update = false;
-
-	/**
-	 * Constructor
-	 *
-	 * @param bool|false $force_meta_update whether we should force meta updating
-	 */
-	public function __construct( $force_meta_update = false ) {
-
-		$this->force_meta_update = $force_meta_update;
-
-		if ( isset( $_GET['force-check'] ) ) {
-			$this->delete_all_transients( 'plugins' );
-		}
+	public function __construct() {
 
 		/*
 		 * Get details of git sourced plugins.
 		 */
-		$this->config = $this->get_plugin_meta( $this->force_meta_update );
+		$this->config = $this->get_plugin_meta();
 
 		if ( empty( $this->config ) ) {
 			return false;
+		}
+		if ( isset( $_GET['force-check'] ) ) {
+			$this->delete_all_transients( 'plugins' );
 		}
 
 		foreach ( (array) $this->config as $plugin ) {
@@ -92,7 +73,7 @@ class Plugin extends Base {
 			$this->{$plugin->type} = $plugin;
 			$this->set_defaults( $plugin->type );
 
-			if ( $this->force_meta_update && $this->repo_api->get_remote_info( basename( $plugin->slug ) ) ) {
+			if ( $this->repo_api->get_remote_info( basename( $plugin->slug ) ) ) {
 				$this->repo_api->get_repo_meta();
 				$this->repo_api->get_remote_tag();
 				$changelog = $this->get_changelog_filename( $plugin->type );
@@ -122,37 +103,20 @@ class Plugin extends Base {
 				set_site_transient( 'update_plugins', $updates_transient );
 			}
 
-			if ( $this->force_meta_update &&
-			     ( ! is_multisite() || is_network_admin() )
-			) {
-				add_action( "after_plugin_row_$plugin->slug", array( &$this, 'plugin_branch_switcher' ), 15, 3 );
-			}
+			add_action( "after_plugin_row_$plugin->slug", array( &$this, 'wp_plugin_update_row' ), 15, 3 );
 		}
 
 		$this->make_force_check_transient( 'plugins' );
 
 		add_filter( 'plugin_row_meta', array( &$this, 'plugin_row_meta' ), 10, 2 );
-		add_filter( 'plugins_api_result', array( &$this, 'plugins_api_result' ), 99, 3 );
 		add_filter( 'pre_set_site_transient_update_plugins', array( &$this, 'pre_set_site_transient_update_plugins' ) );
-		add_filter( 'upgrader_post_install', array( &$this, 'upgrader_post_install' ), 10, 3 );
+		add_filter( 'plugins_api', array( &$this, 'plugins_api' ), 99, 3 );
+		add_filter( 'upgrader_source_selection', array( &$this, 'upgrader_source_selection' ), 10, 3 );
+		add_filter( 'http_request_args', array( 'Fragen\\GitHub_Updater\\API', 'http_request_args' ), 10, 2 );
+
+		Settings::$ghu_plugins = $this->config;
 	}
 
-	/**
-	 * The Plugin object can be created/obtained via this
-	 * method - this prevents unnecessary work in rebuilding the object and
-	 * querying to construct a list of categories, etc.
-	 *
-	 * @return Plugin
-	 */
-	public static function instance( $force_meta_update = false ) {
-		$class = __CLASS__;
-		if ( false === self::$object && $force_meta_update ) {
-			self::$object = new $class( true );
-			set_site_transient( 'ghu_plugin', self::$object, ( self::$hours * HOUR_IN_SECONDS ) );
-		}
-
-		return self::$object;
-	}
 
 	/**
 	 * Add branch switch row to plugins page.
@@ -162,7 +126,7 @@ class Plugin extends Base {
 	 *
 	 * @return bool
 	 */
-	public function plugin_branch_switcher( $plugin_file, $plugin_data ) {
+	public function wp_plugin_update_row( $plugin_file, $plugin_data ) {
 		$options = get_site_option( 'github_updater' );
 		if ( empty( $options['branch_switch'] ) ) {
 			return false;
@@ -193,7 +157,7 @@ class Plugin extends Base {
 		 */
 		echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message update-ok">';
 
-		printf( esc_html__( 'Current branch is `%1$s`, try %2$sanother branch%3$s.', 'github-updater' ),
+		printf( __( 'Current branch is `%1$s`, try %2$sanother branch%3$s.', 'github-updater' ),
 			$branch,
 			'<a href="#" onclick="jQuery(\'#' . $id .'\').toggle();return false;">',
 			'</a>'
@@ -201,6 +165,7 @@ class Plugin extends Base {
 
 		print( '<ul id="' . $id . '" style="display:none; width: 100%;">' );
 		foreach ( $branches as $branch => $uri ) {
+
 			printf( '<li><a href="%s%s">%s</a></li>',
 				wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' . urlencode( $plugin_file ) ), 'upgrade-plugin_' . $plugin_file ),
 				'&rollback=' . urlencode( $branch ),
@@ -209,8 +174,6 @@ class Plugin extends Base {
 		}
 		print( '</ul>' );
 		echo '</div></td></tr>';
-
-		return true;
 	}
 
 	/**
@@ -243,9 +206,9 @@ class Plugin extends Base {
 			if ( false !== stristr( $links[2], 'Visit plugin site' ) ) {
 				unset( $links[2] );
 				$links[] = sprintf( '<a href="%s" class="thickbox">%s</a>',
-					esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $repo .
-					                   '&TB_iframe=true&width=600&height=550' ) ),
-					esc_html__( 'View details', 'github-updater' )
+					network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $repo .
+					                   '&TB_iframe=true&width=600&height=550' ),
+					__( 'View details', 'github-updater' )
 				);
 			}
 		}
@@ -262,20 +225,19 @@ class Plugin extends Base {
 	 *
 	 * @return mixed
 	 */
-	public function plugins_api_result( $false, $action, $response ) {
-		$match = false;
+	public function plugins_api( $false, $action, $response ) {
 		if ( ! ( 'plugin_information' === $action ) ) {
 			return $false;
 		}
 
-		$transient = 'ghu-' . md5( $response->slug . 'wporg' );
-		$wp_repo_data = get_site_transient( $transient );
+		$wp_repo_data = get_site_transient( 'ghu-' . md5( $response->slug . 'wporg' ) );
 		if ( ! $wp_repo_data ) {
 			$wp_repo_data = wp_remote_get( 'https://api.wordpress.org/plugins/info/1.0/' . $response->slug );
 			if ( is_wp_error( $wp_repo_data ) ) {
 				return false;
 			}
-			set_site_transient( $transient, $wp_repo_data, ( 12 * HOUR_IN_SECONDS ) );
+
+			set_site_transient( 'ghu-' . md5( $response->slug . 'wporg' ), $wp_repo_data, ( 12 * HOUR_IN_SECONDS ) );
 		}
 
 		$wp_repo_body = unserialize( $wp_repo_data['body'] );
@@ -290,9 +252,6 @@ class Plugin extends Base {
 			$repos = $this->get_repo_slugs( $plugin->repo );
 			if ( $response->slug === $repos['repo'] || $response->slug === $repos['extended_repo'] ) {
 				$response->slug = $repos['repo'];
-				$match = true;
-			} else {
-				continue;
 			}
 			$contributors = array();
 			if ( strtolower( $response->slug ) === strtolower( $plugin->repo ) ) {
@@ -324,10 +283,6 @@ class Plugin extends Base {
 			}
 		}
 
-		if ( ! $match ) {
-			return $false;
-		}
-
 		return $response;
 	}
 
@@ -355,7 +310,7 @@ class Plugin extends Base {
 				/*
 				 * If branch is 'master' and plugin is in wp.org repo then pull update from wp.org
 				 */
-				if ( $plugin->dot_org && 'master' === $plugin->branch ) {
+				if ( $plugin->dot_org ) {
 					continue;
 				}
 
@@ -374,4 +329,5 @@ class Plugin extends Base {
 
 		return $transient;
 	}
+
 }

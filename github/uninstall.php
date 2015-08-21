@@ -31,5 +31,3 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 delete_site_option( 'github_updater' );
 delete_option( 'github_updater' );
-delete_site_transient( 'github_updater_remote_management' );
-delete_transient( 'github_updater_remote_management' );
