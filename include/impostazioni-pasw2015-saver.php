@@ -1,7 +1,9 @@
 <?php
 
     $cryptKey = get_option('pasw_key');
-    $qEncoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $_POST["pasw_ga_password_n"], MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+    if (function_exists('mcrypt_encrypt')) {
+        $qEncoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $_POST["pasw_ga_password_n"], MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+    }
 
     if(isset($_POST['Submit'])) { //Salvataggio Impostazioni
 
