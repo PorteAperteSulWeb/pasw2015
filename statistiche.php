@@ -9,7 +9,14 @@ Template Name: Statistiche
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
         <h2 class="posttitle"><?php the_title(); ?></h2>
         <?php the_content(); ?>
-        <?php require_once('include/GAAPI/gacounter.php'); ?>
+        
+        <?php 
+            if ( get_option( 'pasw_ga_password' ) ) {
+                require_once('include/GAAPIOLD/gacounter.php');
+            } else {
+                require_once('include/GAAPI/gacounter.php');
+            }
+        ?>
         <?php endwhile; endif; ?>
     </div>
 </div>

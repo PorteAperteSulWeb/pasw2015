@@ -1,39 +1,34 @@
-﻿<?php
-//ini_set("error_reporting","E_ALL");
-/** GAcounter 1.1 - 03 settembre 2012
+<?php
+
+/* CLASSE GAPI
 * based on GAPI php class
 * ( http://code.google.com/p/gapi-google-analytics-php-interface/ )
 * developed by Marco Cilia ( http://www.goanalytics.info )
 * developed by MAXX Berni per Porteapertesulweb 
 * Comunità di pratica per accessibilità dei siti scolastici( http://www.porteapertesulweb.it )
 */
-// inserisci login e password che usi abitualmente per accedere a Google Analytics
+?>
 
-register_shutdown_function('shutdownFunction');
+<div id="curve_chart" style="width: 100%; height: 300px"></div>
+ <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
 
-function shutDownFunction() { 
-    $error = error_get_last();
-    if ($error['type'] == 1) {
-    	session_destroy();
-    	die('<strong>ERRORE PASW2015@S01</strong>');
-
-    } 
-}
-
-error_reporting(0);
-
-function pasw_decryptIt($q) {
-    $cryptKey = get_option('pasw_key');
-    $qDecoded = rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), base64_decode( $q), MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ), "\0");
-    return( $qDecoded );
-}
-
-define('ga_email',get_option('pasw_ga_user'));
-define('ga_password',pasw_decryptIt(get_option('pasw_ga_password')));
-define('ga_profile_id',get_option('pasw_ga_profile_id'));
-
+<?php
 require_once 'gapi.class.php';
 
+if ( get_option( 'pasw_ga_user' ) ) {
+    $user = get_option( 'pasw_ga_user' );
+    $path = get_option( 'pasw_p12' );
+} else {
+    $user = '576457711209-4buphlu09fg6rakbpraf5qpe7hov7uri@developer.gserviceaccount.com';
+    $path = dirname(__FILE__).'/oauthkeyfile.p12';
+}
 
 $giorni_anno = 365;
 $giorni_mese = 30;
@@ -45,83 +40,129 @@ $data_ricerca_settimana = date("Y-m-d", time()-(86400*$giorni_settimana));
 $data_ricerca_giorno = date("Y-m-d", time()-(86400*$giorni_giorno));
 $oggi = date("Y-m-d");
 
-
-	$ga = new gapi(ga_email,ga_password);
-	
-//////////////
-// GIORNO
-//////////////
-	$ga->requestReportData(ga_profile_id,array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_giorno, date("Y-m-d"), 1,1000);
-	echo "<div class=\"gacounter\">";
-	echo "<h3>Periodo osservazione: ultimo giorno </h3>";
-	echo "<p> dal ".date("d-m-Y", time()-(86400*$giorni_giorno))." al ".date("d-m-Y")."</p>";
-	echo "<ul><li>visite totali: " . $ga->getVisits() . "</li>";
-	echo "<li class=\"alternato\">visitatori totali: " . $ga->getVisitors() . "</li>";	
-	echo "<li>nuovi visitatori: " . $ga->getnewVisits() . "</li>";	
-	echo "<li class=\"alternato\">pagine viste: " . $ga->getPageviews() . "</li>";	
-	echo "<li>pagine viste per visita: " . round($ga->getpageviewsPerVisit(),2) . "</li>";	
-	echo "<li class=\"alternato\">pagine uniche: " . $ga->getuniquePageviews() . "</li>";	
-	$t_medio = tempo_medio($ga->getavgTimeOnSite());
-	echo "<li>tempo medio di permanenza sul sito: " .$t_medio. "</li></ul>";	
-	echo "</div>";
-	
-
-//////////////
-// SETTIMANA
-//////////////
-	$ga->requestReportData(ga_profile_id,array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_settimana, date("Y-m-d"), 1,1000);
-	echo "<div class=\"gacounter\">";
-	echo "<h3>Periodo osservazione: ultimi 7 giorni</h3>";
-	echo "<p> dal ".date("d-m-Y", time()-(86400*$giorni_settimana))." al ".date("d-m-Y")."</p>";
-	echo "<ul><li>visite totali: " . $ga->getVisits() . "</li>";
-	echo "<li class=\"alternato\">visitatori totali: " . $ga->getVisitors() . "</li>";	
-	echo "<li>nuovi visitatori: " . $ga->getnewVisits() . "</li>";	
-	echo "<li class=\"alternato\">pagine viste: " . $ga->getPageviews() . "</li>";	
-	echo "<li>pagine viste per visita: " . round($ga->getpageviewsPerVisit(),2) . "</li>";	
-	echo "<li class=\"alternato\">pagine uniche: " . $ga->getuniquePageviews() . "</li>";	
-	$t_medio = tempo_medio($ga->getavgTimeOnSite());
-	echo "<li>tempo medio di permanenza sul sito: " .$t_medio. "</li></ul>";	
-	echo "</div>";		
-	
+$ga = new gapi($user, $path);
 
 
-//////////////
-// MESE
-//////////////
-	$ga->requestReportData(ga_profile_id,array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_mese, date("Y-m-d"), 1,1000);
-	echo "<div class=\"gacounter\">";
-	echo "<h3>Periodo osservazione: ultimi 30 giorni</h3>";
-	echo "<p> dal ".date("d-m-Y", time()-(86400*$giorni_mese))." al ".date("d-m-Y")."</p>";
-	echo "<ul><li>visite totali: " . $ga->getVisits() . "</li>";
-	echo "<li class=\"alternato\">visitatori totali: " . $ga->getVisitors() . "</li>";	
-	echo "<li>nuovi visitatori: " . $ga->getnewVisits() . "</li>";	
-	echo "<li class=\"alternato\">pagine viste: " . $ga->getPageviews() . "</li>";	
-	echo "<li>pagine viste per visita: " . round($ga->getpageviewsPerVisit(),2) . "</li>";	
-	echo "<li class=\"alternato\">pagine uniche: " . $ga->getuniquePageviews() . "</li>";	
-	$t_medio = tempo_medio($ga->getavgTimeOnSite());
-	echo "<li>tempo medio di permanenza sul sito: " .$t_medio. "</li></ul>";	
-	echo "</div>";
+$ga->requestReportData(get_option('pasw_ga_profile_id'),array('date'),array('visits'),array('date'),'',$data_ricerca_anno,date("Y-m-d"),1,1000);
+
+echo "<script type=\"text/javascript\">
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Giorno', 'Visite totali'],";
+foreach($ga->getResults() as $result)
+{
+    echo "['".date("d-m-Y", strtotime($result))."',  ".$result->getVisits()."],";
+}
+echo "]);
+
+        var options = {
+          title: 'Accessi al sito (ultimi 365 giorni)',
+          curveType: 'function',
+          vAxis: {viewWindow: {min:0} },
+          hAxis: { textPosition: 'none' },
+          chartArea:{width:\"100%\"},
+          legend: { position: 'none' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>";
 
 
 
 
-//////////////
-// ANNO
-//////////////
+$ga->requestReportData(get_option('pasw_ga_profile_id'),array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_giorno, date("Y-m-d"), 1,1000);
 
-	$ga->requestReportData(ga_profile_id,array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_anno, date("Y-m-d"), 1,1000);
-	echo "<div class=\"gacounter\">";
-	echo "<h3>Periodo osservazione: ultimi 365 giorni</h3>";
-	echo "<p>dal ".date("d-m-Y", time()-(86400*$giorni_anno))." al ".date("d-m-Y")."</p>";
-	echo "<ul><li>visite totali: " . $ga->getVisits() . "</li>";
-	echo "<li class=\"alternato\">visitatori totali: " . $ga->getVisitors() . "</li>";	
-	echo "<li>nuovi visitatori: " . $ga->getnewVisits() . "</li>";	
-	echo "<li class=\"alternato\">pagine viste: " . $ga->getPageviews() . "</li>";	
-	echo "<li>pagine viste per visita: " . round($ga->getpageviewsPerVisit(),2) . "</li>";	
-	echo "<li class=\"alternato\">pagine uniche: " . $ga->getuniquePageviews() . "</li>";	
-	$t_medio = tempo_medio($ga->getavgTimeOnSite());
-	echo "<li>tempo medio di permanenza sul sito: " .$t_medio. "</li></ul>";	
-	echo "</div>";	
+
+	echo "<h3>Ultimo Giorno";
+    echo "<span style=\"float:right;font-size:0.8em;\">".date("d-m-Y", time()-(86400*$giorni_giorno))." ~ ".date("d-m-Y")."</span>";
+    echo "</h3>";
+?>
+<table style="width:100%">
+  <tr>
+    <td>Visite totali:</td>
+    <td align="center"><b><?php echo $ga->getVisits(); ?></b><br>(tempo medio: <?php echo substr(tempo_medio($ga->getavgTimeOnSite()), 3); ?>)</td>
+  </tr>
+  <tr>
+    <td>Visitatori totali:</td>
+    <td align="center"><b><?php echo $ga->getVisitors(); ?></b><br>(nuovi visitatori: <?php echo $ga->getnewVisits(); ?>)</td>
+  </tr>
+  <tr>
+    <td>Pagine viste:</td>
+    <td align="center"><b><?php echo $ga->getPageviews(); ?></b><br>(pagine per visita: <?php echo round($ga->getpageviewsPerVisit(),2); ?>)</td>
+  </tr>
+</table>
+<?php
+
+	$ga->requestReportData(get_option('pasw_ga_profile_id'),array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_settimana, date("Y-m-d"), 1,1000);
+
+	echo "<h3>Ultima Settimana";
+    echo "<span style=\"float:right;font-size:0.8em;\">".date("d-m-Y", time()-(86400*$giorni_settimana))." ~ ".date("d-m-Y")."</span>";
+    echo "</h3>";
+?>
+<table style="width:100%">
+  <tr>
+    <td>Visite totali:</td>
+    <td align="center"><b><?php echo $ga->getVisits(); ?></b><br>(tempo medio: <?php echo substr(tempo_medio($ga->getavgTimeOnSite()), 3); ?>)</td>
+  </tr>
+  <tr>
+    <td>Visitatori totali:</td>
+    <td align="center"><b><?php echo $ga->getVisitors(); ?></b><br>(nuovi visitatori: <?php echo $ga->getnewVisits(); ?>)</td>
+  </tr>
+  <tr>
+    <td>Pagine viste:</td>
+    <td align="center"><b><?php echo $ga->getPageviews(); ?></b><br>(pagine per visita: <?php echo round($ga->getpageviewsPerVisit(),2); ?>)</td>
+  </tr>
+</table>
+<?php
+
+	$ga->requestReportData(get_option('pasw_ga_profile_id'),array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_mese, date("Y-m-d"), 1,1000);
+
+echo "<h3>Ultimo Mese";
+    echo "<span style=\"float:right;font-size:0.8em;\">".date("d-m-Y", time()-(86400*$giorni_mese))." ~ ".date("d-m-Y")."</span>";
+    echo "</h3>";
+?>
+<table style="width:100%">
+  <tr>
+    <td>Visite totali:</td>
+    <td align="center"><b><?php echo $ga->getVisits(); ?></b><br>(tempo medio: <?php echo substr(tempo_medio($ga->getavgTimeOnSite()), 3); ?>)</td>
+  </tr>
+  <tr>
+    <td>Visitatori totali:</td>
+    <td align="center"><b><?php echo $ga->getVisitors(); ?></b><br>(nuovi visitatori: <?php echo $ga->getnewVisits(); ?>)</td>
+  </tr>
+  <tr>
+    <td>Pagine viste:</td>
+    <td align="center"><b><?php echo $ga->getPageviews(); ?></b><br>(pagine per visita: <?php echo round($ga->getpageviewsPerVisit(),2); ?>)</td>
+  </tr>
+</table>
+<?php
+
+	$ga->requestReportData(get_option('pasw_ga_profile_id'),array('visitorType'),array('visitors','pageviews','visits','timeOnSite','avgtimeOnsite','percentNewVisits','newVisits','pageviewsPerVisit','uniquePageviews'),'','',$data_ricerca_anno, date("Y-m-d"), 1,1000);
+
+echo "<h3>Ultimo Anno";
+    echo "<span style=\"float:right;font-size:0.8em;\">".date("d-m-Y", time()-(86400*$giorni_anno))." ~ ".date("d-m-Y")."</span>";
+    echo "</h3>";
+?>
+<table style="width:100%">
+  <tr>
+    <td>Visite totali:</td>
+    <td align="center"><b><?php echo $ga->getVisits(); ?></b><br>(tempo medio: <?php echo substr(tempo_medio($ga->getavgTimeOnSite()), 3); ?>)</td>
+  </tr>
+  <tr>
+    <td>Visitatori totali:</td>
+    <td align="center"><b><?php echo $ga->getVisitors(); ?></b><br>(nuovi visitatori: <?php echo $ga->getnewVisits(); ?>)</td>
+  </tr>
+  <tr>
+    <td>Pagine viste:</td>
+    <td align="center"><b><?php echo $ga->getPageviews(); ?></b><br>(pagine per visita: <?php echo round($ga->getpageviewsPerVisit(),2); ?>)</td>
+  </tr>
+</table>
+<?php
 
 function tempo_medio($getavgTimeOnSite)
 {

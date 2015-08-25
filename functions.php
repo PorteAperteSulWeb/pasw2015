@@ -65,14 +65,32 @@ function reg_set_p() {
           update_option( 'pasw_logo', get_bloginfo("template_url").'/images/repubblica-italiana.png');
         }
         update_option('pasw2015_version', get_pasw2015_version());
+        update_option('pasw2015_versionalert', get_pasw2015_version());
+        delete_option( 'pasw_favicon' );
         wpgov_update();
         wp_safe_redirect(admin_url('/admin.php?page=pasw2015', 'http'), 301);
     }
 
-    if (get_option('pasw_favicon') == '') {
-        update_option( 'pasw_favicon', get_bloginfo("template_url").'/images/favicon.ico');
-    }
+}
 
+add_action('admin_notices', 'pasw_admin_messages');
+function pasw_admin_messages() {;
+
+        if ( isset($_GET['pasw2015alert'])) {
+             update_option( 'pasw2015_versionalert', '0' );
+        }
+
+    if ( get_option('pasw2015_versionalert') == '1.6.6') {
+        echo '
+            <div class="updated">
+            <p>La versione <b>1.7</b> di Pasw2015 porta alcune importanti novità:
+            <br>
+            <li><b>Nuovo sistema di Google Analytics</b>: supporteremo il vecchio ancora per qualche tempo. Per passare al nuovo, vai nelle impostazioni e segui le istruzioni.</li>
+            <li><b>Icona del Sito</b>: abbiamo rimosso il campo per l\'icona del sito. Da questo momento non funzionerà più. Per reimpostarla, vai nelle impostazioni e segui le istruzioni.</li>
+            <br><a href="?pasw2015alert=0">Ok, ho capito e sistemerò al più presto!</a>
+            </p>
+            </div>';
+    }
 }
 
 add_action( 'after_setup_theme', 'pasw2015_setup' );

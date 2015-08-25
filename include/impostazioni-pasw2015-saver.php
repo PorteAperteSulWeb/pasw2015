@@ -1,12 +1,19 @@
 <?php
 
     $cryptKey = get_option('pasw_key');
-    $qEncoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $_POST["pasw_ga_password_n"], MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+    if (function_exists('mcrypt_encrypt') ) {
+        $qEncoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $_POST["pasw_ga_password_n"], MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+        if (!$_POST["pasw_ga_password_n"]) {
+            $qEncoded = '';
+        }
+    }
 
     if(isset($_POST['Submit'])) { //Salvataggio Impostazioni
 
         // INFO SITO
         update_option( 'pasw_autore', $_POST["pasw_autore_n"] );
+        update_option( 'pasw_autorelink', $_POST["pasw_autorelink_n"] );
+        update_option( 'pasw_p12', $_POST["pasw_p12_n"] );
         update_option( 'pasw_recapito_scuola', $_POST["pasw_recapito_scuola_n"] );
         update_option( 'pasw_email_scuola', $_POST["pasw_email_scuola_n"] );
         update_option( 'pasw_pec_scuola', $_POST["pasw_pec_scuola_n"] );
