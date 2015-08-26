@@ -169,13 +169,16 @@ function pasw2015_impostazioni() { ?>
                         <label for="ga-password">Password:</label>
                         <input id="ga-password-n" type="text" name="pasw_ga_password_n" value="<?php if (get_option('pasw_ga_password')) { echo '#OK#'; } ?>" class="regular-text">
                         <br/><small style="background-color:yellow;">Elimina la Password per passare al nuovo sistema di autenticazione. Fallo al più presto, per nuove funzioni e maggior sicurezza.</small>
-                        <?php } else { ?>
-                        <label for="upload_image">
-                            Inserisci un certificato P12
-                            <input id="pasw-p12-n" type="text" size="36" name="pasw_p12_n" value="<?php if (get_option('pasw_p12') != '') { echo get_option('pasw_p12'); } else { echo 'http://'; } ?>" />
-                            <input id="pasw_p12_upload" class="button" type="button" value="Carica" />
-                            <br><br>
-                        </label>
+    
+                        <?php
+                            } else { 
+                            
+                            if ( is_pasw2015_child(false) && get_option( 'pasw_ga_user' ) ) {
+                                echo 'CHILD RILEVATO<br>USERNAME RILEVATO<br>><b>Autenticazione PERSONALE attiva</b>';
+                            } else {
+                                echo 'CHILD NON RILEVATO<br>USERNAME NON RILEVATO<br>><b>Autenticazione PASW attiva</b>';
+                            }
+                        ?>
                         
                         <?php } ?>
 

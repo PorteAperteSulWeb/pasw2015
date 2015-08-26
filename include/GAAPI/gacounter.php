@@ -22,9 +22,9 @@
 <?php
 require_once 'gapi.class.php';
 
-if ( get_option( 'pasw_ga_user' ) ) {
+if ( is_pasw2015_child(false) && get_option( 'pasw_ga_user' ) ) {
     $user = get_option( 'pasw_ga_user' );
-    $path = get_option( 'pasw_p12' );
+    $path = get_template_directory() . '/ga-oauthkeyfile.p12';
 } else {
     $user = '576457711209-4buphlu09fg6rakbpraf5qpe7hov7uri@developer.gserviceaccount.com';
     $path = dirname(__FILE__).'/oauthkeyfile.p12';

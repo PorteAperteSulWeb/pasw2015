@@ -13,7 +13,6 @@
         // INFO SITO
         update_option( 'pasw_autore', $_POST["pasw_autore_n"] );
         update_option( 'pasw_autorelink', $_POST["pasw_autorelink_n"] );
-        update_option( 'pasw_p12', $_POST["pasw_p12_n"] );
         update_option( 'pasw_recapito_scuola', $_POST["pasw_recapito_scuola_n"] );
         update_option( 'pasw_email_scuola', $_POST["pasw_email_scuola_n"] );
         update_option( 'pasw_pec_scuola', $_POST["pasw_pec_scuola_n"] );
