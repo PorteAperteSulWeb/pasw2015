@@ -119,14 +119,6 @@ function get_pasw2015_version() {
 	}
 }
 
-function is_pasw2015_child2() {
-	if (( wp_get_theme( 'pasw2015-child' )->exists() ) && (wp_get_theme()->name !== 'PASW 2015')){
-		return apply_filters( 'pasw2015childedition', 'C');
-	} else {
-		return '';
-	}
-}
-
 function is_pasw2015_child() {
 	if (( wp_get_theme( 'pasw2015-child' )->exists() ) && (wp_get_theme()->name !== 'PASW 2015')){
 		return true;
