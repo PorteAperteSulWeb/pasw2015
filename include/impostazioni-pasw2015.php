@@ -172,12 +172,17 @@ function pasw2015_impostazioni() { ?>
     
                         <?php
                             } else { 
-                            
-                            if ( is_pasw2015_child(false) && get_option( 'pasw_ga_user' ) ) {
-                                echo 'CHILD RILEVATO<br>USERNAME RILEVATO<br>><b>Autenticazione PERSONALE attiva</b>';
-                            } else {
-                                echo 'CHILD NON RILEVATO<br>USERNAME NON RILEVATO<br>><b>Autenticazione PASW attiva</b>';
-                            }
+                            if (is_pasw2015_child){
+							$string_child = 'CHILD RILEVATO';
+							}else{
+							$string_child = 'CHILD NON RILEVATO';
+							}
+							if (get_option( 'pasw_ga_user' ) ){
+							$string_user = '<b>Autenticazione PERSONALE attiva</b>';
+							}else{
+							$string_user = '<b>Autenticazione PASW attiva</b>';
+							}
+							echo $string_child . '<br>' . $string_user;
                         ?>
                         
                         <?php } ?>

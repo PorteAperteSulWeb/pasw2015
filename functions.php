@@ -119,21 +119,31 @@ function get_pasw2015_version() {
 	}
 }
 
-function is_pasw2015_child($c) {
-	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
-		if ($c) {
-			return apply_filters( 'pasw2015childedition', 'C' );
-		} else {
-			return true;
-		}
+function is_pasw2015_child2() {
+	if (( wp_get_theme( 'pasw2015-child' )->exists() ) && (wp_get_theme()->name !== 'PASW 2015')){
+		return apply_filters( 'pasw2015childedition', 'C');
 	} else {
-		if ($c) {
-			return '';
-		} else {
-			return false;
-		}
+		return '';
 	}
 }
+
+function is_pasw2015_child() {
+	if (( wp_get_theme( 'pasw2015-child' )->exists() ) && (wp_get_theme()->name !== 'PASW 2015')){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function footer_child() {
+	if (is_pasw2015_child()) {
+		return apply_filters( 'pasw2015childedition', 'C');
+	} else {
+		return '';
+	}
+
+}
+
 
 function pasw2015_stili() {
 	// Main stylesheet
