@@ -22,7 +22,8 @@
 <?php
 require_once 'gapi.class.php';
 
-if ( is_pasw2015_child() && get_option( 'pasw_ga_user' ) ) {
+// if ( is_pasw2015_child() && get_option( 'pasw_ga_user' ) ) {
+	if ( get_option( 'pasw_ga_user' ) ) {
     $user = get_option( 'pasw_ga_user' );
     $path = get_stylesheet_directory() . '/ga-oauthkeyfile.p12';
 } else {
