@@ -127,7 +127,7 @@ function is_pasw2015_child() {
 	}
 }
 
-function footer_child() {
+function version_child() {
 	if (is_pasw2015_child()) {
 		return apply_filters( 'pasw2015childedition', 'C');
 	} else {
