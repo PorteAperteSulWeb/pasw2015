@@ -17,6 +17,7 @@ function load_modules() {
         pasw_sidebar_generator::init();
     }
     if (get_option('pasw_eulaw') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-eulaw.php' ); }
+    if (get_option('pasw_post_tpl') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-post-templates.php' ); }
 }
 add_action('admin_init', "reg_set_p");
 
@@ -421,5 +422,17 @@ function new_excerpt_more($more) {
 	return '&nbsp; &nbsp; <a class="moretag" href="'. get_permalink($post->ID) . '" title="Leggi l&#180;intero articolo">&raquo;</a>';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
+
+
+function pasw2015_statistiche()
+{
+	if ( get_option( 'pasw_ga_password' ) ) {
+                require_once('include/GAAPIOLD/gacounter.php');
+            } else {
+                require_once('include/GAAPI/gacounter.php');
+            }
+}
+add_shortcode('pasw_stat', 'pasw2015_statistiche');
+
 
 ?>

@@ -25,8 +25,14 @@
                 update_option('pasw_taxdest', '0');
             }
         }
-
-        if (isset($_GET['switchsidebar']) || wp_verify_nonce($_GET['switchsidebar'], 'switchsidebar')) {
+    if (isset($_GET['switchpost_tpl']) || wp_verify_nonce($_GET['switchpost_tpl'], 'switchpost_tpl')) {
+            if (get_option('pasw_post_tpl') == 0) {
+                update_option('pasw_post_tpl', '1');
+            } else {
+                update_option('pasw_post_tpl', '0');
+            }
+        }
+    if (isset($_GET['switchsidebar']) || wp_verify_nonce($_GET['switchsidebar'], 'switchsidebar')) {
             if (get_option('pasw_msidebar') == 0) {
                 update_option('pasw_msidebar', '1');
             } else {
@@ -143,6 +149,25 @@
             <td class="column-description desc">
                 <div class="plugin-description">
                     <p>Il modulo è una soluzione leggera, facile da configurare ed utilizzare che consente al sito di rispettare la legge europea sui cookie,  informando gli utenti  che il sito utilizza cookie. Il modulo permette di bloccare gli script e i relativi cookie prima dell'accettazione rispettando in questo modo la normativa italiana. <br> <strong>Attenzione</strong> il modulo funziona solo con il tema Pasw2015, se si utilizza plugin per la visualizzazione del sito nei cellulari il modulo non genera alcun effetto in tale modalit&agrave, in questo caso si consiglia l'uso del plugin EU Cookie Law di Marco Milesi.</p>
+                </div>
+            </td>
+        </tr>
+
+    <tr class="<?php if (get_option('pasw_post_tpl') == 0) { echo 'in'; } ?>active"><th scope="row" class="check-column"></th>
+            <td class="plugin-title"><strong>Modelli articoli </strong><div class="row-actions visible">
+                <span class="activate">
+                    <a href="<?php print wp_nonce_url(admin_url('admin.php?page=pasw2015-moduli'), 'switchpost_tpl', 'switchpost_tpl');?>" class="edit">
+                        <?php if (get_option('pasw_post_tpl') == 0) { echo 'Attiva'; } else { echo 'Disattiva'; } ?>
+                    </a>
+                    &bull;
+                    <?php if (get_option('pasw_post_tpl') != 0) {?>
+                       <a href="<?php print wp_nonce_url(admin_url('admin.php?page=pasw-post-templates'));?>" class="edit">Impostazioni</a>
+                    <?php } ?>
+                </span>
+            </td>
+            <td class="column-description desc">
+                <div class="plugin-description">
+                    <p>Questo modulo attiva la gestione dei modelli articolo (simile ai modelli di pagina) - per maggiorni informazioni su come creare i modelli vedi wiki</p>
                 </div>
             </td>
         </tr>
