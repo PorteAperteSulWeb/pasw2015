@@ -172,12 +172,25 @@ function pasw2015_impostazioni() { ?>
     
                         <?php
                             } else { 
-                            
-                            if ( is_pasw2015_child(false) && get_option( 'pasw_ga_user' ) ) {
-                                echo 'CHILD RILEVATO<br>USERNAME RILEVATO<br>><b>Autenticazione PERSONALE attiva</b>';
-                            } else {
-                                echo 'CHILD NON RILEVATO<br>USERNAME NON RILEVATO<br>><b>Autenticazione PASW attiva</b>';
-                            }
+                            if (is_pasw2015_child()){
+								$string_child = 'TEMA CHILD ATTIVO';
+							}else{
+								$string_child = 'TEMA PADRE ATTIVO';
+							}
+							if (get_option( 'pasw_ga_user' ) ){
+								$filename = get_stylesheet_directory() . '/ga-oauthkeyfile.p12';
+								if (file_exists($filename)) {
+									$string_p12 = '<b>Statistiche con login personale <span style= color:green;>Attive</span></b>';
+								}else{
+									$string_p12 = '<span style= color:red;>Attenzione Errore File <strong>ga-oauthkeyfile.p12</strong> non trovato</span><br> caricare file in questa posizione: - ' . $filename;
+								}
+								$string_user = 'Autenticazione PERSONALE';
+							}else{
+								$string_user = 'Autenticazione PASW';
+								$string_p12 = '<b>Statistiche con login PASW <span style= color:green;>Attive</span></b>';
+							}
+												
+							echo $string_child . ' - ' . $string_user . '<br>' . $string_p12;
                         ?>
                         
                         <?php } ?>

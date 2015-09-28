@@ -17,6 +17,7 @@ function load_modules() {
         pasw_sidebar_generator::init();
     }
     if (get_option('pasw_eulaw') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-eulaw.php' ); }
+    if (get_option('pasw_post_tpl') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-post-templates.php' ); }
 }
 add_action('admin_init', "reg_set_p");
 
@@ -119,21 +120,23 @@ function get_pasw2015_version() {
 	}
 }
 
-function is_pasw2015_child($c) {
-	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
-		if ($c) {
-			return apply_filters( 'pasw2015childedition', 'C' );
-		} else {
-			return true;
-		}
+function is_pasw2015_child() {
+	if (( wp_get_theme( 'pasw2015-child' )->exists() ) && (wp_get_theme()->name !== 'PASW 2015')){
+		return true;
 	} else {
-		if ($c) {
-			return '';
-		} else {
-			return false;
-		}
+		return false;
 	}
 }
+
+function version_child() {
+	if (is_pasw2015_child()) {
+		return apply_filters( 'pasw2015childedition', 'C');
+	} else {
+		return '';
+	}
+
+}
+
 
 function pasw2015_stili() {
 	// Main stylesheet
@@ -419,5 +422,17 @@ function new_excerpt_more($more) {
 	return '&nbsp; &nbsp; <a class="moretag" href="'. get_permalink($post->ID) . '" title="Leggi l&#180;intero articolo">&raquo;</a>';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
+
+
+function pasw2015_statistiche()
+{
+	if ( get_option( 'pasw_ga_password' ) ) {
+                require_once('include/GAAPIOLD/gacounter.php');
+            } else {
+                require_once('include/GAAPI/gacounter.php');
+            }
+}
+add_shortcode('pasw_stat', 'pasw2015_statistiche');
+
 
 ?>
