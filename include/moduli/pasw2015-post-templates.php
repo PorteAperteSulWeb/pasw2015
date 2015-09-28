@@ -219,7 +219,6 @@ function post_tpl_admin_page(){
   $content = html_entity_decode(get_option('pasw_post_tpl_header'));
   $editor_settings =  array (
           'textarea_rows' => 8,
-          'teeny'         => TRUE,
           'tinymce'       => TRUE
           );
 
@@ -231,7 +230,6 @@ function post_tpl_admin_page(){
   $content = html_entity_decode(get_option('pasw_post_tpl_sign'));
   $editor_settings =  array (
           'textarea_rows' => 4,
-          'teeny'         => TRUE,
           'tinymce'       => TRUE
           );
 
