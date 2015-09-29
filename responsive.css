@@ -1,0 +1,80 @@
+/*
+Responsive CSS Rules for PASW2015 v2.0+R
+by Marco Milesi 2015
+*/
+
+@media screen and (max-width: 480px) {
+	#topbar ul li a {
+		width:100% !important;
+	}
+	#header h1 {
+		font-size: 6vw;
+	}
+	#header img.logo {
+		display:none;
+	}
+    .footer-column img, span {
+    	float: none!important;
+    	margin-bottom:10px;
+  }
+  	.col-com2, .stickyc-col {
+    	    width: 95%!Important;
+  }
+  .footer-column span {
+    	float: none!important;
+    	margin-bottom:10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+	.footer-column, #footer-credits {
+		width: 50%;
+		text-align:center;
+	}
+    .footer-column:nth-of-type(1) {
+    	width: 100%;
+    }
+	#centrecontent {
+		width: 97%!important;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	 #topbar ul li a, #menu-menu-orizzontale li:first-child a {
+		float:left;
+		width:50%;
+		text-align:center;
+		border:none;
+		padding: 5px 0;
+	}
+	.topsearch-div {
+		width: 100%;
+		float: left;
+		position: relative;
+	}
+	#header h1 {
+		font-size:5vw;
+	}
+	#header ul.sito {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		height: auto;
+	}
+	#sidebarleft-100-background {
+    	display: none;
+	}
+    #leftsidebar {
+    	float: none;
+    	width: 100%;
+  }
+	#centrecontent {
+		width: 75%;
+	}
+	.secondo-menu {
+		//display:none;
+	}
+	#rightsidebar {
+		width: auto;
+	}
+}

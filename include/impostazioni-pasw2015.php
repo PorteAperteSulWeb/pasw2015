@@ -31,6 +31,10 @@ function pasw2015_impostazioni() { ?>
                     <div class="welcome-panel-column">
                         <h4>Stile</h4>
 
+						<input id="responsive" type="checkbox" name="pasw_responsive_layout_n"
+                        <?php $get_pasw_responsive_layout = get_option('pasw_responsive_layout');
+                        if ($get_pasw_responsive_layout == '1') { echo ' checked="checked" '; } ?>><label for="responsive">responsive (beta)</label><br/>
+						
                         <input id="fluid" type="checkbox" name="pasw_fluid_layout_n"
                         <?php $get_pasw_fluid_layout = get_option('pasw_fluid_layout');
                         if ($get_pasw_fluid_layout == '1') { echo ' checked="checked" '; } ?>><label for="fluid">layout allargato</label><br/>

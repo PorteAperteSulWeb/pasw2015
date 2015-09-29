@@ -120,15 +120,17 @@ function get_pasw2015_version() {
 }
 
 function is_pasw2015_child($c) {
+	$r = '';
+	if ( get_option('pasw_responsive_layout') ) { $r = '+R'; }
 	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
 		if ($c) {
-			return apply_filters( 'pasw2015childedition', 'C' );
+			return apply_filters( 'pasw2015childedition', 'C' ).$r;
 		} else {
 			return true;
 		}
 	} else {
 		if ($c) {
-			return '';
+			return ''.$r;
 		} else {
 			return false;
 		}
@@ -136,9 +138,11 @@ function is_pasw2015_child($c) {
 }
 
 function pasw2015_stili() {
-	// Main stylesheet
+	if ( get_option('pasw_responsive_layout') ) {
+		wp_enqueue_style( 'pasw2015_styles-responsive', get_template_directory_uri() . '/responsive.css',  array(), null, 'all' );
+	}
 	wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
-	wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  null, null, 'print' );
+	wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  array(), null, 'print' );
 }
 add_action( 'wp_enqueue_scripts', 'pasw2015_stili' );
 
