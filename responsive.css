@@ -69,8 +69,8 @@ by Marco Milesi 2015
     		width: 100%;
   	}
   	body {
-  		background:none;
-  		margin:0;
+  		background:none!important;
+  		margin:0!important;
   	}
   	#wrapper, #topbar {
   		width: 100%!important;
