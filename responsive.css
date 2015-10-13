@@ -6,7 +6,7 @@ by Marco Milesi 2015
 @media screen and (max-width: 480px) {
 	#topbar ul li a {
 		width:100% !important;
-	}
+	}w
 	#header h1 {
 		font-size: 6vw;
 	}
@@ -67,6 +67,10 @@ by Marco Milesi 2015
     	#leftsidebar {
     		float: none;
     		width: 100%;
+  	}
+  	body {
+  		background:none;
+  		margin:0;
   	}
   	#wrapper, #topbar {
   		width: 100%!important;
