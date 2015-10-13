@@ -64,10 +64,16 @@ by Marco Milesi 2015
 	#sidebarleft-100-background {
     	display: none;
 	}
-    #leftsidebar {
-    	float: none;
-    	width: 100%;
-  }
+    	#leftsidebar {
+    		float: none;
+    		width: 100%;
+  	}
+  	#wrapper, #topbar {
+  		width: 100%;
+  	}
+  	#header ul.sito {
+  		margin: 0;
+  	}
 	#centrecontent {
 		width: 75%;
 	}
