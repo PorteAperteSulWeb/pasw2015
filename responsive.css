@@ -69,10 +69,10 @@ by Marco Milesi 2015
     		width: 100%;
   	}
   	#wrapper, #topbar {
-  		width: 100%;
+  		width: 100%!important;
   	}
   	#header ul.sito {
-  		margin: 0;
+  		margin: 0!important;
   	}
 	#centrecontent {
 		width: 75%;
