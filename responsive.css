@@ -77,8 +77,8 @@ by Marco Milesi 2015
   	}
   	#wrapper, #topbar {
   		width: 100%!important;
-  		margin: 0 auto;
-  		box-shadow: none;
+  		margin: 0 auto!important;
+  		box-shadow: none!important;
   		overflow-x: hidden;
   	}
   	#header ul.sito {
