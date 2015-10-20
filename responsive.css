@@ -61,6 +61,9 @@ by Marco Milesi 2015
 		padding: 0;
 		height: auto;
 	}
+	#topbar {
+		left: 0;
+	}
 	#sidebarleft-100-background {
     	display: none;
 	}
@@ -74,6 +77,9 @@ by Marco Milesi 2015
   	}
   	#wrapper, #topbar {
   		width: 100%!important;
+  		margin: 0 auto;
+  		box-shadow: none;
+  		overflow-x: hidden;
   	}
   	#header ul.sito {
   		margin: 0!important;
