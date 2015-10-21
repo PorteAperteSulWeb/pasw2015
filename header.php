@@ -14,8 +14,9 @@
 <script>
     jQuery("document").ready(function($){
     var nav = $('#topbar');
+    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
     $(window).scroll(function () {
-        if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?>) {
+        if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?> && $width > 1024) {
             nav.addClass("f-nav");
         } else {
             nav.removeClass("f-nav");
