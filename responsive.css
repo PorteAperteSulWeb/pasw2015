@@ -47,6 +47,13 @@ by Marco Milesi 2015
 		border:none;
 		padding: 5px 0;
 	}
+	#leftsidebar {
+		width: 100%!important;
+	}
+	#leftsidebar ul li {
+		width: 49%;
+		float:left;
+	}
 	.topsearch-div {
 		width: 100%;
 		float: left;
