@@ -40,9 +40,9 @@ by Marco Milesi 2015
 }
 
 @media screen and (max-width: 1024px) {
-	 #topbar ul li a, #menu-menu-orizzontale li:first-child a {
+	 #topbar ul li a, #menu-menu-orizzontale li:first-child a,  {
 		float:left;
-		width:50%;
+		width:50%!important;
 		text-align:center;
 		border:none;
 		padding: 5px 0;
