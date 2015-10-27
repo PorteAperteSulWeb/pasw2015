@@ -24,6 +24,9 @@ by Marco Milesi 2015
     	float: none!important;
     	margin-bottom:10px;
   }
+  .remove-cookie{
+	display: none!important;
+  }
 }
 
 @media screen and (max-width: 768px) {
