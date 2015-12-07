@@ -30,7 +30,7 @@
 
     class pasw2015_posts extends WP_Widget {
 
-        function pasw2015_posts() {
+        function __construct() {
             parent::__construct( false, 'PASW @ Categorie' );
         }
 
@@ -163,7 +163,7 @@
 
     class pasw2015_at extends WP_Widget {
 
-        function pasw2015_at() {
+        function __construct() {
             parent::__construct( false, 'PASW @ AT #Milesi' );
         }
 
@@ -240,7 +240,7 @@
 
     class pasw2015_albo extends WP_Widget {
 
-        function pasw2015_albo() {
+        function __construct() {
             parent::__construct( false, 'PASW @ Albo Pretorio On line', array('description' => 'Widget che permette la visualizzazione degli ultimi atti pubblicati nell\'Albo Pretorio') );
         }
         public function form($instance)
@@ -383,7 +383,7 @@
 
     class pasw2015_circolari extends WP_Widget {
 
-        function pasw2015_circolari() {
+        function __construct() {
             parent::__construct( false, 'PASW @ Circolari #Scimone');
         }
 
@@ -512,7 +512,7 @@
     }
 	class pasw2015_taxdest extends WP_Widget {
 
-        function pasw2015_taxdest() {
+        function __construct() {
             parent::__construct( false, 'PASW @ TaxDestinatari' );
     	}
 
@@ -642,7 +642,7 @@
 // Widget che mostra l'immagine in evidenza associata a una pagina o a un post
 //**************************************************************************************************************
 class ThumbWidget extends WP_Widget {
-    function ThumbWidget() {
+    function __construct() {
 		parent::__construct( false, 'Immagine in evidenza' );
     }
     function widget( $args, $instance ) {
