@@ -40,7 +40,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         echo stripslashes(get_option('pasw_cfpiva_scuola')) . '<br/>';
     }
         ?>
-                    <?php echo html_entity_decode(get_option('pasw_testo_footer')); ?><br/>
+                    <?php echo do_shortcode(html_entity_decode(get_option('pasw_testo_footer'))); ?><br/>
                 </small>
             </span>
         </div>
