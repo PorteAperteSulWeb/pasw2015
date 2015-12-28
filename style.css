@@ -1695,3 +1695,130 @@ float:left;
 span.pasw2015eu-policy-link a {
 	// link to the extended policy page
 }
+
+/* CSS Document */
+/* Modulo single custom*/
+
+.box-shadow-br{ 
+    padding: 1px;
+    margin: auto;   
+    position: relative; 
+    background-color: #FFFFFF; 
+    border: 1px solid #CCCCCC;    
+    border-radius: 2px;
+    box-shadow: 2px 2px 10px 0px rgba(50, 50, 50, 0.50);
+}           
+
+.box-shadow-br:after{ 
+    content: ""; 
+    z-index: -1; 
+    position: absolute; 
+    width: 60%; 
+    top: 75%; 
+    right: 4px; 
+    bottom: 12px; 
+    -webkit-transform: rotate(2deg); 
+    transform: rotate(2deg); 
+    box-shadow: 0px 15px 10px rgba(50, 50, 50, 0.50); 
+}
+
+.avviso {
+  font-size: 0.90em;
+  padding: 30px 30px 30px 30px;  
+  margin: 15px 0 20px 0;
+  text-shadow: 0 0 1px rgba(100, 100, 100, 0.75) !important;
+}
+
+.avviso hr {
+  height: 1px;
+  border-width: 0;
+  background-color: #c2e2ed;
+  margin-bottom: 20px;  
+}
+
+.avviso img {
+  border: none !important;
+}
+
+.avviso table {
+  width: 100%;
+  /*background-color: rgb(255,255,255);*/
+  border-collapse: collapse;
+  margin: 5px 0 5px 0;
+  cursor: default;
+  font-size: 0.95em!important;
+}
+
+.avviso table td {
+  /*background-color: rgb(255,255,255)!important;*/
+  border: none;
+  border-bottom: 1px solid rgb(102,204,255); 
+}
+
+.avviso table tr:nth-child(odd) td { 
+  background-color: #eeeeff!important; 
+}
+
+.avviso table tr:nth-child(even) td { 
+  background-color: #ffffff!important; 
+}
+
+.avviso table th {
+  border: none;
+  border-bottom: 1px solid rgb(102,204,255); 
+  text-align: centre;
+}
+
+.avviso p {
+  font-size: 1.00em;
+}
+
+.avviso .content {
+  min-height: 500px;
+}
+
+.avviso .object {
+  margin: 30px 0 40px 0;
+}
+
+.avviso .sign {
+  margin: 10px 0 10px 0;
+  //font-size: 0.90em;
+}
+
+.avviso .footer {
+  font-size: 0.90em;
+} 
+/*--------------------------------------------------------------
+## Back to top.
+--------------------------------------------------------------*/
+/* Back to top. */
+.back-to-top {
+  position: fixed;
+  bottom: -7.5%;
+  padding: 5px;
+  color: white;
+  opacity: 0.25;
+  border-radius: 4px;
+  visibility: hidden;
+  text-decoration: none;
+  -webkit-transition: all 0.25s ease-in-out;
+          transition: all 0.25s ease-in-out;
+  background: #202020; 
+  }
+  .back-to-top span {
+    color: white;
+    font-size: 24px;
+	}
+  .back-to-top:hover, .back-to-top:focus {
+    opacity: 1; }
+  .back-to-top:focus {
+    outline: #e4f1fe dotted thin; }
+
+.show-back-to-top {
+  display: block;
+  bottom: 2.5%;
+  visibility: visible;
+  z-index: 9999999 !important;
+    }
+

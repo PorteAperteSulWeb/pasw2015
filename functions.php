@@ -17,6 +17,7 @@ function load_modules() {
         pasw_sidebar_generator::init();
     }
     if (get_option('pasw_eulaw') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-eulaw.php' ); }
+    if (get_option('pasw_post_tpl') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-post-templates.php' ); }
 }
 add_action('admin_init', "reg_set_p");
 
@@ -119,21 +120,21 @@ function get_pasw2015_version() {
 	}
 }
 
-function is_pasw2015_child($c) {
+function is_pasw2015_child() {
+	if (( wp_get_theme( 'pasw2015-child' )->exists() ) && (wp_get_theme()->name !== 'PASW 2015')){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function version_child() {
 	$r = '';
 	if ( get_option('pasw_responsive_layout') ) { $r = '+R'; }
-	if ( wp_get_theme( 'pasw2015-child' )->exists() ) {
-		if ($c) {
-			return apply_filters( 'pasw2015childedition', 'C' ).$r;
-		} else {
-			return true;
-		}
+	if (is_pasw2015_child()) {
+		return apply_filters( 'pasw2015childedition', 'C').$r;
 	} else {
-		if ($c) {
-			return ''.$r;
-		} else {
-			return false;
-		}
+		return ''.$r;
 	}
 }
 
@@ -141,9 +142,10 @@ function pasw2015_stili() {
 	if ( get_option('pasw_responsive_layout') ) {
 		wp_enqueue_style( 'pasw2015_styles-responsive', get_template_directory_uri() . '/responsive.css',  array(), null, 'all' );
 	}
+	wp_enqueue_style( 'pasw2015_styles-fonts', get_template_directory_uri() . '/font/css/font-awesome.min.css',  array(), null, 'all' );
 	wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
 	wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  array(), null, 'print' );
-}
+	}
 add_action( 'wp_enqueue_scripts', 'pasw2015_stili' );
 
 function pasw2015_favicon() {
@@ -370,7 +372,7 @@ function pasw2015_customizer_css() { ?>
             border-bottom: 1px solid <?php echo $c_principale; ?>;
     </style>
 
-    <?php
+    <?php	
 }
 add_action( 'wp_head', 'pasw2015_customizer_css' );
 
@@ -386,6 +388,14 @@ function pasw2015_customizer_live_preview() {
 
 }
 add_action( 'customize_preview_init', 'pasw2015_customizer_live_preview' );
+
+function pasw2015_scripts() {
+
+	// Load the theme custom script file.
+	wp_enqueue_script( 'pasw2015-script', get_template_directory_uri() . '/js/pasw2015.js', array( 'jquery' ), '20151227', true );
+	
+}
+add_action( 'wp_enqueue_scripts', 'pasw2015_scripts' );
 
 function wpgov_update() {
 

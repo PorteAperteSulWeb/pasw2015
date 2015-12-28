@@ -40,7 +40,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         echo stripslashes(get_option('pasw_cfpiva_scuola')) . '<br/>';
     }
         ?>
-                    <?php echo do_shortcode(html_entity_decode(get_option('pasw_testo_footer'))); ?><br/>
+                    <?php echo html_entity_decode(get_option('pasw_testo_footer')); ?><br/>
                 </small>
             </span>
         </div>
@@ -88,7 +88,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
 
             <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/"> <img src="<?php echo get_template_directory_uri() . '/images/logopab.png'; ?>" width="180" alt=""/></a>
 
-        <br/><small> Versione 2015.<?php echo get_option('pasw2015_version') . is_pasw2015_child(true); ?><br/>
+        <br/><small> Versione 2015.<?php echo get_option('pasw2015_version') . version_child(); ?><br/>
         Proudly powered by <a href="http://wordpress.org" title="Piattaforma CMS WordPress">WordPress</a> &bull;
         <a href="http://validator.w3.org/check/referer" title="HTML5 valido"><abbr title="HyperText Markup Language">HTML5</abbr></a> &bull;
         <a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS valido"><abbr title="Cascading Style Sheets">CSS</abbr></a>
@@ -97,6 +97,18 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         </div>
     </div>
 </div>
+<?php if (get_option( 'pasw_scrolltop') != '0') { 
+	switch (get_option( 'pasw_scrolltop')) {
+    case 1:
+        $temp = "right";
+        break;
+    case 2:
+		$temp = "left";
+        break;
+	}
+?>
+	<a href="#content" class="back-to-top" title="Vai su" style="<?php echo $temp ?>: 2.0% !important;"><span class="fa fa-arrow-circle-o-up"></span></a>
+<?php } ?>
 <?php wp_footer(); ?>
 </body>
 </html>

@@ -16,7 +16,7 @@ function pasw2015_menu() {
 
 function pasw2015_welcome() { ?>
     <div class="wrap about-wrap">
-        <h1>Benvenuto in Pasw 2015 <small><?php echo get_option('pasw2015_version') . is_pasw2015_child(true); ?></small></h1>
+        <h1>Benvenuto in Pasw 2015 <small><?php echo get_option('pasw2015_version') . version_child(); ?></small></h1>
         <div class="about-text">Pasw2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web.
         <br/>Bello, accessibile e innovativo.</div>
         <div class="wp-badge">Pasw2015

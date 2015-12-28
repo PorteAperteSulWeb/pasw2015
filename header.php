@@ -72,14 +72,15 @@
 
     </div>
 </div>
-
+<?php if (get_option('pasw_search_show') == '0') { ?>
     <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
         <div>
             <label class="screen-reader-text" for="s">Cerca:</label>
             <input placeholder="Cerca..." type="text" value="" name="s" id="s" />
         </div>
     </form>
-        
+<?php    }
+?>      
 <div id="topbar">
 
 <?php

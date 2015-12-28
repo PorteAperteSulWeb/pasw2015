@@ -24,7 +24,8 @@
         update_option( 'pasw_ga_profile_id', $_POST["pasw_ga_profile_id_n"] );
         update_option( 'pasw_ga_user', $_POST["pasw_ga_user_n"] );
         update_option( 'pasw_submenu', $_POST["pasw_submenu_n"] );
-
+	update_option( 'pasw_scrolltop', $_POST["pasw_scrolltop_n"] );
+		
         if ($_POST["pasw_ga_password_n"] != '#OK#') {
             update_option( 'pasw_ga_password', $qEncoded );
         }
@@ -56,6 +57,12 @@
                 update_option('pasw_menu_login', '0');
             } else {
                 update_option('pasw_menu_login', '1');
+        }
+		
+		if (isset($_POST['pasw_search_show_n'])){
+                update_option('pasw_search_show', '0');
+            } else {
+                update_option('pasw_search_show', '1');
         }
 
         if (isset($_POST['pasw_fluid_layout_n'])){

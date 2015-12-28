@@ -42,7 +42,14 @@ function pasw2015_impostazioni() { ?>
                         <input id="social" type="checkbox" name="pasw_social_n"
                         <?php $get_pasw_social = get_option('pasw_social');
                         if ($get_pasw_social == '1') { echo ' checked="checked" '; }?>><label for="social">Abilita Pulsanti Sociali negli articoli</label>
-
+						
+                        <h4>Scroll Top</h4>
+                        <select name="pasw_scrolltop_n" >
+                            <option value="0" <?php if (get_option( 'pasw_scrolltop') == '0') { echo 'selected="selected"'; }?>>Off</option>
+                            <option value="1" <?php if (get_option( 'pasw_scrolltop') == '1') { echo 'selected="selected"'; }?>>Destra</option>
+                            <option value="2" <?php if (get_option( 'pasw_scrolltop') == '2') { echo 'selected="selected"'; }?>>Sinistra</option>
+                        </select>
+						
                         <h4>Modalità Sottopagine</h4>
                         <select name="pasw_submenu_n" >
                             <option value="3" <?php if (get_option( 'pasw_submenu') == '3') { echo 'selected="selected"'; }?>>Disabilitato</option>
@@ -72,6 +79,11 @@ function pasw2015_impostazioni() { ?>
                         <input id="fixedmenu" type="checkbox" name="pasw_fixedmenu_n"
                         <?php $get_pasw_fixedmenu = get_option('pasw_fixedmenu');
                         if ($get_pasw_fixedmenu == '1') { echo ' checked="checked" '; }?>><label for="fixedmenu">Fixed menu</label>
+
+			<br/>
+			<input id="showsearch" type="checkbox" name="pasw_search_show_n"
+                        <?php $get_pasw_search_show = get_option('pasw_search_show');
+                        if ($get_pasw_search_show == '0') { echo ' checked="checked" '; }?>><label for="showsearch">Abilita form Ricerca nel Menù</label>
 
                     </div>
                     <div class="welcome-panel-column">
@@ -176,21 +188,28 @@ function pasw2015_impostazioni() { ?>
     
                         <?php
                             } else { 
-                            
-                            if ( is_pasw2015_child(false) ) {
-                            	$string_child = 'Child presente';
-                            } else {
-                                $string_child = 'Child non presente';
-                            }
-                            if ( get_option( 'pasw_ga_user' ) ) {
-                            	$string_child .= ' + Username presente';
-                            	$string_user = '<b>Autenticazione PERSONALE attiva</b>';
-                            } else {
-                            	$string_child .= ' + Username non presente';
-                            	$string_user = '<b>Autenticazione PASW attiva</b>';
-                            }
-                            echo $string_child . '<br>' . $string_user;
-                        } ?>
+                            if (is_pasw2015_child()){
+								$string_child = 'TEMA CHILD ATTIVO';
+							}else{
+								$string_child = 'TEMA PADRE ATTIVO';
+							}
+							if (get_option( 'pasw_ga_user' ) ){
+								$filename = get_stylesheet_directory() . '/ga-oauthkeyfile.p12';
+								if (file_exists($filename)) {
+									$string_p12 = '<b>Statistiche con login personale <span style= color:green;>Attive</span></b>';
+								}else{
+									$string_p12 = '<span style= color:red;>Attenzione Errore File <strong>ga-oauthkeyfile.p12</strong> non trovato</span><br> caricare file in questa posizione: - ' . $filename;
+								}
+								$string_user = 'Autenticazione PERSONALE';
+							}else{
+								$string_user = 'Autenticazione PASW';
+								$string_p12 = '<b>Statistiche con login PASW <span style= color:green;>Attive</span></b>';
+							}
+												
+							echo $string_child . ' - ' . $string_user . '<br>' . $string_p12;
+                        ?>
+                        
+                        <?php } ?>
 
                     </div>
                     <div class="welcome-panel-column welcome-panel-last">
