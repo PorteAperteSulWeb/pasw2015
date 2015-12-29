@@ -4,6 +4,7 @@ by Marco Milesi 2015
 */
 
 @media screen and (max-width: 480px) {
+
 	#topbar ul li a {
 		width:100% !important;
 	}w
@@ -30,6 +31,11 @@ by Marco Milesi 2015
 }
 
 @media screen and (max-width: 768px) {
+
+div#header { 
+	background-image: none!important; 
+	} 
+
 	.footer-column, #footer-credits {
 		width: 50%;
 		text-align:center;
