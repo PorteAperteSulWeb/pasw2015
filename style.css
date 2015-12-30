@@ -1821,4 +1821,11 @@ span.pasw2015eu-policy-link a {
   visibility: visible;
   z-index: 9999999 !important;
     }
+.back-to-top a:link, a:visited, a:hover, a:active {
+    color: white !important;
+}
+
+.back-to-top i {
+	color: white !important;
+	}
 
