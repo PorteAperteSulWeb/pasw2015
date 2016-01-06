@@ -1,4 +1,4 @@
-/*
+﻿/*
 Theme Name: PASW 2015
 Description: Pasw2015 è il tema trasparente e accessibile promosso dalla Comunità di Pratica "Porte Aperte sul Web". Bello, accessibile e innovativo, con supporto continuo e volontario offerto dalla comunità.
 Author: Porte Aperte sul Web
@@ -1821,9 +1821,9 @@ span.pasw2015eu-policy-link a {
   visibility: visible;
   z-index: 9999999 !important;
     }
-.back-to-top a:link, a:visited, a:hover, a:active {
+/*.back-to-top a:link, a:visited, a:hover, a:active {
     color: white !important;
-}
+} */
 
 .back-to-top i {
 	color: white !important;
