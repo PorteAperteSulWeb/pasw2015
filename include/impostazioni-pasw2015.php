@@ -187,7 +187,9 @@ function pasw2015_impostazioni() { ?>
                         <br/><small style="background-color:yellow;">Elimina la Password per passare al nuovo sistema di autenticazione. Fallo al più presto, per nuove funzioni e maggior sicurezza.</small>
     
                         <?php
-                            } else { 
+                            } else {
+						if (get_option('pasw_ga_id') && get_option('pasw_ga_profile_id')){		
+	
                             if (is_pasw2015_child()){
 								$string_child = 'TEMA CHILD ATTIVO';
 							}else{
@@ -205,7 +207,10 @@ function pasw2015_impostazioni() { ?>
 								$string_user = 'Autenticazione PASW';
 								$string_p12 = '<b>Statistiche con login PASW <span style= color:green;>Attive</span></b>';
 							}
-												
+						}
+						else{
+							$string_child = '- Statistiche non attive';
+						}						
 							echo $string_child . ' - ' . $string_user . '<br>' . $string_p12;
                         ?>
                         
