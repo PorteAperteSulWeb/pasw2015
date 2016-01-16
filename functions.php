@@ -370,6 +370,7 @@ function pasw2015_customizer_css() { ?>
         input#submit{
             background-color: <?php echo $c_secondario; ?>;
             border-bottom: 1px solid <?php echo $c_principale; ?>;
+        }
     </style>
 
     <?php	
