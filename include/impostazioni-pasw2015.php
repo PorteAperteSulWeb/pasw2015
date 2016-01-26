@@ -128,7 +128,67 @@ function pasw2015_impostazioni() { ?>
                             <li><a href="themes.php?page=custom-background" class="welcome-icon welcome-view-site">Cambia immagine o colore di sfondo</a></li>
                         </ul>
                     </div>
+	
                 <div class="clear"></div>
+			<hr>			
+			<h4>Web 2.0 - Area Social Network Ente</h4>
+		    <div class="welcome-panel-column-container">
+				<div class="welcome-panel-column">
+					<h4>Impostazioni</h4>
+
+				    <label for="pisocial">Posizione Icone social:</label>
+					<select name="pasw_pisocial_n" >
+						<option value="0" <?php if (get_option( 'pasw_pisocial') == '0') { echo 'selected="selected"'; }?>>Off</option>
+                        <option value="1" <?php if (get_option( 'pasw_pisocial') == '1') { echo 'selected="selected"'; }?>>Sidebar Sinistra</option>
+                        <option value="2" <?php if (get_option( 'pasw_pisocial') == '2') { echo 'selected="selected"'; }?>>Sidebar Destra</option>
+						<option value="3" <?php if (get_option( 'pasw_pisocial') == '3') { echo 'selected="selected"'; }?>>Footer</option>
+                    </select>
+					<br>
+				    <label for="dimsocial">Dimensione Icone social:</label>
+					<select name="pasw_dimsocial_n" >
+						<option value="0" <?php if (get_option( 'pasw_dimsocial') == '0') { echo 'selected="selected"'; }?>>Small</option>
+                        <option value="1" <?php if (get_option( 'pasw_dimsocial') == '1') { echo 'selected="selected"'; }?>>Normal</option>
+                        <option value="2" <?php if (get_option( 'pasw_dimsocial') == '2') { echo 'selected="selected"'; }?>>2X</option>
+						<option value="3" <?php if (get_option( 'pasw_dimsocial') == '3') { echo 'selected="selected"'; }?>>3X</option>
+                    </select>
+					<br /><br />
+					<i class="fa fa-facebook-square"> small</i>
+					<i class="fa fa-facebook-square fa-lg"> normal</i>
+					<i class="fa fa-facebook-square fa-2x"> 2x</i>
+					<i class="fa fa-facebook-square fa-3x"> 3x</i>
+					<br><br>
+					<input id="hidesocial" type="checkbox" name="pasw_hidesocial_n"
+                    <?php $get_pasw_hidesocial = get_option('pasw_hidesocial');
+                    if ($get_pasw_hidesocial == '1') { echo ' checked="checked" '; }?>><label for="hidesocial">Visualizzare icone social non attive</label>
+					
+				</div>
+				<div class="welcome-panel-column">
+					<h4>Social Ente</h4>
+					<label for="author">Pagina Facebook:</label>
+					<input id="pagefb" type="text" name="pasw_pagefb_n" value="<?php echo get_option('pasw_pagefb'); ?>" size="40" placeholder="https://facebook.com/nomepagina">
+					<br>
+					<label for="author">Profilo twitter:</label>
+					<input id="proftwitter" type="text" name="pasw_proftwitter_n" value="<?php echo get_option('pasw_proftwitter'); ?>" size="40" placeholder="https://twitter.com/profilo">
+					<br>
+					<label for="author">Profilo Instagram:</label>
+					<input id="profinstagram" type="text" name="pasw_profinstagram_n" value="<?php echo get_option('pasw_profinstagram'); ?>" size="40" placeholder="https://">
+					<br>
+					<label for="author">Canale Youtube:</label>
+					<input id="canaleyoutube" type="text" name="pasw_canaleyoutube_n" value="<?php echo get_option('pasw_canaleyoutube'); ?>" size="40" placeholder="https://">
+					<br>
+					<label for="author">Profilo Google+:</label>
+					<input id="profgoogle" type="text" name="pasw_profgoogle_n" value="<?php echo get_option('pasw_profgoogle'); ?>" size="40" placeholder="https://">
+					<br>
+					<label for="author">Profilo Linkedin:</label>
+					<input id="proflinkedin" type="text" name="pasw_proflinkedin_n" value="<?php echo get_option('pasw_proflinkedin'); ?>" size="40" placeholder="https://www.linkedin.com/.......">
+				</div>
+				<div class="welcome-panel-column welcome-panel-last">
+				 <center> <br><br>
+				 La scuola Web 2.0
+				 </center>
+				</div>
+			</div>
+			<div class="clear"></div>	
                 <h4>Loghi Footer</h4>
                         <?php
                             $content = html_entity_decode(get_option('pasw_loghi_footer'));
@@ -154,6 +214,7 @@ function pasw2015_impostazioni() { ?>
                         ?>
             </div>
         </div>
+
             <br><hr><br>
             <div class="welcome-panel-content">
                 <h4>Google Analytics</h4>
@@ -224,6 +285,7 @@ function pasw2015_impostazioni() { ?>
                     </div>
                 </div>
             </div>
+		
         </div>
 
     </div>

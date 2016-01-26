@@ -68,12 +68,15 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         </div>
 
         <div id="footer-credits">
+			
+			<?php 
+			if (get_option('pasw_pisocial') === '3'){get_template_part('template/tlp-social');}?>
             Credits
         <p>Sito realizzato 
             <?php
                 if (get_option('pasw_Autore')) {
                     if (get_option('pasw_autorelink')) {
-                        echo 'da <a href="' . get_option('pasw_autorelink') . '" alt="'.get_option('pasw_Autore').'" >' . get_option('pasw_Autore') . '</a><br>';
+                        echo 'da <a href="' . get_option('pasw_autorelink') . '" title="'.get_option('pasw_Autore').'" >' . get_option('pasw_Autore') . '</a><br>';
                     } else {
                         echo 'da ' . get_option('pasw_Autore') . '<br>';
                     }

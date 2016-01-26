@@ -1,4 +1,5 @@
 <div id="rightsidebar" class="column">
+<?php if (get_option('pasw_pisocial') === '2'){get_template_part('template/tlp-social');} ?>
 <ul>
 <?php
 global $children;

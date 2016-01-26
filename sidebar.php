@@ -1,4 +1,5 @@
 <div id="leftsidebar" class="column">
+<?php if (get_option('pasw_pisocial') === '1'){get_template_part('template/tlp-social');}?>
   <ul>
 <?php if ( function_exists('dynamic_sidebar') && dynamic_sidebar('sidebar-1') ) :?>
 <?php endif; ?>

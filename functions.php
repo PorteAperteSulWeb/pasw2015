@@ -428,6 +428,7 @@ function pasw_get_posts( $query ) {
 }
 
 
+
 // Replaces the excerpt "more" text by a link
 function new_excerpt_more($more) {
        global $post;

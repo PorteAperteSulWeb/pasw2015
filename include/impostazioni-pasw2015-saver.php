@@ -26,6 +26,26 @@
         update_option( 'pasw_submenu', $_POST["pasw_submenu_n"] );
 	update_option( 'pasw_scrolltop', $_POST["pasw_scrolltop_n"] );
 		
+		// SOCIAL ENTE
+		
+		update_option( 'pasw_pagefb', $_POST["pasw_pagefb_n"] );
+		update_option( 'pasw_proftwitter', $_POST["pasw_proftwitter_n"] );
+		update_option( 'pasw_profinstagram', $_POST["pasw_profinstagram_n"] );
+		update_option( 'pasw_canaleyoutube', $_POST["pasw_canaleyoutube_n"] );
+		update_option( 'pasw_profgoogle', $_POST["pasw_profgoogle_n"] );
+		update_option( 'pasw_proflinkedin', $_POST["pasw_proflinkedin_n"] );
+		update_option( 'pasw_pisocial', $_POST["pasw_pisocial_n"] );
+		update_option( 'pasw_dimsocial', $_POST["pasw_dimsocial_n"] );
+		
+		if (isset($_POST['pasw_hidesocial_n'])){
+                update_option('pasw_hidesocial', '1');
+            } else {
+                update_option('pasw_hidesocial', '0');
+        }
+		
+		// fine SOCIAL ENTE
+		
+		
         if ($_POST["pasw_ga_password_n"] != '#OK#') {
             update_option( 'pasw_ga_password', $qEncoded );
         }
