@@ -63,6 +63,11 @@ div#header {
 		width: 49%;
 		float:left;
 	}
+	#rightsidebar ul li {
+		width: 48%;
+    		margin-left: 5px;
+    		float: left;
+	}
 	.topsearch-div {
 		width: 100%;
 		float: left;
