@@ -436,4 +436,11 @@ function new_excerpt_more($more) {
 }
 add_filter('excerpt_more', 'new_excerpt_more');
 
+// abilita lo style css nell'area admin
+
+function pasw_admin_head() {
+        echo '<link rel="stylesheet" type="text/css" href="'.get_template_directory_uri() . '/font/css/font-awesome.min.css">';
+}
+add_action('admin_head', 'pasw_admin_head');
+
 ?>
