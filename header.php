@@ -44,7 +44,7 @@
 
 <div id="sidebarleft-100-background"></div>
 
-<div id="header" style="height: <?php echo get_custom_header()->height; ?>px; background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
+<header id="header" style="height: <?php echo get_custom_header()->height; ?>px; background: url(<?php header_image(); ?>);color:#<?php header_textcolor(); ?>;">
 
         <?php
             if(function_exists('wp_nav_menu') && has_nav_menu( 'menu-1' ) ) {
@@ -71,7 +71,7 @@
             </div>
 
     </div>
-</div>
+</header>
 <?php if (get_option('pasw_search_show') == '0') { ?>
     <form class="topsearch-div" method="get" id="searchform" action='<?php echo bloginfo('url');?>' >
         <div>
