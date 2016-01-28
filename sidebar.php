@@ -1,10 +1,10 @@
-<div id="leftsidebar" class="column">
+<aside id="leftsidebar" class="column">
 <?php if (get_option('pasw_pisocial') === '1'){get_template_part('template/tlp-social');}?>
   <ul>
 <?php if ( function_exists('dynamic_sidebar') && dynamic_sidebar('sidebar-1') ) :?>
 <?php endif; ?>
   </ul>
-</div>
+</aside>
 <?php if (get_option('pasw_secondo_menu')) {
     echo '<div class="secondo-menu">';
 
