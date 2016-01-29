@@ -164,22 +164,22 @@ function pasw2015_impostazioni() { ?>
 				</div>
 				<div class="welcome-panel-column">
 					<h4>Social Ente</h4>
-					<label for="author">Pagina Facebook:</label>
+					<label for="facebook">Pagina Facebook:</label>
 					<input id="pagefb" type="text" name="pasw_pagefb_n" value="<?php echo get_option('pasw_pagefb'); ?>" size="40" placeholder="https://facebook.com/nomepagina">
 					<br>
-					<label for="author">Profilo twitter:</label>
+					<label for="twitter">Profilo twitter:</label>
 					<input id="proftwitter" type="text" name="pasw_proftwitter_n" value="<?php echo get_option('pasw_proftwitter'); ?>" size="40" placeholder="https://twitter.com/profilo">
 					<br>
-					<label for="author">Profilo Instagram:</label>
+					<label for="instagram">Profilo Instagram:</label>
 					<input id="profinstagram" type="text" name="pasw_profinstagram_n" value="<?php echo get_option('pasw_profinstagram'); ?>" size="40" placeholder="https://">
 					<br>
-					<label for="author">Canale Youtube:</label>
+					<label for="youtube">Canale Youtube:</label>
 					<input id="canaleyoutube" type="text" name="pasw_canaleyoutube_n" value="<?php echo get_option('pasw_canaleyoutube'); ?>" size="40" placeholder="https://">
 					<br>
-					<label for="author">Profilo Google+:</label>
+					<label for="google">Profilo Google+:</label>
 					<input id="profgoogle" type="text" name="pasw_profgoogle_n" value="<?php echo get_option('pasw_profgoogle'); ?>" size="40" placeholder="https://">
 					<br>
-					<label for="author">Profilo Linkedin:</label>
+					<label for="linkedin">Profilo Linkedin:</label>
 					<input id="proflinkedin" type="text" name="pasw_proflinkedin_n" value="<?php echo get_option('pasw_proflinkedin'); ?>" size="40" placeholder="https://www.linkedin.com/.......">
 				</div>
 				<div class="welcome-panel-column welcome-panel-last">
