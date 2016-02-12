@@ -148,11 +148,6 @@ function pasw2015_stili() {
 	}
 add_action( 'wp_enqueue_scripts', 'pasw2015_stili' );
 
-function pasw2015_favicon() {
-	echo '<link rel="Shortcut Icon" type="image/x-icon" href="'.get_option('pasw_favicon').'" />';
-}
-add_action('wp_head', 'pasw2015_favicon');
-
 $defaults = array(
     'default-color'          => 'white',
     'default-image'          => get_template_directory_uri() . '/images/pattern_default_pasw2015.jpg',
