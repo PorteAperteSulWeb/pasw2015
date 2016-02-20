@@ -693,7 +693,7 @@ display:block;
 
 #leftsidebar ul {
 list-style-image:url(images/li_image.gif);
-font-size:95%;
+font-size:1em;
 margin:0;
 padding:0;
 }
