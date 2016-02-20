@@ -479,6 +479,7 @@ min-height:125px;
 position:relative;
 text-align: center;
 border-radius: 5px 0 0 0;
+font-size: 1.1em;
 }
 
 /* Essential Layout (IE7 Fix) */
