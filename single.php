@@ -5,9 +5,6 @@
 
         <div class="post" id="post-<?php the_ID(); ?>">
 
-            <div class="lastmodified">
-            Ultima modifica: <?php the_modified_date('j F Y'); ?>
-            </div>
             <h2 class="posttitle"><?php the_title(); ?></h2>
 
             <?php if ( function_exists('previous_cat_post') ) { ?>
