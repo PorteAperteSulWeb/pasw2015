@@ -16,5 +16,9 @@
 <div id="centrecontent"  class="column">
 
 <!-- breadcrumbs -->
-<?php include(TEMPLATEPATH . '/template/breadcrumbs.php'); ?>
+<?php
+  if (!is_home() && !is_front_page()) {
+    include(TEMPLATEPATH . '/template/breadcrumbs.php');
+  }
+?>
 <!-- fine breadcrumbs -->
