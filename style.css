@@ -1247,11 +1247,12 @@ display:none;
 display:none;
 }
 
-h4.piccino {
-font-size:.95em;
+h4.piccino a {
+font-size:1.2em;
 font-weight:400;
 line-height:1.4em;
 margin:.75em 0 .25em;
+text-decoration:none;
 }
 
 .piccolino {
