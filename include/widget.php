@@ -57,12 +57,19 @@
 
 				<?php
 			$after_title = '<span class="showall_widget after_widget_title"><a href='. esc_url( $category_link ) .' title="Tutti gli articoli della categoria '. $category_name . '" >Mostra Tutto &rsaquo;</a></span>'.$after_title;
+			$mostra = '<span class="showall_widget after_widget_title"><a href='. esc_url( $category_link ) .' title="Tutti gli articoli della categoria '. $category_name . '" >Tutti gli articoli della categoria '. $category_name .'</a></span>';
+				
 			}
 
             
 
             if ( $title ) {
                 echo $before_widget . $before_title . $title . $after_title;
+            }
+            else
+            {
+	            echo $mostra;
+	            echo '<br>';
             }
 
             echo '<ul';
