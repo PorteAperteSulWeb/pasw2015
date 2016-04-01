@@ -89,7 +89,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
     // #######################
 ?>
 
-            <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/"> <img src="<?php echo get_template_directory_uri() . '/images/logopab.png'; ?>" width="180" alt=""/></a>
+            <a title="Porte Aperte sul Web" href="http://www.porteapertesulweb.it/"> <img src="<?php echo get_template_directory_uri() . '/images/logopab.png'; ?>" width="180" alt="logo porte aperte sul web"/></a>
 
         <br/><small> Versione 2015.<?php echo get_option('pasw2015_version') . version_child(); ?><br/>
         Proudly powered by <a href="http://wordpress.org" title="Piattaforma CMS WordPress">WordPress</a> &bull;
