@@ -1687,7 +1687,7 @@ float:left;
 	background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
 	background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
 	background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
+	/*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0); */
 	background-color:#bab1ba;
 }
 
