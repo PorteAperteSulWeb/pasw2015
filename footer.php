@@ -110,7 +110,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
         break;
 	}
 ?>
-	<a href="#content" class="back-to-top" title="Vai su" style="<?php echo $temp ?>: 2.0% !important;"><i class="fa fa-arrow-circle-o-up fa-2x"></i></a>
+	<a href="#content" class="back-to-top" title="Vai su" style="<?php echo $temp ?>: 2.0% !important;"><i class="fa fa-arrow-circle-o-up fa-2x"><span class="screen-reader-text">Link vai su</span></i></a>
 <?php } ?>
 <?php wp_footer(); ?>
 </body>
