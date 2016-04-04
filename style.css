@@ -1667,7 +1667,7 @@ float:left;
 	background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
 	background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
 	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
+/*	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0); */
 	background-color:#ededed;
 	border-radius:5px;
 	border:1px solid #d6bcd6;
@@ -1699,7 +1699,7 @@ float:left;
 }
 
 span.pasw2015eu-policy-link a {
-	// link to the extended policy page
+	/* link to the extended policy page */
 }
 
 /* CSS Document */
@@ -1772,7 +1772,7 @@ span.pasw2015eu-policy-link a {
 .avviso table th {
   border: none;
   border-bottom: 1px solid rgb(102,204,255); 
-  text-align: centre;
+  text-align: center;
 }
 
 .avviso p {
@@ -1789,7 +1789,7 @@ span.pasw2015eu-policy-link a {
 
 .avviso .sign {
   margin: 10px 0 10px 0;
-  //font-size: 0.90em;
+  /*font-size: 0.90em; */
 }
 
 .avviso .footer {
