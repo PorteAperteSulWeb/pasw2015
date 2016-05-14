@@ -59,7 +59,11 @@
     <div class="clear"></div>
     <div id="header-interno">
 
-        <a href="<?php bloginfo('url'); ?>"><img style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="Vai alla home" class="logo"/></a>
+        <?php 
+		$header_image = get_option('pasw_logo');
+		if ( ! empty( $header_image ) ) { ?>
+			<a href="<?php bloginfo('url'); ?>"><img style="max-height:110px;" src="<?php echo get_option('pasw_logo'); ?>" alt="vai alla home" class="logo"/></a>
+		<?php } ?>
 
             <h1 style="color:#<?php header_textcolor(); ?>;" class="site-title">
                 <a style="color:#<?php header_textcolor(); ?>;" href="<?php bloginfo('url'); ?>">
