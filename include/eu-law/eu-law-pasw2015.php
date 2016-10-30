@@ -21,9 +21,9 @@ function wp_enqueue_color_picker( ) {
 //  START BOX EXCLUDE PAGE
 
 function pasw2015_exclude_page_add_meta_box() {
-	
+
 	$screens = array( 'post', 'page' );
-	
+
 	foreach ( $screens as $screen ) {
 		add_meta_box(
 				'exclude_page_id',
@@ -37,7 +37,7 @@ function pasw2015_exclude_page_add_meta_box() {
 }
 
 if (get_option('pasw_eulaw') == 1) {
-add_action( 'add_meta_boxes', 'pasw2015_exclude_page_add_meta_box' );  
+add_action( 'add_meta_boxes', 'pasw2015_exclude_page_add_meta_box' );
 }
 
 
@@ -45,11 +45,12 @@ add_action( 'add_meta_boxes', 'pasw2015_exclude_page_add_meta_box' );
 function exclude_page_meta_box_callback( $post ) {
 	wp_nonce_field( 'pasw2015_exclude_page_meta_box', 'pasw2015_exclude_page_meta_box_nonce' );
 
-	if (get_post_meta($post->ID, '_is_pasw2015_exclude_page', true)){ 
+	$value='';
+	if (get_post_meta($post->ID, '_is_pasw2015_exclude_page', true)){
     $value = 'checked';
-	} 
-	
-  echo '<p font-size: 0.90em;><em>Questo parametro disabilita la funzione '; 
+	}
+
+  echo '<p font-size: 0.90em;><em>Questo parametro disabilita la funzione ';
   echo 'di autobloc script del modulo EU Law per questa pagina / articolo.</em>';
   echo '<div style="margin: 15px 0 10px 0;">';
   echo '<label for="pasw2015_exclude_page_field"><input type="checkbox" name="pasw2015_exclude_page_field" value="1" ' . $value . '>';
@@ -84,12 +85,12 @@ function pasw2015_exclude_page_save_meta_box_data( $post_id ) {
 	}
 
 	$value = isset($_POST['pasw2015_exclude_page_field']) && $_POST['pasw2015_exclude_page_field'];
-  
+
 	update_post_meta( $post_id, '_is_pasw2015_exclude_page', $value );
 }
 
 if (get_option('pasw_eulaw') == 1) {
-  add_action( 'save_post', 'pasw2015_exclude_page_save_meta_box_data' );  
+  add_action( 'save_post', 'pasw2015_exclude_page_save_meta_box_data' );
 }
 
 //  END BOX EXCLUDE PAGE
@@ -101,28 +102,28 @@ function pasw2015_cookie() { ?>
         <form method="post" name="options" target="_self">
 			<?php wp_nonce_field('update-options') ?>
 
-			<?php if (get_option('pasw_eulaw') == 1) {?> 
+			<?php if (get_option('pasw_eulaw') == 1) {?>
 			<div id="welcome-panel" class="welcome-panel">
 				<div class="welcome-panel-content">
 					<h3>Cookie Law Info</h3>
 					<p class="about-description">direttiva europea Cookie Law recepita nel 2012 in Italia.</p>
 					<br>
 					<div class="welcome-panel-column-container">
-						
+
 						<div class="welcome-panel-column" >
-										
+
 						<input id="eucookie_automatic" type="checkbox" name="pasw_eucookie_automatic_n"
                         <?php $get_pasw_eucookie_automatic = get_option('pasw_eucookie_automatic');
                         if ($get_pasw_eucookie_automatic == '1') { echo ' checked="checked" '; }?>>
 						<label for="eucookie_automatic">Abilita blocco automatico</label>
 						<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; blocca iframe, embed, object, script</p>
-						
+
 						<input id="eucookie_acceptOnClick" type="checkbox" name="pasw_eucookie_acceptOnClick_n"
                         <?php $get_pasw_eucookie_acceptOnClick = get_option('pasw_eucookie_acceptOnClick');
                         if ($get_pasw_eucookie_acceptOnClick == '1') { echo ' checked="checked" '; }?>>
 						<label for="eucookie_acceptOnClick">Abilita accetta cookie su click</label>
 						<br>
-						
+
 						<input id="eucookie_remove_bottom" type="checkbox" name="pasw_eucookie_remove_bottom_n"
                         <?php $get_pasw_eucookie_remove_bottom = get_option('pasw_eucookie_remove_bottom');
                         if ($get_pasw_eucookie_remove_bottom == '1') { echo ' checked="checked" '; }?>>
@@ -140,17 +141,17 @@ function pasw2015_cookie() { ?>
 							<label for="eucookie_expire">Numero giorni cookie attivo:</label>
 							<input id="eucookie_expire" type="text" name="pasw_eucookie_expire_n" value="<?php echo get_option('pasw_eucookie_expire'); ?>" size="5">
 							<br><small>se vuoto il cookie risulta essere di sessione</small>
-						
-						
+
+
 						</div>
-						
-						<div class="welcome-panel-column" >		
+
+						<div class="welcome-panel-column" >
 							<label for="eucookie_button">Testo pulsante accetta cookie:</label>
 							<input id="eucookie_button" type="text" name="pasw_eucookie_button_n" value="<?php if (get_option('pasw_eucookie_button') != '') {echo stripslashes(get_option('pasw_eucookie_button'));} else {echo 'Accetta';} ?>" class="regular-text">
 							<br/><label for="eucookie_info">Testo link altre informazioni:</label>
 							<input id="eucookie_info" type="text" name="pasw_eucookie_info_n" value="<?php if (get_option('pasw_eucookie_info') !='') {echo stripslashes(get_option('pasw_eucookie_info'));} else {echo 'Informazioni';} ?>" class="regular-text">
 						</div>
-						
+
 						<div class="welcome-panel-column" >
 							<label for="eucookie_page"><?php _e('Page per EU LAW Cookies') ?></label>
 							<br>
@@ -160,10 +161,10 @@ function pasw2015_cookie() { ?>
 								'selected'              => get_option('pasw_eucookie_page'),
 								'echo'                  => 1,
 								'name'                  => 'pasw_eucookie_page_n',
-								'id'                    => null, 
-								'show_option_none'      => null, 
-								'show_option_no_change' => null, 
-								'option_none_value'     => null, 
+								'id'                    => null,
+								'show_option_none'      => null,
+								'show_option_no_change' => null,
+								'option_none_value'     => null,
 							); ?>
 
 							<?php wp_dropdown_pages($args); ?>
@@ -178,14 +179,14 @@ function pasw2015_cookie() { ?>
 							<input id="eucookie_cookieName" type="text" name="pasw_eucookie_cookieName_n" value="<?php echo get_option('pasw_eucookie_cookieName'); ?>" size="20">
 							<br><small>se vuoto il cookie assumerà nome <strong>pasw_law_cookie</strong></small><br>
 						</div>
-						
+
 					</div>
 					<br><hr>
-					
+
 					<h4>Setting Colori</h4>
 					<div class="welcome-panel-column-container">
 					<table style="	width: 100%;">
-						<tr style="font-weight: bold;">							
+						<tr style="font-weight: bold;">
 							<td style="	width: 15%;">Area<td>
 							<td></td>
 							<td style="	width: 15%;">Colore Sfondo</td>
@@ -207,7 +208,7 @@ function pasw2015_cookie() { ?>
 							<td><input id="eucookie_textcolor_blocco" type="text" name="pasw_eucookie_textcolor_blocco_n" value="<?php echo get_option('pasw_eucookie_textcolor_blocco'); ?>" class="colorfield" data-default-color="#7f7f7f"/>	</td>
 							<td><input id="eucookie_bgopacity_blocco" type="text" name="pasw_eucookie_bgopacity_blocco_n" value="<?php echo get_option('pasw_eucookie_bgopacity_blocco'); ?>" size="2">
 							valore compreso tra 0 e 1 ( 0 = trasparente; 1 = opaco) es. 0.9</td>
-						
+
 						</tr>
 						<tr>
 							<td>Shortcode cookie-controll<td>
@@ -223,19 +224,19 @@ function pasw2015_cookie() { ?>
 							<td><!-- <input id="eucookie_bgopacity_shortcode" type="text" name="pasw_eucookie_bgopacity_shortcode_n" value="<?php echo get_option('pasw_eucookie_bgopacity_shortcode'); ?>" size="2">
 							valore compreso tra 0 e 1 ( 0 = trasparente; 1 = opaco) es. 0.9 --></td>
 						</tr>
-					</table>					
-						
+					</table>
+
 					</div>
 					<br><hr>
-					
-					
-					
-					
+
+
+
+
 					<h4>Testi utilizzati nei vari banner</h4>
 					<div class="welcome-panel-column-container">
 						<div class="welcome-panel-column">
 							<label for="eucookie_msg">Messaggio Banner:</label>
-						</div>	
+						</div>
 						<div class="welcome-panel-column" style="width: 60% !important;">
 							<?php
 								$content = html_entity_decode(get_option('pasw_eucookie_msg'));
@@ -246,14 +247,14 @@ function pasw2015_cookie() { ?>
 										'tinymce'       => TRUE
 								);
 								wp_editor( $content, 'pasw_eucookie_msg_n', $editor_settings );
-							?> 
-						</div>	
+							?>
+						</div>
 					</div>
 					<div class="welcome-panel-column-container">
 						<div class="welcome-panel-column">
 							<label for="eucookie_msg_box">Messaggio Contenuto Bloccato ( articoli - pagine ) :</label>
 						</div>
-						<div class="welcome-panel-column" style="width: 60% !important;">			
+						<div class="welcome-panel-column" style="width: 60% !important;">
 							<?php
 								$content_eu_box = html_entity_decode(get_option('pasw_eucookie_box_msg'));
 								$editor_settings =  array (
@@ -267,7 +268,7 @@ function pasw2015_cookie() { ?>
 						</div>
 					</div>
 					<div class="welcome-panel-column-container">
-						<div class="welcome-panel-column">	
+						<div class="welcome-panel-column">
 							<label for="eucookie_msg_widget">Messaggio Contenuto Bloccato ( widget ) :</label>
 						</div>
 						<div class="welcome-panel-column" style="width: 60% !important;">
@@ -282,16 +283,16 @@ function pasw2015_cookie() { ?>
 								wp_editor( $content_eu_widget, 'pasw_eucookie_box_widget_n', $editor_settings );
 							?>
 						</div>
-					</div>		
-													
+					</div>
+
 							<br/>
 							<br/>
-							
+
 				</div>
-			</div>	
+			</div>
 			<?php } ?>
 			<p class="submit"><input type="submit" class="button-primary" name="Submit" value="Salva Impostazioni" /></p>
         </form>
-	</div>	
+	</div>
 <?php }
 

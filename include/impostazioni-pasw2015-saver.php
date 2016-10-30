@@ -2,9 +2,10 @@
 
     $cryptKey = get_option('pasw_key');
     if (function_exists('mcrypt_encrypt') ) {
-        $qEncoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $_POST["pasw_ga_password_n"], MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
-        if (!$_POST["pasw_ga_password_n"]) {
+        if (!isset($_POST["pasw_ga_password_n"])) {
             $qEncoded = '';
+        } else {
+            $qEncoded = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $_POST["pasw_ga_password_n"], MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
         }
     }
 
@@ -25,9 +26,9 @@
         update_option( 'pasw_ga_user', $_POST["pasw_ga_user_n"] );
         update_option( 'pasw_submenu', $_POST["pasw_submenu_n"] );
 	update_option( 'pasw_scrolltop', $_POST["pasw_scrolltop_n"] );
-		
+
 		// SOCIAL ENTE
-		
+
 		update_option( 'pasw_pagefb', $_POST["pasw_pagefb_n"] );
 		update_option( 'pasw_proftwitter', $_POST["pasw_proftwitter_n"] );
 		update_option( 'pasw_profinstagram', $_POST["pasw_profinstagram_n"] );
@@ -36,16 +37,16 @@
 		update_option( 'pasw_proflinkedin', $_POST["pasw_proflinkedin_n"] );
 		update_option( 'pasw_pisocial', $_POST["pasw_pisocial_n"] );
 		update_option( 'pasw_dimsocial', $_POST["pasw_dimsocial_n"] );
-		
+
 		if (isset($_POST['pasw_hidesocial_n'])){
                 update_option('pasw_hidesocial', '1');
             } else {
                 update_option('pasw_hidesocial', '0');
         }
-		
+
 		// fine SOCIAL ENTE
-		
-		
+
+
         if ($_POST["pasw_ga_password_n"] != '#OK#') {
             update_option( 'pasw_ga_password', $qEncoded );
         }
@@ -78,7 +79,7 @@
             } else {
                 update_option('pasw_menu_login', '1');
         }
-		
+
 		if (isset($_POST['pasw_search_show_n'])){
                 update_option('pasw_search_show', '0');
             } else {
@@ -90,13 +91,13 @@
             } else {
                 update_option('pasw_fluid_layout', '0');
         }
-		
+
 		if (isset($_POST['pasw_responsive_layout_n'])){
                 update_option('pasw_responsive_layout', '1');
             } else {
                 update_option('pasw_responsive_layout', '0');
         }
-        
+
         if (isset($_POST['pasw_ga_anonymous_n'])){
                 update_option('pasw_ga_anonymous', '1');
             } else {

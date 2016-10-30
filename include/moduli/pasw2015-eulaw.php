@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (get_option('pasw_eucookie_page') && get_option('pasw_eucookie_msg') && get_option('pasw_eucookie_button') && get_option('pasw_eucookie_info')){
 
@@ -11,9 +11,9 @@ function pasw2015_eu_law_script() {
         '',
         true
     );
-    
+
 	$bgbanner= convertHex(get_option('pasw_eucookie_bgcolor_banner'),get_option('pasw_eucookie_bgopacity_banner'));
-	
+
 	if (get_option('pasw_eucookie_cookieName') == ""){
 	$cookieName = 'pasw_law_cookie';
 	}
@@ -21,7 +21,7 @@ function pasw2015_eu_law_script() {
 	{
 	$cookieName = get_option('pasw_eucookie_cookieName');
 	}
-	
+
     $scriptData = array(
         'message' 	=> get_option('pasw_eucookie_msg') ,
         'button'  	=> get_option('pasw_eucookie_button'),
@@ -50,10 +50,10 @@ function pasw2015_eu_law_script() {
  wp_localize_script('pasw2015_law','pasw2015_law_text',$scriptData);
 
 
-	
+
 }
 
-add_action('wp_enqueue_scripts', 'pasw2015_eu_law_script'); 
+add_action('wp_enqueue_scripts', 'pasw2015_eu_law_script');
 
 
 /* =========== Auto Block ============ */
@@ -76,7 +76,7 @@ function pasw_eulaw_autoblock_widget($content) {
 		$content = preg_replace('#<script.*?\/script>#is', '', $content);
         $content = preg_replace('#<iframe.*?\/iframe>|<embed.*?>|<object.*?\/object>#is', generate_cookie_notice_widget('auto', '100%'), $content);
     }
-	
+
     return $content;
 }
 
@@ -86,7 +86,7 @@ function pasw_eulaw_autoblock_widget($content) {
 /* =========== Funzioni ============ */
 
 function cookie_accepted() {
-	
+
 	if (get_option('pasw_eucookie_cookieName') == ""){
 	$cookieName = 'pasw_law_cookie';
 	}
@@ -94,7 +94,7 @@ function cookie_accepted() {
 	{
 	$cookieName = get_option('pasw_eucookie_cookieName');
 	}
-    
+
     if ( isset( $_COOKIE[$cookieName] ) ) {
         return true;
     } else {
@@ -107,17 +107,17 @@ function generate_cookie_notice_text($height, $width, $text, $textpriv= null) {
 		$bgbox = 'background:'.convertHex(get_option ('pasw_eucookie_bgcolor_blocco'),get_option ('pasw_eucookie_bgopacity_blocco'));
 	}
 	$textboxcolor = get_option('pasw_eucookie_textcolor_blocco');
-    return '<div class="pasw2015cookies_block" style="'. $bgbox .';color:'.$textboxcolor.';width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div>';    
+    return '<div class="pasw2015cookies_block" style="'. $bgbox .';color:'.$textboxcolor.';width:'.$width.';height:'.$height.';"><span>'.$text.'</span>'.$textpriv.'</div>';
 }
 
 function generate_cookie_notice_privacy($privacy, $tipo) {
 	if($privacy != '') {
-		return '<p style="text-align: right;">Contenuto bloccato: '. $tipo .' - pagina <a href="'. $privacy .'" target="_blank" title="link esterno privacy '.$tipo.'">privacy</a> fornitore del servizio</p>';   
+		return '<p style="text-align: right;">Contenuto bloccato: '. $tipo .' - pagina <a href="'. $privacy .'" target="_blank" title="link esterno privacy '.$tipo.'">privacy</a> fornitore del servizio</p>';
 		} else {
 			return '<p style="text-align: right;">Contenuto bloccato: '. $tipo.'</p>';
 		}
 }
- 
+
 function generate_cookie_notice($height, $width, $privacy=null, $tipo=null ) {
     $textpriv = generate_cookie_notice_privacy($privacy, $tipo);
     $text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
@@ -125,7 +125,7 @@ function generate_cookie_notice($height, $width, $privacy=null, $tipo=null ) {
 }
 function generate_cookie_notice_lite($height, $width) {
     $text = html_entity_decode(get_option('pasw_eucookie_box_msg'));
-	return generate_cookie_notice_text($height, $width, $text, $textpriv);
+	return generate_cookie_notice_text($height, $width, $text);
 }
 
 function generate_cookie_notice_widget($height, $width) {
@@ -155,7 +155,7 @@ function convertHex($hex,$opacity){
    }
     $result = 'rgba('.$r.','.$g.','.$b.','.$opacity.')';
     return $result;
-} 
+}
 
 /* ========= Buttom Editor ========== */
 function cookie_add_mce_button() {
@@ -194,9 +194,9 @@ extract(shortcode_atts(array(
     'privacy' => '',
 	'size' => 'auto',
    ), $atts));
-	
+
 	$html1= '<p style="text-align: right;">contenuto bloccato: ';
-	
+
 	switch ($tipo) {
 		case "youtube":
 			$privacy = 'http://www.google.it/intl/it/policies/privacy/';
@@ -211,8 +211,8 @@ extract(shortcode_atts(array(
 			$privacy ='https://www.linkedin.com/legal/privacy-policy';
 			break;
 	}
-	
-	
+
+
 	if ( cookie_accepted() ) {
         return do_shortcode( $content );
     } else {
@@ -223,10 +223,10 @@ extract(shortcode_atts(array(
 				return generate_cookie_notice($height, $width, $privacy, $tipo);
 			} else {
 				return generate_cookie_notice_lite($height, $width);
-			}	
-		}	
+			}
+		}
 	}
-	
+
 }
 add_shortcode('cookie', 'cookie_policy');
 
@@ -241,8 +241,8 @@ function eu_cookie_control_shortcode( $atts ) {
     } else {
         return '
             <div class="pasw2015cookies_control" style="color:'.get_option('pasw_eucookie_textcolor_short_cd').'; background-color:'.get_option('pasw_eucookie_bgcolor_short_cd').' ;">
-             Cookie disabilitati<br>Accetta i Cookie cliccando "Si, accetto" nel banner. 
-            </div>';            
+             Cookie disabilitati<br>Accetta i Cookie cliccando "Si, accetto" nel banner.
+            </div>';
     }
 }
 add_shortcode( 'cookie-control', 'eu_cookie_control_shortcode' );
