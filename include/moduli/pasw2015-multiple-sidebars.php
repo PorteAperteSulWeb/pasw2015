@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class pasw_sidebar_generator {
 
-    function pasw_sidebar_generator(){
+    function __construct(){
         add_action('init',array('pasw_sidebar_generator','init'));
         add_action('admin_menu',array('pasw_sidebar_generator','admin_menu'));
         add_action('admin_print_scripts', array('pasw_sidebar_generator','admin_print_scripts'));
@@ -55,7 +55,7 @@ class pasw_sidebar_generator {
 
     }
 
-    function init(){
+    static function init(){
         //go through each sidebar and register it
         $sidebars = pasw_sidebar_generator::get_sidebars();
 
@@ -71,7 +71,7 @@ class pasw_sidebar_generator {
         }
     }
 
-    function admin_print_scripts(){
+    static function admin_print_scripts(){
         wp_print_scripts( array( 'sack' ));
         ?>
             <script>
@@ -110,7 +110,7 @@ class pasw_sidebar_generator {
         <?php
     }
 
-    function add_sidebar(){
+    static function add_sidebar(){
         $sidebars = pasw_sidebar_generator::get_sidebars();
         $name = str_replace(array("\n","\r","\t"),'',$_POST['sidebar_name']);
         $id = pasw_sidebar_generator::name_to_class($name);
@@ -158,7 +158,7 @@ class pasw_sidebar_generator {
         die( "$js");
     }
 
-    function remove_sidebar(){
+    static function remove_sidebar(){
         $sidebars = pasw_sidebar_generator::get_sidebars();
         $name = str_replace(array("\n","\r","\t"),'',$_POST['sidebar_name']);
         $id = pasw_sidebar_generator::name_to_class($name);
@@ -176,11 +176,11 @@ class pasw_sidebar_generator {
         die($js);
     }
 
-    function admin_menu(){
+    static function admin_menu(){
         add_submenu_page('pasw2015', 'Sidebar Pasw', 'Sidebar', 'manage_options', 'pasw-sidebar-generator', 'pasw_sidebar_generator::admin_page' );
     }
 
-    function admin_page(){
+    static function admin_page(){
         ?>
         <script type='text/javascript'>
             function remove_sidebar_link(name,num){
@@ -245,7 +245,7 @@ class pasw_sidebar_generator {
     /**
      * for saving the pages/post
     */
-    function save_form($post_id){
+    static function save_form($post_id){
         if(isset($_POST['sbg_edit']))
         $is_saving = $_POST['sbg_edit'];
         if(!empty($is_saving)){
@@ -256,7 +256,7 @@ class pasw_sidebar_generator {
         }
     }
 
-    function edit_form(){
+    static function edit_form(){
         global $post;
         $post_id = $post;
         if (is_object($post_id)) {
@@ -337,7 +337,7 @@ class pasw_sidebar_generator {
     /**
      * called by the action get_sidebar. this is what places this into the theme
     */
-    function get_sidebar($name="0"){
+    static function get_sidebar($name="0"){
         if(!is_singular()){
             if($name != "0"){
                 dynamic_sidebar($name);
@@ -402,18 +402,19 @@ class pasw_sidebar_generator {
     /**
      * replaces array of sidebar names
     */
-    function update_sidebars($sidebar_array){
+    static function update_sidebars($sidebar_array){
         $sidebars = update_option('sbg_sidebars',$sidebar_array);
     }
 
     /**
      * gets the generated sidebars
     */
-    function get_sidebars(){
+    static function get_sidebars(){
         $sidebars = get_option('sbg_sidebars');
         return $sidebars;
     }
-    function name_to_class($name){
+
+    static function name_to_class($name){
         $class = str_replace(array(' ',',','.','"',"'",'/',"\\",'+','=',')','(','*','&','^','%','$','#','@','!','~','`','<','>','?','[',']','{','}','|',':',),'',$name);
         return $class;
     }
