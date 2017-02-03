@@ -108,9 +108,6 @@ function pasw2015_setup() {
     } else {
         delete_option('pasw_wrongdirectory');
     }
-	
-	// Indicate widget sidebars can use selective refresh in the Customizer.
-	add_theme_support( 'customize-selective-refresh-widgets' );
 }
 
 function get_pasw2015_version() {
