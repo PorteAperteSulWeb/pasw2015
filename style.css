@@ -1453,16 +1453,11 @@ border-bottom:none;
 #leftsidebar .current_page_item a, #leftsidebar .current_page_item ul li a {
 	color: #25385D !important;
 	text-decoration:none;
-	background-color: #DEEFF6;
+	background-color: #fff;
 }
 
 #postnavigation .navheader {
 	color: #25385D; 
-}
-
-#rightsidebar li.active a, #rightsidebar ul ul li.active a, #leftsidebar li.active a {
-        background-color:#DEEFF6!important;
-        color:#25385D!important;
 }
 
 .posttitle, .pagetitle {
