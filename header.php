@@ -71,12 +71,13 @@
                     <?php bloginfo('name'); ?>
                 </a>
             </h1>
+	    <small>
             <div class="site-description"><?php bloginfo('description'); ?>
             <br/>
             <small>
                 <?php echo stripslashes(get_option('pasw_indirizzo_scuola')) . ' &bull; ' . stripslashes(get_option('pasw_recapito_scuola')); ?>
-            </small>
             </div>
+	    </small>
 
     </div>
 </div>
