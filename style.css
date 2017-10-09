@@ -3,7 +3,7 @@ Theme Name: PASW 2015
 Description: Pasw2015 è il tema trasparente e accessibile promosso dalla Comunità di Pratica "Porte Aperte sul Web". Bello, accessibile e innovativo, con supporto continuo e volontario offerto dalla comunità.
 Author: Porte Aperte sul Web
 Author URI: http://www.porteapertesulweb.it
-Version: 1.6.7
+Version: 1.7
 Tags: pasw, scuole, pubblica amministrazione, accessibile, trasparente, personalizzabile
 GitHub Theme URI: https://github.com/PorteAperteSulWeb/pasw2015
 GitHub Branch: master
@@ -1158,7 +1158,6 @@ font-size:.9em;
 #centrecontent table {
 width:100%;
 font-size:.8em;
-background-color:#BFDFFF;
 }
 
 #centrecontent caption {
@@ -1454,16 +1453,11 @@ border-bottom:none;
 #leftsidebar .current_page_item a, #leftsidebar .current_page_item ul li a {
 	color: #25385D !important;
 	text-decoration:none;
-	background-color: #DEEFF6;
+	background-color: #fff;
 }
 
 #postnavigation .navheader {
 	color: #25385D; 
-}
-
-#rightsidebar li.active a, #rightsidebar ul ul li.active a, #leftsidebar li.active a {
-        background-color:#DEEFF6!important;
-        color:#25385D!important;
 }
 
 .posttitle, .pagetitle {
