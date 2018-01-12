@@ -341,7 +341,7 @@
         else
             $Ordinamento.=" DESC";
         $coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
-        $lista=ap_get_all_atti(1,0,0,'',0,0,$Ordinamento,0,$instance['numero_atti']);
+	$lista=ap_get_all_atti(1,0,0,0,'',0,0,$Ordinamento,0,$instance['numero_atti']);
         $HtmlW='<ul>';
         if ($lista){
             foreach($lista as $riga){
