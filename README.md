@@ -1,4 +1,7 @@
 #Benvenuto in Pasw2015!
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e211735cd90348b28285945ec747c258)](https://www.codacy.com/app/milesimarco/pasw2015?utm_source=github.com&utm_medium=referral&utm_content=PorteAperteSulWeb/pasw2015&utm_campaign=badger)
+
 PASW2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web per fornire alle scuole, e più in generale a tutte le Pubbliche Amministrazioni, un modello di sito professionale, trasparente, innovativo e accessibile sviluppato per il CMS WordPress.
 
 **Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
