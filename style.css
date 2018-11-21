@@ -609,6 +609,7 @@ display:inline;
 text-decoration:none;
 color:#FFF;
 transition: background 0.5s, color 0.2s;
+padding: 10px;
 }
 
 #topbar ul li a:hover {
@@ -621,6 +622,10 @@ text-decoration:none!important;
 color:#3A291F;
 }
 
+.topsearch-div input {
+padding: 8px 7px;
+margin: 2px;
+}
 /* Essential Layout (IE7 Fix) */
 *+html #topbar li a {
 margin-top:-14px;
@@ -855,9 +860,7 @@ line-height:1.2em;
 #searchform #s {
 width: 95%;
 background: white url(images/search.png) no-repeat center right;
-font-family: Verdana, Arial, Helvetica, sans-serif;
 font-size: 0.8em;
-padding: 5px 2px 4px 10px;
 }
 
 /***************** Calendar Styles ******************/
