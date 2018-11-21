@@ -86,11 +86,11 @@ extract(shortcode_atts(array(
 
     $utente_cpt = strtolower(get_term_by( 'slug', $utente, 'paswdestinatari' )->name);
 
-    $returner = '';
+    $returner = '<hr>';
     $returner .= '<div class="shortcode-destinatari">';
-    $returner .= '<h3>' . $tipo_cpt . ' di interesse per ' . $utente_cpt;
+    $returner .= '<h2>' . $tipo_cpt . ' di interesse per ' . $utente_cpt;
 
-    $returner .= '</h3>';
+    $returner .= '</h2>';
 
     $returner .= '<small>Visualizzazione';
 	if($numero !=""){ 
@@ -100,7 +100,7 @@ extract(shortcode_atts(array(
     if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
 	if ($link == 'si') { 	 
     	$returner .= '  &bull;  <a href="' . add_query_arg( 'post_type', $tipo , get_term_link( $utente, 'paswdestinatari' ) );
-    	$returner .='">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
+    	$returner .='"><b>Tutti i contenuti per ' . $utente_cpt . ' &raquo;</b></a>';
 	}
     $returner .= '</small>';
 
@@ -113,7 +113,7 @@ extract(shortcode_atts(array(
    //     $returner .= '<ul>';
         $returner .= '<div class="contentdest">';
         if (count($arrayposttypes) > 1) {
-            $returner .= '<h4>' .  get_post_type_object( $ciao )->labels->name . '</h4>';
+            $returner .= '<h3>' .  get_post_type_object( $ciao )->labels->name . '</h3>';
         }
 
         if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "pagina") {
