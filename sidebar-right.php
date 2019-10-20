@@ -1,4 +1,4 @@
-<div id="rightsidebar" class="column">
+<aside id="rightsidebar" class="column">
 <?php if (get_option('pasw_pisocial') === '2'){get_template_part('template/tlp-social');} ?>
 <ul>
 <?php
@@ -18,4 +18,4 @@ if ( function_exists('generated_dynamic_sidebar')) {
 }
 ?>
 </ul>
-</div>
+</aside>
