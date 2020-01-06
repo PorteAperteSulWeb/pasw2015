@@ -27,7 +27,7 @@ Pasw2015 integra un modulo php in grado di verificare automaticamente se è disp
 ## Demo
 
 - [Liceo Lanusei](http://www.liceolanusei.gov.it)
-- [ICS Scarpa](http://www.icscarpa.gov.it)
-- [Comune di Carassai](http://www.comune.carassai.ap.it)
+- [Alberghiero Sonzogni](https://www.alberghierosonzogni.it/)
+- [Istituto Tecnico Statale "Giacomo Quarenghi"](https://www.istitutoquarenghi.edu.it/)
 
 **Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
