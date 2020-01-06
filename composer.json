@@ -1,0 +1,5 @@
+{
+    "require": {
+        "afragen/wp-dependency-installer": "^2.0"
+    }
+}

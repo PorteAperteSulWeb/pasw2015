@@ -1,0 +1,11 @@
+[
+  {
+    "name": "GitHub Updater",
+    "host": "github",
+    "slug": "github-updater/github-updater.php",
+    "uri": "afragen/github-updater",
+    "branch": "master",
+    "optional": true,
+    "token": null
+  }
+]

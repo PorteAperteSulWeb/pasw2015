@@ -2,7 +2,8 @@
 
 require (get_template_directory() . '/include/widget.php');
 require (get_template_directory() . '/include/pagination.php');
-require (get_template_directory() . '/github/github-updater.php');
+include_once( get_template_directory() . '/vendor/autoload.php' );
+WP_Dependency_Installer::instance()->run( __DIR__ );
 
 add_action('init', 'load_modules'); //ocio!
 

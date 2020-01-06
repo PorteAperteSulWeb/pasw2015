@@ -430,9 +430,9 @@
 			 		$visibilita="p";
 			 	else 
 			 		$visibilita=$visibilita[0];
-			 	if (function_exists(Is_Circolare_per_User))
+			 	if (function_exists('Is_Circolare_per_User'))
 			 		$IsPerUser=((Is_Circolare_per_User($my_query->post->ID) and $visibilita=="d") or $visibilita=="p");
-			 	if (function_exists(gcg_Is_Circolare_per_User))
+			 	if (function_exists('gcg_Is_Circolare_per_User'))
 			 		$IsPerUser=gcg_Is_Circolare_per_User($my_query->post->ID);
 
 				if ($IsPerUser){

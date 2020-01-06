@@ -16,9 +16,8 @@ function pasw2015_menu() {
 
 function pasw2015_welcome() { ?>
     <div class="wrap about-wrap">
-        <h1>Benvenuto in Pasw 2015 <small><?php echo get_option('pasw2015_version') . version_child(); ?></small></h1>
-        <div class="about-text">Pasw2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web.
-        <br/>Bello, accessibile e innovativo.</div>
+        <h1>Pasw 2015 <small><?php echo get_option('pasw2015_version') . version_child(); ?></small></h1>
+        <div class="about-text">Realizzato dalla Comunità di Pratica Porte Aperte sul Web.</div>
         <div class="wp-badge">Pasw2015
         <?php
             echo get_option('pasw2015_version') . '<br/>'; 
@@ -37,8 +36,21 @@ function pasw2015_welcome() { ?>
             <a class="add-new-h2" target="_blank" href="https://github.com/PorteAperteSulWeb/pasw2015/releases">Changelog</a>
             <br/><br/>
         </div>
-
+<h2>Sviluppato da:</h2>
 <ul class="wp-people-group ">
+    <li class="wp-person">
+        <a href="https://marcomilesi.com"><img src="http://www.gravatar.com/avatar/c70b8e378aa035f77ab7a3ddee83b892.jpg?s=60" class="gravatar"></a>
+        <a class="web" href="http://marcomilesi.com">Marco Milesi</a> @ <a class="web" href="https://wpgov.it">WPGov.it</a>
+        <span class="title">San Pellegrino Terme <small>(BG)</small></span>
+    </li>
+    <li class="wp-person">
+        <a href=""><img src="http://www.gravatar.com/avatar/e3ba6cb4b821a6b5b68885bd14dc907b.jpg?s=60" class="gravatar"></a>
+        <a class="web" href="">Christian Ghellere</a>
+        <span class="title">Brendola <small>(VI)</small></span>
+    </li>
+</ul>
+<h2>In collaborazione con:</h2>
+<ul>
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/18434072beb69131948d13ec49b43bc3.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Alberto Ardizzone</a>
@@ -49,11 +61,6 @@ function pasw2015_welcome() { ?>
         <a class="web" href="">Andrea Smith</a>
         <span class="title">-</span>
     </li>
-     <li class="wp-person">
-        <a href=""><img src="http://www.gravatar.com/avatar/e3ba6cb4b821a6b5b68885bd14dc907b.jpg?s=60" class="gravatar"></a>
-        <a class="web" href="">Christian Ghellere</a>
-        <span class="title">Brendola <small>(VI)</small></span>
-    </li>
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/a6486b6230464a36ff431d3ef655e1e8.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Guido Spanti</a>
@@ -63,11 +70,6 @@ function pasw2015_welcome() { ?>
         <a href=""><img src="http://www.gravatar.com/avatar/f73d67c77f89c70ef303588aeab44ceb.jpg?s=60" class="gravatar"></a>
         <a class="web" href="">Ignazio Scimone</a>
         <span class="title">-</span>
-    </li>
-    <li class="wp-person">
-        <a href="http://marcomilesi.ml"><img src="http://www.gravatar.com/avatar/c70b8e378aa035f77ab7a3ddee83b892.jpg?s=60" class="gravatar"></a>
-        <a class="web" href="http://marcomilesi.ml">Marco Milesi</a>
-        <span class="title">San Pellegrino Terme <small>(BG)</small></span>
     </li>
     <li class="wp-person">
         <a href=""><img src="http://www.gravatar.com/avatar/a5294e8762346dbbfa62e6fee71b3614.jpg?s=60" class="gravatar"></a>
@@ -83,11 +85,9 @@ function pasw2015_welcome() { ?>
 <p class="wp-credits-list">
 Anna Ladu, Antonello Facchetti, Candida Zappacosta, Caterina Toccafondi, Enzo Costantini, Giorgio Galli, Lillo Sciascia, Paolo Mauri, Sergio Cortese
 </p>
-<center>
 <a href="http://www.porteapertesulweb.it" target="_blank" alt="Porte Aperte sul Web">
-<img src="<?php echo site_url() . '/wp-content/themes/pasw2015/images/logopab.png'; ?>" />
+<img style="width:200px;" src="<?php echo site_url() . '/wp-content/themes/pasw2015/images/logopab.png'; ?>" />
 </a>
-</center>
     </div>
 <?php }
 
