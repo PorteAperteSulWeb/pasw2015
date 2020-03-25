@@ -1,6 +1,6 @@
 # Benvenuto in Pasw2015!
 
-PASW2015 è il nuovo tema realizzato dalla Comunità di Pratica Porte Aperte sul Web per fornire alle scuole, e più in generale a tutte le Pubbliche Amministrazioni, un modello di sito professionale, trasparente, innovativo e accessibile sviluppato per il CMS WordPress.
+PASW2015 è il tema WordPress realizzato dalla Comunità di Pratica Porte Aperte sul Web per fornire alle scuole, e più in generale a tutte le Pubbliche Amministrazioni, un modello di sito professionale, trasparente, innovativo e accessibile sviluppato per il CMS WordPress.
 
 **Puoi trovare guide d'uso dettagliate nella nostra [wiki](https://github.com/PorteAperteSulWeb/pasw2015/wiki)**
 
