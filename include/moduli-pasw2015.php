@@ -2,7 +2,7 @@
 
     function pasw2015_moduli() {
 
-        if (isset($_GET['switchcolumn']) || wp_verify_nonce($_GET['switchcolumn'], 'switchcolumn')) {
+        if (isset($_GET['switchcolumn']) && wp_verify_nonce($_GET['switchcolumn'], 'switchcolumn')) {
             if (get_option('pasw_mcolumn') == 0) {
                 update_option('pasw_mcolumn', '1');
             } else {
@@ -10,7 +10,7 @@
             }
         }
 
-        if (isset($_GET['switchcat']) || wp_verify_nonce($_GET['switchcat'], 'switchcat')) {
+        if (isset($_GET['switchcat']) && wp_verify_nonce($_GET['switchcat'], 'switchcat')) {
             if (get_option('pasw_catpage') == 0) {
                 update_option('pasw_catpage', '1');
             } else {
@@ -18,21 +18,21 @@
             }
         }
 
-        if (isset($_GET['switchtax']) || wp_verify_nonce($_GET['switchtax'], 'switchtax')) {
+        if (isset($_GET['switchtax']) && wp_verify_nonce($_GET['switchtax'], 'switchtax')) {
             if (get_option('pasw_taxdest') == 0) {
                 update_option('pasw_taxdest', '1');
             } else {
                 update_option('pasw_taxdest', '0');
             }
         }
-    if (isset($_GET['switchpost_tpl']) || wp_verify_nonce($_GET['switchpost_tpl'], 'switchpost_tpl')) {
+    if (isset($_GET['switchpost_tpl']) && wp_verify_nonce($_GET['switchpost_tpl'], 'switchpost_tpl')) {
             if (get_option('pasw_post_tpl') == 0) {
                 update_option('pasw_post_tpl', '1');
             } else {
                 update_option('pasw_post_tpl', '0');
             }
         }
-    if (isset($_GET['switchsidebar']) || wp_verify_nonce($_GET['switchsidebar'], 'switchsidebar')) {
+    if (isset($_GET['switchsidebar']) && wp_verify_nonce($_GET['switchsidebar'], 'switchsidebar')) {
             if (get_option('pasw_msidebar') == 0) {
                 update_option('pasw_msidebar', '1');
             } else {
@@ -40,7 +40,7 @@
             }
         }
 
-		if (isset($_GET['switcheulaw']) || wp_verify_nonce($_GET['switcheulaw'], 'switcheulaw')) {
+		if (isset($_GET['switcheulaw']) && wp_verify_nonce($_GET['switcheulaw'], 'switcheulaw')) {
 			if ( is_plugin_active( 'eu-cookie-law/eu-cookie-law.php' ) ) {
 				$checkattiva = '<br>Il modulo non può essere attivato<br>è attivo EU Cookie Law';
 			}else{
@@ -50,7 +50,7 @@
 				} else {
 					update_option('pasw_eulaw', '0');
 				}
-			} 
+			}
         }
 
         ?>
@@ -137,7 +137,7 @@
                 </div>
             </td>
         </tr>
-	
+
 		<tr class="<?php if (get_option('pasw_eulaw') == 0) { echo 'in'; } ?>active"><th scope="row" class="check-column"></th>
             <td class="plugin-title"><strong>EU Cookie Law </strong><div class="row-actions visible">
                 <span class="activate">

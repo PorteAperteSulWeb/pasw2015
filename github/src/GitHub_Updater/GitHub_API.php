@@ -18,9 +18,10 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
+ * Class GitHub_API
+ *
  * Get remote data from a GitHub repo.
  *
- * Class    GitHub_API
  * @package Fragen\GitHub_Updater
  * @author  Andy Fragen
  */
@@ -32,8 +33,9 @@ class GitHub_API extends API {
 	 * @param object $type
 	 */
 	public function __construct( $type ) {
-		$this->type    = $type;
-		parent::$hours = 12;
+		parent::$hours  = 12;
+		$this->type     = $type;
+		$this->response = $this->get_transient();
 	}
 
 	/**
@@ -44,7 +46,7 @@ class GitHub_API extends API {
 	 * @return bool
 	 */
 	public function get_remote_info( $file ) {
-		$response = $this->get_transient( $file );
+		$response = isset( $this->response[ $file ] ) ? $this->response[ $file ] : false;
 
 		if ( ! $response ) {
 			$response = $this->api( '/repos/:owner/:repo/contents/' . $file );
@@ -63,7 +65,7 @@ class GitHub_API extends API {
 			return false;
 		}
 
-		$this->set_file_info( $response, 'GitHub' );
+		$this->set_file_info( $response );
 
 		return true;
 	}
@@ -75,13 +77,17 @@ class GitHub_API extends API {
 	 */
 	public function get_remote_tag() {
 		$repo_type = $this->return_repo_type();
-		$response  = $this->get_transient( 'tags' );
+		$response  = isset( $this->response['tags'] ) ? $this->response['tags'] : false;
+
+		if ( $this->exit_no_update( $response, true ) ) {
+			return false;
+		}
 
 		if ( ! $response ) {
 			$response = $this->api( '/repos/:owner/:repo/tags' );
 
 			if ( ! $response ) {
-				$response = new \stdClass();
+				$response          = new \stdClass();
 				$response->message = 'No tags found';
 			}
 
@@ -107,10 +113,24 @@ class GitHub_API extends API {
 	 * @return bool
 	 */
 	public function get_remote_changes( $changes ) {
-		$response = $this->get_transient( 'changes' );
+		$response = isset( $this->response['changes'] ) ? $this->response['changes'] : false;
+
+		/*
+		 * Set response from local file if no update available.
+		 */
+		if ( ! $response && ! $this->can_update( $this->type ) ) {
+			$response = new \stdClass();
+			$content  = $this->get_local_info( $this->type, $changes );
+			if ( $content ) {
+				$response->content = $content;
+				$this->set_transient( 'changes', $response );
+			} else {
+				$response = false;
+			}
+		}
 
 		if ( ! $response ) {
-			$response = $this->api( '/repos/:owner/:repo/contents/' . $changes  );
+			$response = $this->api( '/repos/:owner/:repo/contents/' . $changes );
 
 			if ( $response ) {
 				$this->set_transient( 'changes', $response );
@@ -121,7 +141,7 @@ class GitHub_API extends API {
 			return false;
 		}
 
-		$changelog = $this->get_transient( 'changelog' );
+		$changelog = isset( $this->response['changelog'] ) ? $this->response['changelog'] : false;
 
 		if ( ! $changelog ) {
 			$parser    = new \Parsedown;
@@ -146,15 +166,29 @@ class GitHub_API extends API {
 			return false;
 		}
 
-		$response = $this->get_transient( 'readme' );
+		$response = isset( $this->response['readme'] ) ? $this->response['readme'] : false;
+
+		/*
+		 * Set $response from local file if no update available.
+		 */
+		if ( ! $response && ! $this->can_update( $this->type ) ) {
+			$response = new \stdClass();
+			$content  = $this->get_local_info( $this->type, 'readme.txt' );
+			if ( $content ) {
+				$response->content = $content;
+			} else {
+				$response = false;
+			}
+		}
 
 		if ( ! $response ) {
 			$response = $this->api( '/repos/:owner/:repo/contents/readme.txt' );
 		}
 
 		if ( $response && isset( $response->content ) ) {
-			$parser   = new Readme_Parser;
-			$response = $parser->parse_readme( base64_decode( $response->content ) );
+			$file     = base64_decode( $response->content );
+			$parser   = new Readme_Parser( $file );
+			$response = $parser->parse_data();
 			$this->set_transient( 'readme', $response );
 		}
 
@@ -173,24 +207,44 @@ class GitHub_API extends API {
 	 * @return bool
 	 */
 	public function get_repo_meta() {
-		$response   = $this->get_transient( 'meta' );
+		$response   = isset( $this->response['meta'] ) ? $this->response['meta'] : false;
+		$response   = ! isset( $response->items ) ? $response : false;
+		$repos      = isset( $this->response[ $this->type->owner ] ) ? $this->response[ $this->type->owner ] : false;
 		$meta_query = '?q=' . $this->type->repo . '+user:' . $this->type->owner;
+
+		if ( $this->exit_no_update( $response ) ) {
+			return false;
+		}
 
 		if ( ! $response ) {
 			$response = $this->api( '/search/repositories' . $meta_query );
+			$response = ! empty( $response->items[0] ) ? $response->items[0] : false;
+
+			if ( ! $repos ) {
+				$repos = $this->api( '/users/' . $this->type->owner . '/repos' );
+				$this->set_transient( $this->type->owner, $response );
+			}
+
+			if ( ! $response ) {
+				foreach ( $repos as $repo ) {
+					if ( $this->type->repo === $repo->name ) {
+						$response = $repo;
+						break;
+					}
+				}
+			}
 
 			if ( $response ) {
 				$this->set_transient( 'meta', $response );
 			}
 		}
 
-		if ( $this->validate_response( $response ) || empty( $response->items ) ) {
+		if ( $this->validate_response( $response ) ) {
 			return false;
 		}
 
-		$this->type->repo_meta = $response->items[0];
-		$this->_add_meta_repo_object();
-		$this->get_remote_branches();
+		$this->type->repo_meta = $response;
+		$this->add_meta_repo_object();
 
 		return true;
 	}
@@ -202,7 +256,11 @@ class GitHub_API extends API {
 	 */
 	public function get_remote_branches() {
 		$branches = array();
-		$response = $this->get_transient( 'branches' );
+		$response = isset( $this->response['branches'] ) ? $this->response['branches'] : false;
+
+		if ( $this->exit_no_update( $response, true ) ) {
+			return false;
+		}
 
 		if ( ! $response ) {
 			$response = $this->api( '/repos/:owner/:repo/branches' );
@@ -213,6 +271,7 @@ class GitHub_API extends API {
 				}
 				$this->type->branches = $branches;
 				$this->set_transient( 'branches', $branches );
+
 				return true;
 			}
 		}
@@ -230,7 +289,7 @@ class GitHub_API extends API {
 	 * Construct $this->type->download_link using Repository Contents API
 	 * @url http://developer.github.com/v3/repos/contents/#get-archive-link
 	 *
-	 * @param boolean $rollback for theme rollback
+	 * @param boolean $rollback      for theme rollback
 	 * @param boolean $branch_switch for direct branch changing
 	 *
 	 * @return string $endpoint
@@ -239,21 +298,36 @@ class GitHub_API extends API {
 		/*
 		 * Check if using GitHub Self-Hosted.
 		 */
-		if ( ! empty( $this->type->enterprise ) ) {
-			$github_base = $this->type->enterprise;
+		if ( ! empty( $this->type->enterprise_api ) ) {
+			$github_base = $this->type->enterprise_api;
 		} else {
 			$github_base = 'https://api.github.com';
 		}
 
-		$download_link_base = implode( '/', array( $github_base, 'repos', $this->type->owner, $this->type->repo, 'zipball/' ) );
+		$download_link_base = implode( '/', array(
+			$github_base,
+			'repos',
+			$this->type->owner,
+			$this->type->repo,
+			'zipball/',
+		) );
 		$endpoint           = '';
+
+		/*
+		 * If release asset.
+		 */
+		if ( $this->type->release_asset && '0.0.0' !== $this->type->newest_tag ) {
+			$download_link_base = $this->make_release_asset_download_link();
+
+			return $this->add_access_token_endpoint( $this, $download_link_base );
+		}
 
 		/*
 		 * Check for rollback.
 		 */
 		if ( ! empty( $_GET['rollback'] ) &&
 		     ( isset( $_GET['action'] ) && 'upgrade-theme' === $_GET['action'] ) &&
-		     ( isset( $_GET['theme'] ) && $_GET['theme'] === $this->type->repo )
+		     ( isset( $_GET['theme'] ) && $this->type->repo === $_GET['theme'] )
 		) {
 			$endpoint .= $rollback;
 
@@ -274,44 +348,94 @@ class GitHub_API extends API {
 			$endpoint = $branch_switch;
 		}
 
-		$asset = $this->get_asset();
-		if ( $asset && ! $branch_switch ) {
-			return $asset;
-		}
-
-		if ( ! empty( parent::$options[ $this->type->repo ] ) ) {
-			$endpoint = add_query_arg( 'access_token', parent::$options[ $this->type->repo ], $endpoint );
-		} elseif ( ! empty( parent::$options['github_access_token'] ) && empty( $this->type->enterprise ) ) {
-			$endpoint = add_query_arg( 'access_token', parent::$options['github_access_token'], $endpoint );
-		}
+		$endpoint = $this->add_access_token_endpoint( $this, $endpoint );
 
 		return $download_link_base . $endpoint;
 	}
 
 	/**
-	 * Add remote data to type object.
+	 * Get/process Language Packs.
+	 * Language Packs cannot reside on GitHub Enterprise.
+	 *
+	 * @TODO Figure out how to serve raw file from GitHub Enterprise.
+	 *
+	 * @param array $headers Array of headers of Language Pack.
+	 *
+	 * @return bool When invalid response.
 	 */
-	private function _add_meta_repo_object() {
-		$this->type->rating       = $this->make_rating( $this->type->repo_meta );
-		$this->type->last_updated = $this->type->repo_meta->pushed_at;
-		$this->type->num_ratings  = $this->type->repo_meta->watchers;
-		$this->type->private      = $this->type->repo_meta->private;
+	public function get_language_pack( $headers ) {
+		$response = ! empty( $this->response['languages'] ) ? $this->response['languages'] : false;
+		$type     = explode( '_', $this->type->type );
+
+		if ( ! $response ) {
+			$response = $this->api( '/repos/' . $headers['owner'] . '/' . $headers['repo'] . '/contents/language-pack.json' );
+
+			if ( $this->validate_response( $response ) ) {
+				return false;
+			}
+
+			if ( $response ) {
+				$contents = base64_decode( $response->content );
+				$response = json_decode( $contents );
+
+				foreach ( $response as $locale ) {
+					$package = array( 'https://github.com', $headers['owner'], $headers['repo'], 'blob/master' );
+					$package = implode( '/', $package ) . $locale->package;
+					$package = add_query_arg( array( 'raw' => 'true' ), $package );
+
+					$response->{$locale->language}->package = $package;
+					$response->{$locale->language}->type    = $type[1];
+					$response->{$locale->language}->version = $this->type->remote_version;
+				}
+
+				$this->set_transient( 'languages', $response );
+			}
+		}
+		$this->type->language_packs = $response;
+	}
+
+	/**
+	 * Add appropriate access token to endpoint.
+	 *
+	 * @param $git
+	 * @param $endpoint
+	 *
+	 * @access private
+	 *
+	 * @return string
+	 */
+	private function add_access_token_endpoint( $git, $endpoint ) {
+		// Add GitHub.com access token.
+		if ( ! empty( parent::$options['github_access_token'] ) ) {
+			$endpoint = add_query_arg( 'access_token', parent::$options['github_access_token'], $endpoint );
+		}
+
+		// Add GitHub Enterprise access token.
+		if ( ! empty( $git->type->enterprise ) &&
+		     ! empty( parent::$options['github_enterprise_token'] )
+		) {
+			$endpoint = remove_query_arg( 'access_token', $endpoint );
+			$endpoint = add_query_arg( 'access_token', parent::$options['github_enterprise_token'], $endpoint );
+		}
+
+		// Add repo access token.
+		if ( ! empty( parent::$options[ $git->type->repo ] ) ) {
+			$endpoint = remove_query_arg( 'access_token', $endpoint );
+			$endpoint = add_query_arg( 'access_token', parent::$options[ $git->type->repo ], $endpoint );
+		}
+
+		return $endpoint;
 	}
 
 	/**
 	 * Create GitHub API endpoints.
 	 *
-	 * @param $git object
+	 * @param $git      object
 	 * @param $endpoint string
 	 *
 	 * @return string $endpoint
 	 */
 	protected function add_endpoints( $git, $endpoint ) {
-		if ( ! empty( parent::$options[ $git->type->repo ] ) ) {
-			$endpoint = add_query_arg( 'access_token', parent::$options[ $git->type->repo ], $endpoint );
-		} elseif ( ! empty( parent::$options['github_access_token'] ) ) {
-			$endpoint = add_query_arg( 'access_token', parent::$options['github_access_token'], $endpoint );
-		}
 
 		/*
 		 * If a branch has been given, only check that for the remote info.
@@ -321,14 +445,35 @@ class GitHub_API extends API {
 			$endpoint = add_query_arg( 'ref', $git->type->branch, $endpoint );
 		}
 
+		$endpoint = $this->add_access_token_endpoint( $git, $endpoint );
+
 		/*
-		 * If using GitHub Self-Hosted header return this endpoint.
+		 * Remove branch endpoint if a translation file.
 		 */
-		if ( ! empty( $git->type->enterprise ) ) {
-			return $git->type->enterprise . remove_query_arg( 'access_token', $endpoint );
+		$repo = explode( '/', $endpoint );
+		if ( isset( $repo[3] ) && $repo[3] !== $git->type->repo ) {
+			$endpoint = remove_query_arg( 'ref', $endpoint );
+		}
+
+		/*
+		 * If using GitHub Enterprise header return this endpoint.
+		 */
+		if ( ! empty( $git->type->enterprise_api ) ) {
+			return $git->type->enterprise_api . $endpoint;
 		}
 
 		return $endpoint;
+	}
+
+	/**
+	 * Add remote data to type object.
+	 *
+	 * @access private
+	 */
+	private function add_meta_repo_object() {
+		$this->type->rating       = $this->make_rating( $this->type->repo_meta );
+		$this->type->last_updated = $this->type->repo_meta->pushed_at;
+		$this->type->num_ratings  = $this->type->repo_meta->watchers;
 	}
 
 	/**
@@ -337,64 +482,14 @@ class GitHub_API extends API {
 	 * @param $response
 	 * @param $repo
 	 */
-	protected static function _ratelimit_reset( $response, $repo ) {
+	protected static function ratelimit_reset( $response, $repo ) {
 		if ( isset( $response['headers']['x-ratelimit-reset'] ) ) {
 			$reset                       = (integer) $response['headers']['x-ratelimit-reset'];
 			$wait                        = date( 'i', $reset - time() );
-			parent::$error_code[ $repo ] = array_merge( parent::$error_code[ $repo ], array( 'git' => 'github', 'wait' => $wait ) );
-		}
-	}
-
-	/**
-	 * Get uploaded release asset to use in place of tagged release.
-	 *
-	 * @return bool|string
-	 */
-	protected function get_asset() {
-		if ( empty( $this->type->newest_tag ) ) {
-			return false;
-		}
-		$response = $this->get_transient( 'asset' );
-
-		if ( ! $response ) {
-			$response = $this->api( '/repos/:owner/:repo/releases/latest' );
-			$this->set_transient( 'asset' , $response );
-		}
-
-		if ( $this->validate_response( $response ) ) {
-			return false;
-		}
-
-		if ( $response instanceof \stdClass ) {
-
-			if ( empty( $response->assets ) ) {
-				$response          = new \stdClass();
-				$response->message = false;
-				$this->set_transient( 'asset', $response );
-				return false;
-			}
-			foreach ( (array) $response->assets as $asset ) {
-				if ( isset ( $asset->browser_download_url ) &&
-				     false !== stristr( $asset->browser_download_url, $this->type->newest_tag )
-				) {
-					$this->set_transient( 'asset', $asset->browser_download_url );
-					$response = $asset->browser_download_url;
-				}
-			}
-		}
-
-		if ( ! is_string( $response ) ) {
-			return false;
-		}
-
-		if ( false !== stristr( $response, $this->type->newest_tag ) ) {
-			if ( ! empty( parent::$options[ $this->type->repo ] ) ) {
-				$response = add_query_arg( 'access_token', parent::$options[ $this->type->repo ], $response );
-			} elseif ( ! empty( parent::$options['github_access_token'] ) && empty( $this->type->enterprise ) ) {
-				$response = add_query_arg( 'access_token', parent::$options['github_access_token'], $response );
-			}
-
-			return $response;
+			parent::$error_code[ $repo ] = array_merge( parent::$error_code[ $repo ], array(
+				'git'  => 'github',
+				'wait' => $wait,
+			) );
 		}
 	}
 

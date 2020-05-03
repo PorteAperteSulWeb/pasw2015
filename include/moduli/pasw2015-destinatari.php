@@ -93,12 +93,12 @@ extract(shortcode_atts(array(
     $returner .= '</h3>';
 
     $returner .= '<small>Visualizzazione';
-	if($numero !=""){ 
-		$returner .= ' di ' . $numero; 
-		} 
+	if($numero !=""){
+		$returner .= ' di ' . $numero;
+		}
 	$returner .=	' ' . strtolower($tipo_cpt) . ' in ordine per ' . $ordine;
     if ($anno != '') { $returner .= ' inserite nel ' . $anno; }
-	if ($link == 'si') { 	 
+	if ($link == 'si') {
     	$returner .= '  &bull;  <a href="' . add_query_arg( 'post_type', $tipo , get_term_link( $utente, 'paswdestinatari' ) );
     	$returner .='">Tutti i contenuti per ' . $utente_cpt . ' &raquo;</a>';
 	}
@@ -137,10 +137,11 @@ extract(shortcode_atts(array(
 
         if ( have_posts() ) : while ( have_posts() ) : the_post();
             global $post;
-
+            $id = $post->ID;
             if (strtolower(get_post_type_object( $ciao )->labels->singular_name) == "articolo") {
                 $returner .= '<div class="short_dest_line">';
 				$returner .= '<div class="short_dest_col_images">';
+
 					if ( has_post_thumbnail($id) & $immagine == 'si' ) {
 					$style_col='3C';
 					$returner .= get_the_post_thumbnail($id, array(80,80));
@@ -156,7 +157,7 @@ extract(shortcode_atts(array(
 				$returner .='<div class="short_dest_col_testo_'. $style_col . '"><a href="' .  get_the_permalink() . '">' . get_the_title() . '</a>';
 						if ( $riassunto == 'si' ) {
 								$returner .= '<p class="piccino">' . get_the_excerpt() . '</p>';
-						}				
+						}
 				$returner .='</div>';
 				$returner .= '<div class=”clearer”> </div>';
 				$returner .= '</div>';

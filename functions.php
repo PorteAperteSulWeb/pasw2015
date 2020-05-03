@@ -228,7 +228,7 @@ add_action( 'widgets_init', 'pasw2015_widgets_init' );
 function comment_count_special($post_id, $comment_type)
 {
       $the_post_comments = get_comments('post_id=' . $post_id);
-      $comments_by_type = &separate_comments($the_post_comments);
+      $comments_by_type = separate_comments($the_post_comments);
       return count($comments_by_type[$comment_type]);
 }
 /* Only return comment counts */
@@ -237,7 +237,7 @@ function comment_count( $count )
 {
       global $id;
       global $nearlysprung;
-      if ($nearlysprung->option['splitpings'] != "yes")
+      if ($nearlysprung && $nearlysprung->option['splitpings'] != "yes")
       {
            return $count;
       }
@@ -326,7 +326,7 @@ function pasw2015_customizer_css() { ?>
         <?php
             $c_principale = get_theme_mod( 'pasw2015_colore_principale', '#00004d');
             $c_secondario = get_theme_mod( 'pasw2015_colore_secondario', '#C2E2ED');
-            
+
             if ( ! display_header_text() ) {
                 echo '.site-title, .site-description { display:none; }';
             }
@@ -340,11 +340,11 @@ function pasw2015_customizer_css() { ?>
         a:link, a:visited, a:hover, a:active {
             color: <?php echo $c_principale; ?>;
         }
-        
+
         #topbar, #header ul.sito, #footer, #rightsidebar h2, .hdate, .sotto-pagine li:hover, #centrecontent a img:hover, .showall_widget a:hover {
             background-color: <?php echo $c_principale; ?>;
         }
-        
+
         #wrapper, #topbar, #header ul.sito, #footer {
             box-shadow: 0 0 1px <?php echo $c_principale; ?>;
         }
@@ -355,7 +355,7 @@ function pasw2015_customizer_css() { ?>
         #centrecontent img {
             border-color: <?php echo $c_secondario; ?>;
         }
-        
+
         #sidebarleft-100-background, #topbar ul li a:hover, #topbar ul li.current_page_item a, .showall_widget, #centrecontent table td {
             background-color: <?php echo $c_secondario; ?>;
         }
@@ -369,7 +369,7 @@ function pasw2015_customizer_css() { ?>
         }
     </style>
 
-    <?php	
+    <?php
 }
 add_action( 'wp_head', 'pasw2015_customizer_css' );
 
@@ -390,7 +390,7 @@ function pasw2015_scripts() {
 
 	// Load the theme custom script file.
 	wp_enqueue_script( 'pasw2015-script', get_template_directory_uri() . '/js/pasw2015.js', array( 'jquery' ), '20151227', true );
-	
+
 }
 add_action( 'wp_enqueue_scripts', 'pasw2015_scripts' );
 
