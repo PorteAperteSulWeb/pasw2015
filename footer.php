@@ -12,7 +12,7 @@
 
 </div>
 
-<div id="footer">
+<footer id="footer">
 
     <div id="footer-interno" <?php if (get_option('pasw_fluid_layout') == '0') { echo 'style="max-width: 1150px;"'; } ?>>
         <div class="footer-column">
@@ -99,7 +99,7 @@ if (get_option('pasw_indirizzo_scuola') != '') {
             </p>
         </div>
     </div>
-</div>
+</footer>
 <?php if (get_option( 'pasw_scrolltop') != '0') { 
 	switch (get_option( 'pasw_scrolltop')) {
     case 1:
