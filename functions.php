@@ -20,9 +20,8 @@ function load_modules() {
     if (get_option('pasw_eulaw') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-eulaw.php' ); }
     if (get_option('pasw_post_tpl') != 0) { require ( get_template_directory() . '/include/moduli/pasw2015-post-templates.php' ); }
 }
-add_action('admin_init', "reg_set_p");
-
-function reg_set_p() {
+add_action('admin_init', function() {
+    
     require (get_template_directory() . '/include/moduli-pasw2015.php' );
 
     register_setting( 'pasw2015_options', 'pasw_social');
@@ -73,14 +72,13 @@ function reg_set_p() {
         wp_safe_redirect(admin_url('/admin.php?page=pasw2015', 'http'), 301);
     }
 
-}
+} );
 
-add_action('admin_notices', 'pasw_admin_messages');
-function pasw_admin_messages() {;
+add_action('admin_notices', function() {
 
-        if ( isset($_GET['pasw2015alert'])) {
-             update_option( 'pasw2015_versionalert', '0' );
-        }
+    if ( isset($_GET['pasw2015alert'])) {
+            update_option( 'pasw2015_versionalert', '0' );
+    }
 
     if ( get_option('pasw2015_versionalert') == '1.6.6') {
         echo '
@@ -93,7 +91,7 @@ function pasw_admin_messages() {;
             </p>
             </div>';
     }
-}
+} );
 
 add_action( 'after_setup_theme', 'pasw2015_setup' );
 add_action('admin_notices', 'pasw_alerts');
