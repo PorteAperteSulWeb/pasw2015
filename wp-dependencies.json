@@ -2,8 +2,8 @@
   {
     "name": "GitHub Updater",
     "host": "github",
-    "slug": "github-updater/github-updater.php",
-    "uri": "afragen/github-updater",
+    "slug": "git-updater/git-updater.php",
+    "uri": "afragen/git-updater",
     "branch": "master",
     "optional": true,
     "token": null
