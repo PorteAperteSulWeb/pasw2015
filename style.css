@@ -9,19 +9,27 @@ GitHub Theme URI: https://github.com/PorteAperteSulWeb/pasw2015
 GitHub Branch: master
 */
 
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web);
+@font-face {
+    font-family: "Titillium";
+	src: url('font/TitilliumWeb-Regular.ttf') format('embedded-opentype'), /* Internet Explorer */
+         url('font/TitilliumWeb-Regular.ttf') format('woff2'),             /* Super Modern Browsers */
+         url('font/TitilliumWeb-Regular.ttf') format('woff'),              /* Pretty Modern Browsers */
+         url('font/TitilliumWeb-Regular.ttf') format('truetype'),          /* Safari, Android, iOS */
+         url('font/TitilliumWeb-Regular.ttf') format('svg');               /* Legacy iOS */
+}
 
 .clear:before,.clear:after {
-content:" ";
-display:table;
+	content:" ";
+	display:table;
 }
+
 .f-nav {
-position: fixed!important;
-margin: 0 auto;
-top: 0;
-z-index: 1000;
-max-width:1150px;
-left: initial!important;
+	position: fixed!important;
+	margin: 0 auto;
+	top: 0;
+	z-index: 1000;
+	max-width:1150px;
+	left: initial!important;
 }
 
 .clear:after {
@@ -190,7 +198,7 @@ padding:0;
 
 body {
 color:#222;
-font-family: Titillium Web,HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+font-family: Titillium, Helvetica, Arial, sans-serif;
 margin:0;
 padding:0;
 width:100%;

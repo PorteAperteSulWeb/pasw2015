@@ -137,46 +137,45 @@ function version_child() {
 	}
 }
 
-function pasw2015_stili() {
-	if ( get_option('pasw_responsive_layout') ) {
+add_action( 'wp_enqueue_scripts', function() {
+    if ( get_option('pasw_responsive_layout') ) {
 		wp_enqueue_style( 'pasw2015_styles-responsive', get_template_directory_uri() . '/responsive.css',  array(), null, 'all' );
 	}
 	wp_enqueue_style( 'pasw2015_styles-fonts', get_template_directory_uri() . '/font/css/font-awesome.min.css',  array(), null, 'all' );
 	wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
 	wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  array(), null, 'print' );
-	}
-add_action( 'wp_enqueue_scripts', 'pasw2015_stili' );
+} );
 
-$defaults = array(
-    'default-color'          => 'white',
-    'default-image'          => get_template_directory_uri() . '/images/pattern_default_pasw2015.jpg',
-    'default-repeat'         => 'repeat'
-);
-add_theme_support( 'custom-background', $defaults );
+add_action( 'after_setup_theme', function() {
+    $defaults = array(
+        'default-color'          => 'white',
+        'default-image'          => get_template_directory_uri() . '/images/pattern_default_pasw2015.jpg',
+        'default-repeat'         => 'repeat'
+    );
+    add_theme_support( 'custom-background', $defaults );
+    
+    $args = array(
+        'width'         => 1150,
+        'height'        => 125,
+        'flex-height'   => true,
+        'flex-width'    => true,
+        'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
+        'default-repeat'=> 'repeat',
+        'default-text-color'    => '#00004d'
+    );
+    add_theme_support( 'custom-header', $args );
+    add_theme_support('post-thumbnails');
+    add_theme_support( 'title-tag' );
+} );
 
-$args = array(
-    'width'         => 1150,
-    'height'        => 125,
-    'flex-height'   => true,
-    'flex-width'    => true,
-    'default-image' => get_template_directory_uri() . '/images/header-default-pasw2015.jpg',
-    'default-repeat'=> 'repeat',
-    'default-text-color'    => '#00004d'
-);
-add_theme_support( 'custom-header', $args );
-add_theme_support('post-thumbnails');
-add_theme_support( 'title-tag' );
-
-/* Menu */
-add_action('init', 'register_my_menus');
-function register_my_menus() {
-  if (get_option('pasw_secondo_menu')) {
-    $array_menu = array('menu-1' => 'Menù Superiore', 'menu-2' => 'Menù Principale', 'menu-4' => 'Menù Principale Secondario', 'menu-3' => 'Menù Inferiore');
-  } else {
-    $array_menu = array('menu-1' => 'Menù Superiore', 'menu-2' => 'Menù Principale', 'menu-3' => 'Menù Inferiore');
-  }
-  register_nav_menus($array_menu);
-}
+add_action('init', function() { // Menu
+    if (get_option('pasw_secondo_menu')) {
+      $array_menu = array('menu-1' => 'Menù Superiore', 'menu-2' => 'Menù Principale', 'menu-4' => 'Menù Principale Secondario', 'menu-3' => 'Menù Inferiore');
+    } else {
+      $array_menu = array('menu-1' => 'Menù Superiore', 'menu-2' => 'Menù Principale', 'menu-3' => 'Menù Inferiore');
+    }
+    register_nav_menus($array_menu);
+} );
 
 function pasw2015_widgets_init() {
   register_sidebar( array(
@@ -229,6 +228,7 @@ function comment_count_special($post_id, $comment_type)
       $comments_by_type = &separate_comments($the_post_comments);
       return count($comments_by_type[$comment_type]);
 }
+
 /* Only return comment counts */
 add_filter('get_comments_number', 'comment_count', 0);
 function comment_count( $count )
@@ -409,19 +409,6 @@ function wpgov_update() {
         $result = curl_exec($ch);
      curl_close($ch);
 }
-
-//add_filter( 'pre_get_posts', 'pasw_get_posts' );
-
-function pasw_get_posts( $query ) {
-    if( !is_admin() && $_SERVER['post_type'] == null) {
-        if ( (is_home() || is_category() || is_tag() || is_archive()  || is_feed() ) && $query->is_main_query() ) {
-            $query->set( 'post_type', array( 'any' ) );
-        }
-        return $query;
-    }
-}
-
-
 
 // Replaces the excerpt "more" text by a link
 function new_excerpt_more($more) {
