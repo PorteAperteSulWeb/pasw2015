@@ -25,10 +25,10 @@ function pasw2015_impostazioni() { ?>
             <form method="post" name="options" target="_self">
             <?php wp_nonce_field('update-options') ?>
 
-        <div id="welcome-panel" class="welcome-panel">
+        <div id="welcome-panel">
             <div class="welcome-panel-content">
                 <div class="welcome-panel-column-container">
-                    <div class="welcome-panel-column">
+                    <div class="">
                         <h4>Stile</h4>
 
 						<input id="responsive" type="checkbox" name="pasw_responsive_layout_n"
@@ -85,8 +85,6 @@ function pasw2015_impostazioni() { ?>
                         <?php $get_pasw_search_show = get_option('pasw_search_show');
                         if ($get_pasw_search_show == '0') { echo ' checked="checked" '; }?>><label for="showsearch">Abilita form Ricerca nel Menù</label>
 
-                    </div>
-                    <div class="welcome-panel-column">
                         <h4>Informazioni Autore</h4>
 
                         <label for="author">Autore del sito:</label>
@@ -106,13 +104,12 @@ function pasw2015_impostazioni() { ?>
                         <br/><label for="email">e-mail:</label><br />
                         <input id="email" type="text" name="pasw_email_scuola_n" value="<?php echo stripslashes(get_option('pasw_email_scuola')); ?>" size="40" placeholder="codicemecc@istruzione.it">
 						
-			<br/><label for="pec">pec:</label><br />
+			            <br/><label for="pec">pec:</label><br />
                         <input id="email" type="text" name="pasw_pec_scuola_n" value="<?php echo stripslashes(get_option('pasw_pec_scuola')); ?>" size="40" placeholder="codicemecc@pec.istruzione.it">
                         
-            		<br/><label for="cfpiva">C.Fisc / P.Iva:</label>
+            		    <br/><label for="cfpiva">C.Fisc / P.Iva:</label>
                         <input id="email" type="text" name="pasw_cfpiva_scuola_n" value="<?php echo stripslashes(get_option('pasw_cfpiva_scuola')); ?>" size="40" placeholder="c.f. xxxxxxxxxxx">
-                    </div>
-                    <div class="welcome-panel-column welcome-panel-last">
+
                         <h4>Homepage</h4>
                         <p>La prima pagina di Pasw2015 è composta da 3 fasce orizzontali.</p>
                         <ul>
@@ -127,13 +124,10 @@ function pasw2015_impostazioni() { ?>
                             <li><a href="customize.php" class="welcome-icon welcome-view-site">Cambia icona del sito da <b>Identità del Sito</b></a></li>
                             <li><a href="themes.php?page=custom-background" class="welcome-icon welcome-view-site">Cambia immagine o colore di sfondo</a></li>
                         </ul>
-                    </div>
 	
                 <div class="clear"></div>
 			<hr>			
 			<h4>Web 2.0 - Area Social Network Ente</h4>
-		    <div class="welcome-panel-column-container">
-				<div class="welcome-panel-column">
 					<h4>Impostazioni</h4>
 
 				    <label for="pisocial">Posizione Icone social:</label>
@@ -161,8 +155,6 @@ function pasw2015_impostazioni() { ?>
                     <?php $get_pasw_hidesocial = get_option('pasw_hidesocial');
                     if ($get_pasw_hidesocial == '1') { echo ' checked="checked" '; }?>><label for="hidesocial">Visualizzare icone social non attive</label>
 					
-				</div>
-				<div class="welcome-panel-column">
 					<h4>Social Ente</h4>
 					<label for="facebook">Pagina Facebook:</label>
 					<input id="pagefb" type="text" name="pasw_pagefb_n" value="<?php echo get_option('pasw_pagefb'); ?>" size="40" placeholder="https://facebook.com/nomepagina">
@@ -181,109 +173,99 @@ function pasw2015_impostazioni() { ?>
 					<br>
 					<label for="linkedin">Profilo Linkedin:</label>
 					<input id="proflinkedin" type="text" name="pasw_proflinkedin_n" value="<?php echo get_option('pasw_proflinkedin'); ?>" size="40" placeholder="https://www.linkedin.com/.......">
-				</div>
-				<div class="welcome-panel-column welcome-panel-last">
-				 <center> <br><br>
-				 La scuola Web 2.0
-				 </center>
-				</div>
-			</div>
+
 			<div class="clear"></div>	
                 <h4>Loghi Footer</h4>
-                        <?php
-                            $content = html_entity_decode(get_option('pasw_loghi_footer'));
-                            $editor_settings =  array (
-                                    'textarea_rows' => 8,
-                                    'teeny'         => TRUE,
-                                    'tinymce'       => TRUE
-                            );
+                    <?php
+                        $content = html_entity_decode(get_option('pasw_loghi_footer'));
+                        $editor_settings =  array (
+                                'textarea_rows' => 8,
+                                'teeny'         => TRUE,
+                                'tinymce'       => TRUE
+                        );
 
-                            wp_editor( $content, 'pasw_loghi_footer_n', $editor_settings );
-                        ?>
+                        wp_editor( $content, 'pasw_loghi_footer_n', $editor_settings );
+                    ?>
                 <h4>Testo Footer</h4>
-                        <?php
-                            $content = html_entity_decode(get_option('pasw_testo_footer'));
-                            $editor_settings =  array (
-                                    'textarea_rows' => 2,
-                                    'media_buttons' => FALSE,
-                                    'teeny'         => TRUE,
-                                    'tinymce'       => TRUE
-                            );
+                    <?php
+                        $content = html_entity_decode(get_option('pasw_testo_footer'));
+                        $editor_settings =  array (
+                                'textarea_rows' => 2,
+                                'media_buttons' => FALSE,
+                                'teeny'         => TRUE,
+                                'tinymce'       => TRUE
+                        );
 
-                            wp_editor( $content, 'pasw_testo_footer_n', $editor_settings );
-                        ?>
+                        wp_editor( $content, 'pasw_testo_footer_n', $editor_settings );
+                    ?>
             </div>
         </div>
 
             <br><hr><br>
             <div class="welcome-panel-content">
-                <h4>Google Analytics</h4>
+                <h3>Google Analytics</h3>
 
-                <div class="welcome-panel-column-container">
-                    <div class="welcome-panel-column">
-                        <h4>Codice di Monitoraggio</h4>
+                    <h4>Codice di Monitoraggio</h4>
 
-                        <label for="ga-id">ID monitoraggio:</label>
-                        <input id="ga-id" type="text" name="pasw_ga_id_n" value="<?php echo get_option('pasw_ga_id'); ?>" class="regular-text" placeholder="UA-00000000-0">
-                        
-                        <br>
-                        <input id="ga-anonymous" type="checkbox" name="pasw_ga_anonymous_n"
-                        <?php $get_pasw_ga_anonymous = get_option('pasw_ga_anonymous');
-                        if ($get_pasw_ga_anonymous == '1') { echo ' checked="checked" '; }?>><label for="ga-anonymous">Anonimizza gli indirizzi IP</label>
+                    <label for="ga-id">ID monitoraggio:</label>
+                    <input id="ga-id" type="text" name="pasw_ga_id_n" value="<?php echo get_option('pasw_ga_id'); ?>" class="regular-text" placeholder="UA-00000000-0">
+                    
+                    <br>
+                    <input id="ga-anonymous" type="checkbox" name="pasw_ga_anonymous_n"
+                    <?php $get_pasw_ga_anonymous = get_option('pasw_ga_anonymous');
+                    if ($get_pasw_ga_anonymous == '1') { echo ' checked="checked" '; }?>><label for="ga-anonymous">Anonimizza gli indirizzi IP</label>
 
-                    </div>
-                    <div class="welcome-panel-column">
-                        <h4>Pagina Statistiche</h4>
+                    <h4>Pagina Statistiche</h4>
 
-                        <label for="ga-profile-id">ID Profilo (es. 00000000):</label>
-                        <input id="ga-profile-id" type="text" name="pasw_ga_profile_id_n" value="<?php echo get_option('pasw_ga_profile_id'); ?>" class="regular-text">
-                        
-                        <label for="ga-user">Username:</label>
-                        <input id="ga-user-n" type="text" name="pasw_ga_user_n" value="<?php echo get_option('pasw_ga_user'); ?>" class="regular-text" placeholder="xxx@developer.gserviceaccount.com"><small>(lascia vuoto se vuoi utilizzare il sistema di autenticazione PASW)</small>
-                        
-                        <br>
-                        <?php if ( get_option( 'pasw_ga_password' ) ) { ?>
-                        <label for="ga-password">Password:</label>
-                        <input id="ga-password-n" type="text" name="pasw_ga_password_n" value="<?php if (get_option('pasw_ga_password')) { echo '#OK#'; } ?>" class="regular-text">
-                        <br/><small style="background-color:yellow;">Elimina la Password per passare al nuovo sistema di autenticazione. Fallo al più presto, per nuove funzioni e maggior sicurezza.</small>
+                    <label for="ga-profile-id">ID Profilo (es. 00000000):</label>
+                    <input id="ga-profile-id" type="text" name="pasw_ga_profile_id_n" value="<?php echo get_option('pasw_ga_profile_id'); ?>" class="regular-text">
+                    
+                    <label for="ga-user">Username:</label>
+                    <input id="ga-user-n" type="text" name="pasw_ga_user_n" value="<?php echo get_option('pasw_ga_user'); ?>" class="regular-text" placeholder="xxx@developer.gserviceaccount.com"><small>(lascia vuoto se vuoi utilizzare il sistema di autenticazione PASW)</small>
+                    
+                    <br>
+                    <?php
+                    $string_user = '';
+                    $string_p12 = '';
+                    if ( get_option( 'pasw_ga_password' ) ) { ?>
+                    <label for="ga-password">Password:</label>
+                    <input id="ga-password-n" type="text" name="pasw_ga_password_n" value="<?php if (get_option('pasw_ga_password')) { echo '#OK#'; } ?>" class="regular-text">
+                    <br/><small style="background-color:yellow;">Elimina la Password per passare al nuovo sistema di autenticazione. Fallo al più presto, per nuove funzioni e maggior sicurezza.</small>
+
+                    <?php
+                        } else {
+                        if (get_option('pasw_ga_id') && get_option('pasw_ga_profile_id')){		
     
-                        <?php
-                            } else {
-						if (get_option('pasw_ga_id') && get_option('pasw_ga_profile_id')){		
-	
                             if (is_pasw2015_child()){
-								$string_child = 'TEMA CHILD ATTIVO';
-							}else{
-								$string_child = 'TEMA PADRE ATTIVO';
-							}
-							if (get_option( 'pasw_ga_user' ) ){
-								$filename = get_stylesheet_directory() . '/ga-oauthkeyfile.p12';
-								if (file_exists($filename)) {
-									$string_p12 = '<b>Statistiche con login personale <span style= color:green;>Attive</span></b>';
-								}else{
-									$string_p12 = '<span style= color:red;>Attenzione Errore File <strong>ga-oauthkeyfile.p12</strong> non trovato</span><br> caricare file in questa posizione: - ' . $filename;
-								}
-								$string_user = 'Autenticazione PERSONALE';
-							}else{
-								$string_user = 'Autenticazione PASW';
-								$string_p12 = '<b>Statistiche con login PASW <span style= color:green;>Attive</span></b>';
-							}
-						}
-						else{
-							$string_child = '- Statistiche non attive';
-						}						
-							echo $string_child . ' - ' . $string_user . '<br>' . $string_p12;
-                        ?>
-                        
-                        <?php } ?>
+                                $string_child = 'TEMA CHILD ATTIVO';
+                            }else{
+                                $string_child = 'TEMA PADRE ATTIVO';
+                            }
+                            
+                            if (get_option( 'pasw_ga_user' ) ){
+                                $filename = get_stylesheet_directory() . '/ga-oauthkeyfile.p12';
+                                if (file_exists($filename)) {
+                                    $string_p12 = '<b>Statistiche con login personale <span style= color:green;>Attive</span></b>';
+                                }else{
+                                    $string_p12 = '<span style= color:red;>Attenzione Errore File <strong>ga-oauthkeyfile.p12</strong> non trovato</span><br> caricare file in questa posizione: - ' . $filename;
+                                }
+                                $string_user = 'Autenticazione PERSONALE';
+                            }else{
+                                $string_user = 'Autenticazione PASW';
+                                $string_p12 = '<b>Statistiche con login PASW <span style= color:green;>Attive</span></b>';
+                            }
+                        }
+                        else{
+                            $string_child = '- Statistiche non attive';
+                        }						
+                        echo $string_child . ' - ' . $string_user . '<br>' . $string_p12;
+                    ?>
+                    
+                    <?php } ?>
 
-                    </div>
-                    <div class="welcome-panel-column welcome-panel-last">
-                        <center> <br><br>
-                        <small><a class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla Configurazione</a></small>
-                        </center>
-                    </div>
-                </div>
+                    <center> <br><br>
+                    <small><a class="add-new-h2" href="https://github.com/PorteAperteSulWeb/pasw2015/wiki/Configurare-Google-Analytics" target="_blank">Guida alla Configurazione</a></small>
+                    </center>
             </div>
 		
         </div>
