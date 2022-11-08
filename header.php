@@ -13,7 +13,7 @@
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
 <?php if (get_option('pasw_fixedmenu') == 1) { ?>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="<?php echo get_template_directory_uri() . '/js/jquery.min.js';?>"></script>
 <script>
     jQuery("document").ready(function($){
     var nav = $('#topbar');
