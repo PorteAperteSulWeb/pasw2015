@@ -144,6 +144,7 @@ add_action( 'wp_enqueue_scripts', function() {
 	wp_enqueue_style( 'pasw2015_styles-fonts', get_template_directory_uri() . '/font/css/font-awesome.min.css',  array(), null, 'all' );
 	wp_enqueue_style( 'pasw2015_styles', get_stylesheet_uri() , array());
 	wp_enqueue_style( 'pasw2015_styles-print', get_template_directory_uri() . '/print.css',  array(), null, 'print' );
+    wp_enqueue_script( 'pasw2015-script', get_template_directory_uri() . '/js/pasw2015.js', array( 'jquery' ), '20151227', true );
 } );
 
 add_action( 'after_setup_theme', function() {
@@ -225,7 +226,7 @@ add_action( 'widgets_init', 'pasw2015_widgets_init' );
 function comment_count_special($post_id, $comment_type)
 {
       $the_post_comments = get_comments('post_id=' . $post_id);
-      $comments_by_type = &separate_comments($the_post_comments);
+      $comments_by_type = separate_comments($the_post_comments);
       return count($comments_by_type[$comment_type]);
 }
 
@@ -235,7 +236,7 @@ function comment_count( $count )
 {
       global $id;
       global $nearlysprung;
-      if ($nearlysprung->option['splitpings'] != "yes")
+      if ($nearlysprung && $nearlysprung->option['splitpings'] != "yes")
       {
            return $count;
       }
@@ -383,14 +384,6 @@ function pasw2015_customizer_live_preview() {
 
 }
 add_action( 'customize_preview_init', 'pasw2015_customizer_live_preview' );
-
-function pasw2015_scripts() {
-
-	// Load the theme custom script file.
-	wp_enqueue_script( 'pasw2015-script', get_template_directory_uri() . '/js/pasw2015.js', array( 'jquery' ), '20151227', true );
-	
-}
-add_action( 'wp_enqueue_scripts', 'pasw2015_scripts' );
 
 function wpgov_update() {
 

@@ -1,5 +1,5 @@
 <?php
 get_header();
-echo 'error';
+echo 'Please set your homepage';
 get_footer();
 ?>

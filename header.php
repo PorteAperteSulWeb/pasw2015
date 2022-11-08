@@ -10,32 +10,34 @@
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
-<?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
-
-<?php if (get_option('pasw_fixedmenu') == 1) { ?>
-<script src="<?php echo get_template_directory_uri() . '/js/jquery.min.js';?>"></script>
-<script>
-    jQuery("document").ready(function($){
-    var nav = $('#topbar');
-    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?> && width >= 1024) {
-            nav.addClass("f-nav");
-        } else {
-            nav.removeClass("f-nav");
-        }
-    });
-
-});
-</script>
-<?php
-    if ( is_user_logged_in() ) {
-        echo '<style>.f-nav { top:30px; }</style>';
-    }
-}
+    <?php
     wp_head();
     include(TEMPLATEPATH . '/include/frontend/google-analytics.php');
-?>
+    if ( is_singular() ) {
+        wp_enqueue_script( 'comment-reply' );
+    }
+    if (get_option('pasw_fixedmenu') == 1) {
+    ?>
+    <script>
+        jQuery(document).ready(function($){
+            var nav = $('#topbar');
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > <?php echo get_custom_header()->height + 30; ?> && width >= 1024) {
+                    nav.addClass("f-nav");
+                } else {
+                    nav.removeClass("f-nav");
+                }
+            });
+
+        });
+    </script>
+    <?php
+        if ( is_user_logged_in() ) {
+            echo '<style>.f-nav { top:30px; }</style>';
+        }
+    }
+    ?>
 
 </head>
 
